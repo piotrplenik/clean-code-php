@@ -179,7 +179,7 @@ Zero arguments is the ideal case. One or two arguments is ok, and three should b
 
 **Bad:**
 ```php
-function createMenu(title, body, buttonText, cancellable) {
+function createMenu($title, $body, $buttonText, $cancellable) {
   // ...
 }
 ```
@@ -428,15 +428,15 @@ $menuConfig = [
   'title'       => 'Order',
   // User did not include 'body' key
   'buttonText'  => 'Send',
-  'cancellable' => true
+  'cancellable' => true,
 ];
 
 function createMenu(&$config) {
   $config = array_merge([
-    'title' => 'Foo',
-    'body' => 'Bar',
-    'buttonText' => 'Baz',
-    'cancellable' => true
+    'title'       => 'Foo',
+    'body'        => 'Bar',
+    'buttonText'  => 'Baz',
+    'cancellable' => true,
   ], $config);
 
   // config now equals: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
@@ -501,7 +501,7 @@ var_dump($name); // ['Ryan', 'McDermott'];
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName($name) {
-  return preg_split('/ /', $name);;
+  return preg_split('/ /', $name);
 }
 
 $name = 'Ryan McDermott';
