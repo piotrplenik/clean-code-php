@@ -12,7 +12,9 @@ Software engineering principles, from Robert C. Martin's book
 adapted for PHP. This is not a style guide. It's a guide to producing
 readable, reusable, and refactorable software in PHP.
 
-Not every principle herein has to be strictly followed, and even fewer will be universally agreed upon. These are guidelines and nothing more, but they are ones codified over many years of collective experience by the authors of *Clean Code*.
+Not every principle herein has to be strictly followed, and even fewer will be universally 
+agreed upon. These are guidelines and nothing more, but they are ones codified over many 
+years of collective experience by the authors of *Clean Code*.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
@@ -46,7 +48,9 @@ getUser();
 **[⬆ back to top](#table-of-contents)**
 
 ### Use searchable names
-We will read more code than we will ever write. It's important that the code we do write is readable and searchable. By *not* naming variables that end up being meaningful for understanding our program, we hurt our readers.
+We will read more code than we will ever write. It's important that the code we do write is 
+readable and searchable. By *not* naming variables that end up being meaningful for 
+understanding our program, we hurt our readers.
 Make your names searchable.
 
 **Bad:**
@@ -173,9 +177,14 @@ function createMicrobrewery($breweryName = 'Hipster Brew Co.') {
 **[⬆ back to top](#table-of-contents)**
 ## **Functions**
 ### Function arguments (2 or fewer ideally)
-Limiting the amount of function parameters is incredibly important because it makes testing your function easier. Having more than three leads to a combinatorial explosion where you have to test tons of different cases with each separate argument.
+Limiting the amount of function parameters is incredibly important because it makes 
+testing your function easier. Having more than three leads to a combinatorial explosion 
+where you have to test tons of different cases with each separate argument.
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided. Anything more than that should be consolidated. Usually, if you have more than two arguments then your function is trying to do too much. In cases where it's not, most of the time a higher-level object will suffice as an argument.
+Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided. 
+Anything more than that should be consolidated. Usually, if you have more than two 
+arguments then your function is trying to do too much. In cases where it's not, most 
+of the time a higher-level object will suffice as an argument.
 
 **Bad:**
 ```php
@@ -208,7 +217,11 @@ function createMenu(MenuConfig $config) {
 
 
 ### Functions should do one thing
-This is by far the most important rule in software engineering. When functions do more than one thing, they are harder to compose, test, and reason about. When you can isolate a function to just one action, they can be refactored easily and your code will read much cleaner. If you take nothing else away from this guide other than this, you'll be ahead of many developers.
+This is by far the most important rule in software engineering. When functions do more 
+than one thing, they are harder to compose, test, and reason about. When you can isolate 
+a function to just one action, they can be refactored easily and your code will read much 
+cleaner. If you take nothing else away from this guide other than this, you'll be ahead 
+of many developers.
 
 **Bad:**
 ```php
@@ -334,20 +347,26 @@ function parseBetterJSAlternative($code) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove duplicate code
-Do your absolute best to avoid duplicate code. Duplicate code is bad because it means that there's more than one place to alter something if you need to change some logic.
+Do your absolute best to avoid duplicate code. Duplicate code is bad because 
+it means that there's more than one place to alter something if you need to 
+change some logic.
 
-Imagine if you run a restaurant and you keep track of your inventory: all your tomatoes, onions, garlic, spices, etc. If you have multiple lists that
+Imagine if you run a restaurant and you keep track of your inventory: all your 
+tomatoes, onions, garlic, spices, etc. If you have multiple lists that
 you keep this on, then all have to be updated when you serve a dish with
 tomatoes in them. If you only have one list, there's only one place to update!
 
 Oftentimes you have duplicate code because you have two or more slightly
 different things, that share a lot in common, but their differences force you
-to have two or more separate functions that do much of the same things. Removing duplicate code means creating an abstraction that can handle this set of different things with just one function/module/class.
+to have two or more separate functions that do much of the same things. Removing 
+duplicate code means creating an abstraction that can handle this set of different 
+things with just one function/module/class.
 
 Getting the abstraction right is critical, that's why you should follow the
 SOLID principles laid out in the *Classes* section. Bad abstractions can be
 worse than duplicate code, so be careful! Having said this, if you can make
-a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself updating multiple places anytime you want to change one thing.
+a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself 
+updating multiple places anytime you want to change one thing.
 
 **Bad:**
 ```php
@@ -449,7 +468,9 @@ createMenu($menuConfig);
 
 
 ### Don't use flags as function parameters
-Flags tell your user that this function does more than one thing. Functions should do one thing. Split out your functions if they are following different code paths based on a boolean.
+Flags tell your user that this function does more than one thing. Functions should 
+do one thing. Split out your functions if they are following different code paths 
+based on a boolean.
 
 **Bad:**
 ```php
@@ -475,11 +496,19 @@ function createTempFile($name) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Side Effects
-A function produces a side effect if it does anything other than take a value in and return another value or values. A side effect could be writing to a file, modifying some global variable, or accidentally wiring all your money to a stranger.
+A function produces a side effect if it does anything other than take a value in and 
+return another value or values. A side effect could be writing to a file, modifying 
+some global variable, or accidentally wiring all your money to a stranger.
 
-Now, you do need to have side effects in a program on occasion. Like the previous example, you might need to write to a file. What you want to do is to centralize where you are doing this. Don't have several functions and classes that write to a particular file. Have one service that does it. One and only one.
+Now, you do need to have side effects in a program on occasion. Like the previous 
+example, you might need to write to a file. What you want to do is to centralize where 
+you are doing this. Don't have several functions and classes that write to a particular 
+file. Have one service that does it. One and only one.
 
-The main point is to avoid common pitfalls like sharing state between objects without any structure, using mutable data types that can be written to by anything, and not centralizing where your side effects occur. If you can do this, you will be happier than the vast majority of other programmers.
+The main point is to avoid common pitfalls like sharing state between objects without
+any structure, using mutable data types that can be written to by anything, and not 
+centralizing where your side effects occur. If you can do this, you will be happier 
+than the vast majority of other programmers.
 
 **Bad:**
 ```php
@@ -513,7 +542,11 @@ var_export($newName); // ['Ryan', 'McDermott'];
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't write to global functions
-Polluting globals is a bad practice in very languages because you could clash with another library and the user of your API would be none-the-wiser until they get an exception in production. Let's think about an example: what if you wanted to have configuration array. You could write global function like `config()`, but it could clash with another library that tried to do the same thing. This is why it
+Polluting globals is a bad practice in very languages because you could clash with another 
+library and the user of your API would be none-the-wiser until they get an exception in 
+production. Let's think about an example: what if you wanted to have configuration array. 
+You could write global function like `config()`, but it could clash with another library 
+that tried to do the same thing. This is why it
 would be much better to use singleton design pattern and simple set configuration.
 
 **Bad:**
@@ -674,7 +707,12 @@ function travelToTexas($vehicle) {
 ### Avoid type-checking (part 2)
 If you are working with basic primitive values like strings, integers, and arrays,
 and you can't use polymorphism but you still feel the need to type-check,
-you should consider type declaration or strict mode. It provides you with static typing on top of standard PHP syntax. The problem with manually type-checking is that doing it well requires so much extra verbiage that the faux "type-safety" you get doesn't make up for the lost readability. Keep your PHP clean, write good tests, and have good code reviews. Otherwise, do all of that but with PHP strict type declaration or strict mode.
+you should consider type declaration or strict mode. It provides you with static 
+typing on top of standard PHP syntax. The problem with manually type-checking is 
+that doing it well requires so much extra verbiage that the faux "type-safety" 
+you get doesn't make up for the lost readability. Keep your PHP clean, write good 
+tests, and have good code reviews. Otherwise, do all of that but with PHP strict 
+type declaration or strict mode.
 
 **Bad:**
 ```php
@@ -726,3 +764,103 @@ inventoryTracker('apples', $req, 'www.inventory-awesome.io');
 ```
 **[⬆ back to top](#table-of-contents)**
 
+
+## **Objects and Data Structures**
+### Use getters and setters
+In PHP you can set `public`, `protected` and `private` keywords for methods. 
+Using it, you can control properties modification on an object. 
+
+* When you want to do more beyond getting an object property, you don't have
+to look up and change every accessor in your codebase.
+* Makes adding validation simple when doing a `set`.
+* Encapsulates the internal representation.
+* Easy to add logging and error handling when getting and setting.
+* Inheriting this class, you can override default functionality.
+* You can lazy load your object's properties, let's say getting it from a
+server.
+
+Additionally, this is part of Open/Closed principle, from object-oriented 
+design principles.
+
+**Bad:**
+```php
+class BankAccount {
+  public $balance = 1000;
+}
+
+$bankAccount = new BankAccount();
+
+// Buy shoes...
+$bankAccount->balance -= 100;
+```
+
+**Good**:
+```php
+class BankAccount {
+  private $balance;
+  
+  public function __construct($balance = 1000) {
+    $this->balance = $balance;
+  }
+
+  public function withdrawBalance($amount) {
+    if($amount > $this->balance) {
+        throw new \Exception('Amount greater than available balance.');
+    }
+    $this->balance -= $amount;
+  }
+
+  public function depositBalance($amount) {
+    $this->balance += $amount;
+  }
+
+  public function getBalance() {
+    return $this->balance;
+  }
+}
+
+$bankAccount = new BankAccount();
+
+// Buy shoes...
+$bankAccount->withdrawBalance(-$shoesPrice);
+
+// Get balance
+$balance = $bankAccount->getBalance();
+
+```
+**[⬆ back to top](#table-of-contents)**
+
+
+### Make objects have private/protected members
+
+**Bad:**
+```php
+class Employee {
+  public $name;
+  
+  public function __construct($name) {
+    $this->name = $name;
+  }
+};
+
+$employee = new Employee('John Doe');
+echo 'Employee name: '.$employee->name; // Employee name: John Doe
+```
+
+**Good**:
+```javascript
+class Employee {
+  protected $name;
+  
+  public function __construct($name) {
+    $this->name = $name;
+  }
+  public function getName() {
+    return $this->name;
+  };
+};
+
+$employee = new Employee('John Doe');
+echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
+```
+**[⬆ back to top](#table-of-contents)**
