@@ -4,6 +4,7 @@
   1. [Introduction](#introduction)
   2. [Variables](#variables)
   3. [Functions](#functions)
+  4. [Objects and Data Structures](#objects-and-data-structures)
 
 ## Introduction
 
