@@ -5,6 +5,7 @@
   2. [Variables](#variables)
   3. [Functions](#functions)
   4. [Objects and Data Structures](#objects-and-data-structures)
+  5. [Classes](#classes)
 
 ## Introduction
 
@@ -849,7 +850,7 @@ echo 'Employee name: '.$employee->name; // Employee name: John Doe
 ```
 
 **Good**:
-```javascript
+```php
 class Employee {
   protected $name;
   
@@ -863,5 +864,640 @@ class Employee {
 
 $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
+```
+**[⬆ back to top](#table-of-contents)**
+
+
+## **Classes**
+### Single Responsibility Principle (SRP)
+As stated in Clean Code, "There should never be more than one reason for a class
+to change". It's tempting to jam-pack a class with a lot of functionality, like
+when you can only take one suitcase on your flight. The issue with this is
+that your class won't be conceptually cohesive and it will give it many reasons
+to change. Minimizing the amount of times you need to change a class is important.
+It's important because if too much functionality is in one class and you modify a piece of it,
+it can be difficult to understand how that will affect other dependent modules in
+your codebase.
+
+**Bad:**
+```php
+class UserSettings {
+  private $user;
+  public function __construct($user) {
+    $this->user = user;
+  }
+
+  public function changeSettings($settings) {
+    if ($this->verifyCredentials()) {
+      // ...
+    }
+  }
+
+  private function verifyCredentials() {
+    // ...
+  }
+}
+```
+
+**Good:**
+```php
+class UserAuth {
+  private $user;
+  public function __construct($user) {
+    $this->user = user;
+  }
+
+  protected function verifyCredentials() {
+    // ...
+  }
+}
+
+
+class UserSettings {
+  private $user;
+  public function __construct($user) {
+    $this->user = $user;
+    $this->auth = new UserAuth($user);
+  }
+
+  public function changeSettings($settings) {
+    if ($this->auth->verifyCredentials()) {
+      // ...
+    }
+  }
+}
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Open/Closed Principle (OCP)
+As stated by Bertrand Meyer, "software entities (classes, modules, functions,
+etc.) should be open for extension, but closed for modification." What does that
+mean though? This principle basically states that you should allow users to
+add new functionalities without changing existing code.
+
+**Bad:**
+```php
+abstract class Adapter {
+  protected $name;
+  public function getName() {
+    return $this->name;
+  }
+}
+class AjaxAdapter extends Adapter {
+  public function __construct() {
+    parent::__construct();
+    $this->name = 'ajaxAdapter';
+  }
+}
+
+class NodeAdapter extends Adapter {
+  public function __construct() {
+    parent::__construct();
+    $this->name = 'nodeAdapter';
+  }
+}
+
+class HttpRequester {
+  private $adapter;
+  public function __construct($adapter) {
+    $this->adapter = $adapter;
+  }
+
+  public function fetch($url) {
+    $adapterName = $this->adapter->getName();
+    if ($adapterName === 'ajaxAdapter') {
+      return $this->makeAjaxCall($url);
+    } else if ($adapterName === 'httpNodeAdapter') {
+      return $this->makeHttpCall($url);
+    }
+  }
+
+  protected function makeAjaxCall(url) {
+    // request and return promise
+  }
+
+  protected function makeHttpCall(url) {
+    // request and return promise
+  }
+}
+```
+
+**Good:**
+```php
+abstract class Adapter {
+  abstract protected function getName();
+  abstract public function request($url);
+}
+
+class AjaxAdapter extends Adapter {
+  protected function getName() {
+    return 'ajaxAdapter';
+  }
+
+  public function request($url) {
+    // request and return promise
+  }
+}
+
+class NodeAdapter extends Adapter {
+  protected function getName() {
+    return 'nodeAdapter';
+  }
+
+  public function request($url) {
+    // request and return promise
+  }
+}
+
+class HttpRequester {
+  private $adapter;
+  public function __construct(Adapter $adapter) {
+    $this->adapter = $adapter;
+  }
+
+  public function fetch($url) {
+    return $this->adapter->request($url);
+  }
+}
+
+```
+**[⬆ back to top](#table-of-contents)**
+
+
+### Liskov Substitution Principle (LSP)
+This is a scary term for a very simple concept. It's formally defined as "If S
+is a subtype of T, then objects of type T may be replaced with objects of type S
+(i.e., objects of type S may substitute objects of type T) without altering any
+of the desirable properties of that program (correctness, task performed,
+etc.)." That's an even scarier definition.
+
+The best explanation for this is if you have a parent class and a child class,
+then the base class and child class can be used interchangeably without getting
+incorrect results. This might still be confusing, so let's take a look at the
+classic Square-Rectangle example. Mathematically, a square is a rectangle, but
+if you model it using the "is-a" relationship via inheritance, you quickly
+get into trouble.
+
+**Bad:**
+```php
+class Rectangle {
+  private $width, $height;
+  public function __construct() {
+    $this->width = 0;
+    $this->height = 0;
+  }
+
+  public function setColor($color) {
+    // ...
+  }
+
+  public function render($area) {
+    // ...
+  }
+
+  public function setWidth($width) {
+    $this->width = $width;
+  }
+
+  public function setHeight($height) {
+    $this->height = $height;
+  }
+
+  public function getArea() {
+    return $this->width * $this->height;
+  }
+}
+
+class Square extends Rectangle {
+  public function setWidth($width) {
+    $this->width = $this->height = $width;
+  }
+
+  public function setHeight(height) {
+    $this->width = $this->height = $height;
+  }
+}
+
+function renderLargeRectangles($rectangles) {
+  foreach($rectangle in $rectangles) {
+    $rectangle->setWidth(4);
+    $rectangle->setHeight(5);
+    $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
+    $rectangle->render($area);
+  });
+}
+
+$rectangles = [new Rectangle(), new Rectangle(), new Square()];
+renderLargeRectangles($rectangles);
+```
+
+**Good:**
+```php
+abstract class Shape {
+  private $width, $height;
+  
+  abstract public function getArea();
+  
+  public function setColor($color) {
+    // ...
+  }
+
+  public function render($area) {
+    // ...
+  }
+}
+
+class Rectangle extends Shape {
+  public function __construct {
+    parent::__construct();
+    $this->width = 0;
+    $this->height = 0;
+  }
+
+  public function setWidth($width) {
+    $this->width = $width;
+  }
+
+  public function setHeight($height) {
+    $this->height = $height;
+  }
+
+  public function getArea() {
+    return $this->width * $this->height;
+  }
+}
+
+class Square extends Shape {
+  public function __construct {
+    parent::__construct();
+    this.length = 0;
+  }
+
+  public function setLength($length) {
+    $this->length = $length;
+  }
+
+  public function getArea() {
+    return $this->length * $this->length;
+  }
+}
+
+function renderLargeRectangles($rectangles) {
+  foreach($rectangle in $rectangles) {
+    if($rectangle instanceof Square) {
+      $rextangle->setLength(5);
+    } else if ($rectangle instanceof Rectangle) {
+      $rectangle->setWidth(4);
+      $rectangle->setHeight(5);
+    }
+    
+    $area = $rectangle->getArea(); 
+    $rectangle->render($area);
+  });
+}
+
+$shapes = [new Rectangle(), new Rectangle(), new Square()];
+renderLargeRectangles($shapes);
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Interface Segregation Principle (ISP)
+ISP states that "Clients should not be forced to depend upon interfaces that
+they do not use." 
+
+A good example to look at that demonstrates this principle is for
+classes that require large settings objects. Not requiring clients to setup
+huge amounts of options is beneficial, because most of the time they won't need
+all of the settings. Making them optional helps prevent having a "fat interface".
+
+**Bad:**
+```php
+interface WorkerInterface {
+	public function work();
+	public function eat();
+}
+
+class Worker implements WorkerInterface {
+	public function work() {
+		// ....working
+	}
+	public function eat() {
+		// ...... eating in launch break
+	}
+}
+
+class SuperWorker implements WorkerInterface {
+	public function work() {
+		//.... working much more
+	}
+
+	public function eat() {
+		//.... eating in launch break
+	}
+}
+
+class Manager {
+  /** @var WorkerInterface $worker **/
+  private $worker;
+  
+  public void setWorker(WorkerInterface $worker) {
+		$this->worker = $worker;
+	}
+
+	public function manage() {
+		$this->worker->work();
+	}
+}
+```
+
+**Good:**
+```php
+interface WorkerInterface extends FeedableInterface, WorkableInterface {
+}
+
+interface WorkableInterface {
+	public function work();
+}
+
+interface FeedableInterface {
+	public function eat();
+}
+
+class Worker implements WorkableInterface, FeedableInterface {
+	public function work() {
+		// ....working
+	}
+
+	public function eat() {
+		//.... eating in launch break
+	}
+}
+
+class Robot implements WorkableInterface {
+	public void work() {
+		// ....working
+	}
+}
+
+class SuperWorker implements WorkerInterface  {
+	public function work() {
+		//.... working much more
+	}
+
+	public function eat() {
+		//.... eating in launch break
+	}
+}
+
+class Manager {
+  /** @var $worker WorkableInterface **/
+	private $worker;
+
+	public function setWorker(WorkableInterface $w) {
+	  $this->worker = $w;
+	}
+
+	public function manage() {
+		$this->worker->work();
+	}
+}
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Dependency Inversion Principle (DIP)
+This principle states two essential things:
+1. High-level modules should not depend on low-level modules. Both should
+depend on abstractions.
+2. Abstractions should not depend upon details. Details should depend on
+abstractions.
+
+This can be hard to understand at first, but if you've worked with PHP frameworks (like Symfony), you've seen an implementation of this principle in the form of Dependency
+Injection (DI). While they are not identical concepts, DIP keeps high-level
+modules from knowing the details of its low-level modules and setting them up.
+It can accomplish this through DI. A huge benefit of this is that it reduces
+the coupling between modules. Coupling is a very bad development pattern because
+it makes your code hard to refactor.
+
+**Bad:**
+```php
+class Worker {
+  public function work() {
+    // ....working
+  }
+}
+
+class Manager {
+  /** @var Worker $worker **/
+  private $worker;
+  
+  public function __construct(Worker $worker) {
+    $this->worker = $worker;
+  }
+  
+  public function manage() {
+    $this->worker->work();
+  }
+}
+
+class SuperWorker extends Worker {
+	public function work() {
+		//.... working much more
+	}
+}
+```
+
+**Good:**
+```php
+interface WorkerInterface {
+  public function work();
+}
+
+class Worker implements WorkerInterface {
+  public function work() {
+    // ....working
+  }
+}
+
+class SuperWorker implements WorkerInterface {
+  public function work() {
+		//.... working much more
+  }
+}
+
+class Manager {
+  /** @var Worker $worker **/
+  private $worker;
+  
+  public void __construct(WorkerInterface $worker) {
+		$this->worker = $worker;
+  }
+
+  public void manage() {
+    $this->worker.work();
+  }
+}
+
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Use method chaining
+This pattern is very useful and commonly used it many libraries such
+as PHPUnit and Doctrine. It allows your code to be expressive, and less verbose.
+For that reason, I say, use method chaining and take a look at how clean your code
+will be. In your class functions, simply return `this` at the end of every function,
+and you can chain further class methods onto it.
+
+**Bad:**
+```php
+class Car {
+  private $make, $model, $color;
+  
+  public function __construct() {
+    $this->make = 'Honda';
+    $this->model = 'Accord';
+    $this->color = 'white';
+  }
+  public function setMake($make) {
+    $this->make = $make;
+  }
+
+  public function setModel($model) {
+    $this->model = $model;
+  }
+
+  public function setColor($color) {
+    $this->color = $color;
+  }
+  
+  public function dump() {
+    var_export($this->make, $this->model, $this->color);
+  }
+}
+
+$car = new Car();
+$car->setColor('pink');
+$car->setMake('Ford');
+$car->setModel('F-150');
+$car.dump();
+```
+
+**Good:**
+```php
+class Car {
+  private $make, $model, $color;
+  
+  public function __construct() {
+    $this->make = 'Honda';
+    $this->model = 'Accord';
+    $this->color = 'white';
+  }
+  
+  public function setMake($make) {
+    $this->make = $make;
+
+    // NOTE: Returning this for chaining
+    return this;
+  }
+
+  public function setModel($model) {
+    $this->model = $model;
+
+    // NOTE: Returning this for chaining
+    return this;
+  }
+
+  public function setColor($color) {
+    $this->color = $color;
+    
+    // NOTE: Returning this for chaining
+    return this;
+  }
+
+  public function dump() {
+    var_export($this->make, $this->model, $this->color);
+  }
+}
+
+$car = (new Car())
+  .setColor('pink')
+  .setMake('Ford')
+  .setModel('F-150')
+  .dump();
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Prefer composition over inheritance
+As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
+you should prefer composition over inheritance where you can. There are lots of
+good reasons to use inheritance and lots of good reasons to use composition.
+The main point for this maxim is that if your mind instinctively goes for
+inheritance, try to think if composition could model your problem better. In some
+cases it can.
+
+You might be wondering then, "when should I use inheritance?" It
+depends on your problem at hand, but this is a decent list of when inheritance
+makes more sense than composition:
+
+1. Your inheritance represents an "is-a" relationship and not a "has-a"
+relationship (Human->Animal vs. User->UserDetails).
+2. You can reuse code from the base classes (Humans can move like all animals).
+3. You want to make global changes to derived classes by changing a base class.
+(Change the caloric expenditure of all animals when they move).
+
+**Bad:**
+```php
+class Employee {
+  private $name, $email;
+  
+  public function __construct($name, $email) {
+    $this->name = $name;
+    $this->email = $email;
+  }
+
+  // ...
+}
+
+// Bad because Employees "have" tax data. 
+// EmployeeTaxData is not a type of Employee
+
+class EmployeeTaxData extends Employee {
+  private $ssn, $salary;
+  
+  public function __construct($ssn, $salary) {
+    parent::__construct();
+    $this->ssn = $ssn;
+    $this->salary = $salary;
+  }
+
+  // ...
+}
+```
+
+**Good:**
+```php
+class EmployeeTaxData {
+  private $ssn, $salary;
+    
+  public function __construct($ssn, $salary) {
+    $this->ssn = $ssn;
+    $this->salary = $salary;
+  }
+
+  // ...
+}
+
+class Employee {
+  private $name, $email, $taxData;
+  
+  public function __construct($name, $email) {
+    $this->name = $name;
+    $this->email = $email;
+  }
+
+  setTaxData($ssn, $salary) {
+    $this->taxData = new EmployeeTaxData($ssn, $salary);
+  }
+  // ...
+}
 ```
 **[⬆ back to top](#table-of-contents)**
