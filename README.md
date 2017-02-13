@@ -7,17 +7,15 @@
 
 ## Introduction
 
-Software engineering principles, from Robert C. Martin's book
-[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for PHP. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in PHP.
+摘录自 Robert C. Martin的[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)  书中的软件工程师的原则
+,适用于PHP。 这不是风格指南。 这是一个关于开发可读、可复用并且可重构的PHP软件指南。
 
-Not every principle herein has to be strictly followed, and even fewer will be universally agreed upon. These are guidelines and nothing more, but they are ones codified over many years of collective experience by the authors of *Clean Code*.
+并不是这里所有的原则都得遵循，甚至很少的能被普遍接受。 These are guidelines and nothing more, but they are ones codified over many years of collective experience by the authors of *Clean Code*.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
-## **Variables**
-### Use meaningful and pronounceable variable names
+## **变量**
+### 使用有意义且可拼写的变量名
 
 **Bad:**
 ```php
@@ -28,9 +26,9 @@ $ymdstr = $moment->format('y-m-d');
 ```javascript
 $currentDate = $moment->format('y-m-d');
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
-### Use the same vocabulary for the same type of variable
+### 同种类型的变量使用相同词汇
 
 **Bad:**
 ```php
@@ -43,11 +41,10 @@ getCustomerRecord();
 ```php
 getUser();
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
-### Use searchable names
-We will read more code than we will ever write. It's important that the code we do write is readable and searchable. By *not* naming variables that end up being meaningful for understanding our program, we hurt our readers.
-Make your names searchable.
+### 使用易检索的名称
+我们会读比写要多的代码。通过是命名易搜索，让我们写出可读性和易搜索代码很重要。
 
 **Bad:**
 ```php
@@ -65,10 +62,10 @@ interface DateGlobal {
 
 addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 
-### Use explanatory variables
+### 使用解释型变量
 **Bad:**
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -85,10 +82,10 @@ preg_match($cityZipCodeRegex, $address, $matches);
 list(, $city, $zipCode) = $matchers;
 saveCityZipCode(city, zipCode);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
-### Avoid Mental Mapping
-Explicit is better than implicit.
+### 避免心理映射
+明确比隐性好。
 
 **Bad:**
 ```php
@@ -99,8 +96,8 @@ foreach($i=0; $i<count($l); $i++) {
   // ...
   // ...
   // ...
-  // Wait, what is `l` for again?
-  dispatch(l);
+  // 等等`$l` 又代表什么?
+  dispatch($l);
 }
 ```
 
@@ -115,15 +112,14 @@ foreach($i=0; $i<count($locations); $i++) {
   // ...
   // ...
   // ...
-  dispatch(location);
+  dispatch($location);
 });
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 
-### Don't add unneeded context
-If your class/object name tells you something, don't repeat that in your
-variable name.
+### 不要添加不必要上下文
+如果你的class/object 名能告诉你什么，不要把它重复在你变量名里。
 
 **Bad:**
 ```php
@@ -150,10 +146,9 @@ function paintCar(&$car) {
   $car['color'] = 'Red';
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
-### Use default arguments instead of short circuiting or conditionals
-
+###使用参数默认值代替短路或条件语句。
 **Bad:**
 ```php
 function createMicrobrewery($name = null) {
@@ -170,12 +165,12 @@ function createMicrobrewery($breweryName = 'Hipster Brew Co.') {
 }
 
 ```
-**[⬆ back to top](#table-of-contents)**
-## **Functions**
-### Function arguments (2 or fewer ideally)
-Limiting the amount of function parameters is incredibly important because it makes testing your function easier. Having more than three leads to a combinatorial explosion where you have to test tons of different cases with each separate argument.
+**[返回顶部](#table-of-contents)**
+## **函数**
+### 函数参数最好少于2个
+限制函数参数个数极其重要因为它是你函数测试容易点。有超过3个可选参数参数导致一个爆炸式组合增长，你会有成吨独立参数情形要测试。
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided. Anything more than that should be consolidated. Usually, if you have more than two arguments then your function is trying to do too much. In cases where it's not, most of the time a higher-level object will suffice as an argument.
+无参数是理想情况。1个或2个都可以，最好避免3个。再多旧需要加固了。通常如果你的函数有超过两个参数，说明他多做了一些事。 在参数少的情况里，大多数时候一个高级别对象（数组）作为参数就足够应付。
 
 **Bad:**
 ```php
@@ -204,11 +199,11 @@ function createMenu(MenuConfig $config) {
 }
 
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 
-### Functions should do one thing
-This is by far the most important rule in software engineering. When functions do more than one thing, they are harder to compose, test, and reason about. When you can isolate a function to just one action, they can be refactored easily and your code will read much cleaner. If you take nothing else away from this guide other than this, you'll be ahead of many developers.
+### 函数应该只做一件事
+这是迄今为止软件工程里最重要的一个规则。当函数做超过一件事的时候，他们就难于实现、测试和理解。当你隔离函数只剩一个功能时，他们就容易被重构，然后你的代码读起来就更清晰。如果你光遵循这条规则，你就领先于大多数开发者了。
 
 **Bad:**
 ```php
@@ -238,9 +233,9 @@ function isClientActive($client) {
   return $clientRecord->isActive();
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
-### Function names should say what they do
+### 函数名应当描述他们所做的事
 
 **Bad:**
 ```php
@@ -263,12 +258,9 @@ function addMonthToDate($month, $date) {
 $date = new \DateTime();
 addMonthToDate(1, $date);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
-### Functions should only be one level of abstraction
-When you have more than one level of abstraction your function is usually
-doing too much. Splitting up functions leads to reusability and easier
-testing.
+### 函数应当只为一层抽象，当你超过一层抽象时，函数正在做多件事。拆分功能易达到可重用性和易用性。.
 
 **Bad:**
 ```php
@@ -331,16 +323,14 @@ function parseBetterJSAlternative($code) {
   });
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
-### Remove duplicate code
-Do your absolute best to avoid duplicate code. Duplicate code is bad because it means that there's more than one place to alter something if you need to change some logic.
+### 删除重复的代码
+尽你最大的努力来避免重复的代码。重复代码不好，因为它意味着如果你修改一些逻辑，那就有不止一处地方要同步修改了。
 
-Imagine if you run a restaurant and you keep track of your inventory: all your tomatoes, onions, garlic, spices, etc. If you have multiple lists that
-you keep this on, then all have to be updated when you serve a dish with
-tomatoes in them. If you only have one list, there's only one place to update!
+想象一下如果你经营着一家餐厅并跟踪它的库存: 你全部的西红柿、洋葱、大蒜、香料等。如果你保留有多个列表，当你服务一个有着西红柿的菜，那么所有记录都得更新。如果你只有一个列表，那么只需要修改一个地方！
 
-Oftentimes you have duplicate code because you have two or more slightly
+当你容忍重复代码，因为你有两个或更多差异很少的不同东西。Oftentimes you have duplicate code because you have two or more slightly
 different things, that share a lot in common, but their differences force you
 to have two or more separate functions that do much of the same things. Removing duplicate code means creating an abstraction that can handle this set of different things with just one function/module/class.
 
@@ -399,7 +389,7 @@ function showList($employees) {
   }
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Set default objects with Object.assign
 
@@ -445,7 +435,7 @@ function createMenu(&$config) {
 
 createMenu($menuConfig);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 
 ### Don't use flags as function parameters
@@ -472,7 +462,7 @@ function createTempFile($name) {
   touch('./temp/'.$name);
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Avoid Side Effects
 A function produces a side effect if it does anything other than take a value in and return another value or values. A side effect could be writing to a file, modifying some global variable, or accidentally wiring all your money to a stranger.
@@ -510,7 +500,7 @@ $newName = splitIntoFirstAndLastName(name);
 var_export($name); // 'Ryan McDermott';
 var_export($newName); // ['Ryan', 'McDermott'];
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Don't write to global functions
 Polluting globals is a bad practice in very languages because you could clash with another library and the user of your API would be none-the-wiser until they get an exception in production. Let's think about an example: what if you wanted to have configuration array. You could write global function like `config()`, but it could clash with another library that tried to do the same thing. This is why it
@@ -542,7 +532,7 @@ class Configuration {
 
 $singleton = Configuration::getInstance();
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Encapsulate conditionals
 
@@ -563,7 +553,7 @@ if (shouldShowSpinner($fsmInstance, $listNodeInstance)) {
   // ...
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Avoid negative conditionals
 
@@ -588,7 +578,7 @@ if (isDOMNodePresent($node)) {
   // ...
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Avoid conditionals
 This seems like an impossible task. Upon first hearing this, most people say,
@@ -644,7 +634,7 @@ class Cessna extends Airplane {
   }
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Avoid type-checking (part 1)
 PHP is untyped, which means your functions can take any type of argument.
@@ -669,7 +659,7 @@ function travelToTexas($vehicle) {
   $vehicle->move($this->currentLocation, new Location('texas'));
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Avoid type-checking (part 2)
 If you are working with basic primitive values like strings, integers, and arrays,
@@ -693,7 +683,7 @@ function combine(int $val1, int $val2) {
   return $val1 + $val2;
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
 ### Remove dead code
 Dead code is just as bad as duplicate code. There's no reason to keep it in
@@ -724,5 +714,5 @@ function newRequestModule($url) {
 $req = new newRequestModule();
 inventoryTracker('apples', $req, 'www.inventory-awesome.io');
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回顶部](#table-of-contents)**
 
