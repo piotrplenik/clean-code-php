@@ -11,7 +11,7 @@
 摘录自 Robert C. Martin的[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)  书中的软件工程师的原则
 ,适用于PHP。 这不是风格指南。 这是一个关于开发可读、可复用并且可重构的PHP软件指南。
 
-并不是这里所有的原则都得遵循，甚至很少的能被普遍接受。 These are guidelines and nothing more, but they are ones codified over many years of collective experience by the authors of *Clean Code*.
+并不是这里所有的原则都得遵循，甚至很少的能被普遍接受。 这些虽然只是指导，但是都是*Clean Code*作者多年总结出来的。
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
