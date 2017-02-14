@@ -1,11 +1,12 @@
 # clean-code-php
 
 ## Table of Contents
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-  3. [Functions](#functions)
+  1. [介绍](#介绍)
+  2. [变量](#变量)
+  3. [函数](#函数)
 
-## Introduction
+## 介绍
+本文由 yangweijie 翻译自[clen php code](https://github.com/jupeter/clean-code-php)，团建用，欢迎大家指正。
 
 摘录自 Robert C. Martin的[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)  书中的软件工程师的原则
 ,适用于PHP。 这不是风格指南。 这是一个关于开发可读、可复用并且可重构的PHP软件指南。
@@ -165,7 +166,9 @@ function createMicrobrewery($breweryName = 'Hipster Brew Co.') {
 }
 
 ```
-**[返回顶部](#table-of-contents)**
+
+**[⬆ 返回顶部](#table-of-contents)**
+
 ## **函数**
 ### 函数参数最好少于2个
 限制函数参数个数极其重要因为它是你函数测试容易点。有超过3个可选参数参数导致一个爆炸式组合增长，你会有成吨独立参数情形要测试。
@@ -697,3 +700,11 @@ inventoryTracker('apples', $req, 'www.inventory-awesome.io');
 ```
 **[⬆ 返回顶部](#table-of-contents)**
 
+
+##有问题反馈
+在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
+
+* 邮件(yangweijiest#gmail.com, 把#换成@)
+* QQ: 917647288
+* weibo: [@黑白世界4648](http://weibo.com/1342658313)
+* 人人: [@杨维杰](http://www.renren.com/247050624)
