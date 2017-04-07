@@ -71,7 +71,7 @@ addExpireAt(86400);
 ```php
 // Declare them as capitalized `const` globals.
 interface DateGlobal {
-  const SECONDS_IN_A_DAY = 86400;
+    const SECONDS_IN_A_DAY = 86400;
 }
 
 addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
@@ -85,6 +85,7 @@ addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
 preg_match($cityZipCodeRegex, $address, $matches);
+
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
@@ -93,12 +94,14 @@ saveCityZipCode($matches[1], $matches[2]);
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
 preg_match($cityZipCodeRegex, $address, $matches);
+
 list(, $city, $zipCode) = $matchers;
 saveCityZipCode(city, zipCode);
 ```
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Mental Mapping
+Don’t force the reader of your code to translate what the variable means.
 Explicit is better than implicit.
 
 **Bad:**
@@ -106,13 +109,14 @@ Explicit is better than implicit.
 $l = ['Austin', 'New York', 'San Francisco'];
 
 foreach($i=0; $i<count($l); $i++) {
+    $li = $l[$i];
     oStuff();
     doSomeOtherStuff();
     // ...
     // ...
     // ...
-    // Wait, what is `l` for again?
-    dispatch(l);
+    // Wait, what is `$li` for again?
+    dispatch($li);
 }
 ```
 
@@ -179,7 +183,7 @@ function createMicrobrewery($name = null) {
 **Good**:
 ```php
 function createMicrobrewery($breweryName = 'Hipster Brew Co.') {
-  // ...
+    // ...
 }
 
 ```
@@ -198,7 +202,7 @@ of the time a higher-level object will suffice as an argument.
 **Bad:**
 ```php
 function createMenu($title, $body, $buttonText, $cancellable) {
-  // ...
+    // ...
 }
 ```
 
