@@ -34,7 +34,7 @@ $ymdstr = $moment->format('y-m-d');
 ```
 
 **Good**:
-```javascript
+```php
 $currentDate = $moment->format('y-m-d');
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -104,29 +104,31 @@ Explicit is better than implicit.
 **Bad:**
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
+
 foreach($i=0; $i<count($l); $i++) {
-  oStuff();
-  doSomeOtherStuff();
-  // ...
-  // ...
-  // ...
-  // Wait, what is `l` for again?
-  dispatch(l);
+    oStuff();
+    doSomeOtherStuff();
+    // ...
+    // ...
+    // ...
+    // Wait, what is `l` for again?
+    dispatch(l);
 }
 ```
 
 **Good**:
 ```php
 $locations = ['Austin', 'New York', 'San Francisco'];
+
 foreach($i=0; $i<count($locations); $i++) {
-  $location = $locations[$i];
-  
-  doStuff();
-  doSomeOtherStuff();
-  // ...
-  // ...
-  // ...
-  dispatch(location);
+    $location = $locations[$i];
+    
+    doStuff();
+    doSomeOtherStuff();
+    // ...
+    // ...
+    // ...
+    dispatch(location);
 });
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -139,26 +141,26 @@ variable name.
 **Bad:**
 ```php
 $car = [
-  'carMake'  => 'Honda',
-  'carModel' => 'Accord',
-  'carColor' => 'Blue',
+    'carMake'  => 'Honda',
+    'carModel' => 'Accord',
+    'carColor' => 'Blue',
 ];
 
 function paintCar(&$car) {
-  $car['carColor'] = 'Red';
+    $car['carColor'] = 'Red';
 }
 ```
 
 **Good**:
 ```php
 $car = [
-  'make'  => 'Honda',
-  'model' => 'Accord',
-  'color' => 'Blue',
+    'make'  => 'Honda',
+    'model' => 'Accord',
+    'color' => 'Blue',
 ];
 
 function paintCar(&$car) {
-  $car['color'] = 'Red';
+    $car['color'] = 'Red';
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -168,8 +170,8 @@ function paintCar(&$car) {
 **Bad:**
 ```php
 function createMicrobrewery($name = null) {
-  $breweryName = $name ?: 'Hipster Brew Co.';
-  // ...
+    $breweryName = $name ?: 'Hipster Brew Co.';
+    // ...
 }
 
 ```
@@ -203,10 +205,10 @@ function createMenu($title, $body, $buttonText, $cancellable) {
 **Good**:
 ```php
 class menuConfig() {
-  public $title;
-  public $body;
-  public $buttonText;
-  public $cancellable = false;
+    public $title;
+    public $body;
+    public $buttonText;
+    public $cancellable = false;
 }
 
 $config = new MenuConfig();
@@ -216,7 +218,7 @@ $config->buttonText = 'Baz';
 $config->cancellable = true;
 
 function createMenu(MenuConfig $config) {
-  // ...
+    // ...
 }
 
 ```
@@ -233,29 +235,29 @@ of many developers.
 **Bad:**
 ```php
 function emailClients($clients) {
-  foreach ($clients as $client) {
-    $clientRecord = $db->find($client);
-    if($clientRecord->isActive()) {
-       email($client);
+    foreach ($clients as $client) {
+        $clientRecord = $db->find($client);
+        if($clientRecord->isActive()) {
+            email($client);
+        }
     }
-  }
 }
 ```
 
 **Good**:
 ```php
 function emailClients($clients) {
-  $activeClients = activeClients($clients);
-  array_walk($activeClients, 'email');
+    $activeClients = activeClients($clients);
+    array_walk($activeClients, 'email');
 }
 
 function activeClients($clients) {
-  return array_filter($clients, 'isClientActive');
+    return array_filter($clients, 'isClientActive');
 }
 
 function isClientActive($client) {
-  $clientRecord = $db->find($client);
-  return $clientRecord->isActive();
+    $clientRecord = $db->find($client);
+    return $clientRecord->isActive();
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -265,7 +267,7 @@ function isClientActive($client) {
 **Bad:**
 ```php
 function addToDate($date, $month) {
-  // ...
+    // ...
 }
 
 $date = new \DateTime();
@@ -277,7 +279,7 @@ addToDate($date, 1);
 **Good**:
 ```php
 function addMonthToDate($month, $date) {
-  // ...
+    // ...
 }
 
 $date = new \DateTime();
@@ -293,62 +295,62 @@ testing.
 **Bad:**
 ```php
 function parseBetterJSAlternative($code) {
-  $regexes = [
-    // ...
-  ];
-
-  $statements = split(' ', $code);
-  $tokens = [];
-  foreach($regexes as $regex) {
-    foreach($statements as $statement) {
-      // ...
+    $regexes = [
+        // ...
+    ];
+    
+    $statements = split(' ', $code);
+    $tokens = [];
+    foreach($regexes as $regex) {
+        foreach($statements as $statement) {
+            // ...
+        }
     }
-  }
-  
-  $ast = [];
-  foreach($tokens as $token) {
-     // lex...
-  }
-
-  foreach($ast as $node) {
-   // parse...
-  }
+    
+    $ast = [];
+    foreach($tokens as $token) {
+        // lex...
+    }
+    
+    foreach($ast as $node) {
+        // parse...
+    }
 }
 ```
 
 **Good**:
 ```php
 function tokenize($code) {
-  $regexes = [
-    // ...
-  ];
-
-  $statements = split(' ', $code);
-  $tokens = [];
-  foreach($regexes as $regex) {
-    foreach($statements as $statement) {
-      $tokens[] = /* ... */;
+    $regexes = [
+        // ...
+    ];
+    
+    $statements = split(' ', $code);
+    $tokens = [];
+    foreach($regexes as $regex) {
+        foreach($statements as $statement) {
+            $tokens[] = /* ... */;
+        });
     });
-  });
-
-  return tokens;
+    
+    return tokens;
 }
 
 function lexer($tokens) {
-  $ast = [];
-  foreach($tokens as $token) {
-    $ast[] = /* ... */;
-  });
-
-  return ast;
+    $ast = [];
+    foreach($tokens as $token) {
+        $ast[] = /* ... */;
+    });
+    
+    return ast;
 }
 
 function parseBetterJSAlternative($code) {
-  $tokens = tokenize($code);
-  $ast = lexer($tokens);
-  foreach($ast as $node) {
-    // parse...
-  });
+    $tokens = tokenize($code);
+    $ast = lexer($tokens);
+    foreach($ast as $node) {
+        // parse...
+    });
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -378,51 +380,51 @@ updating multiple places anytime you want to change one thing.
 **Bad:**
 ```php
 function showDeveloperList($developers) {
-  foreach($developers as $developer) {
-    $expectedSalary = $developer->calculateExpectedSalary();
-    $experience = $developer->getExperience();
-    $githubLink = $developer->getGithubLink();
-    $data = [
-      $expectedSalary,
-      $experience,
-      $githubLink
-    ];
-
-    render($data);
-  }
+    foreach($developers as $developer) {
+        $expectedSalary = $developer->calculateExpectedSalary();
+        $experience = $developer->getExperience();
+        $githubLink = $developer->getGithubLink();
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
+        
+        render($data);
+    }
 }
 
 function showManagerList($managers) {
-  foreach($managers as $manager) {
-    $expectedSalary = $manager->calculateExpectedSalary();
-    $experience = $manager->getExperience();
-    $githubLink = $manager->getGithubLink();
-    $data = [
-      $expectedSalary,
-      $experience,
-      $githubLink
-    ];
-
-    render($data);
-  }
+    foreach($managers as $manager) {
+        $expectedSalary = $manager->calculateExpectedSalary();
+        $experience = $manager->getExperience();
+        $githubLink = $manager->getGithubLink();
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
+        
+        render($data);
+    }
 }
 ```
 
 **Good**:
 ```php
 function showList($employees) {
-  foreach($employees as $employe) {
-    $expectedSalary = $employe->calculateExpectedSalary();
-    $experience = $employe->getExperience();
-    $githubLink = $employe->getGithubLink();
-    $data = [
-      $expectedSalary,
-      $experience,
-      $githubLink
-    ];
-
-    render($data);
-  }
+    foreach($employees as $employe) {
+        $expectedSalary = $employe->calculateExpectedSalary();
+        $experience = $employe->getExperience();
+        $githubLink = $employe->getGithubLink();
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
+        
+        render($data);
+    }
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -432,17 +434,17 @@ function showList($employees) {
 **Bad:**
 ```php
 $menuConfig = [
-  'title'       => null,
-  'body'        => 'Bar',
-  'buttonText'  => null,
-  'cancellable' => true,
+    'title'       => null,
+    'body'        => 'Bar',
+    'buttonText'  => null,
+    'cancellable' => true,
 ];
 
 function createMenu(&$config) {
-  $config['title']       = $config['title'] ?: 'Foo';
-  $config['body']        = $config['body'] ?: 'Bar';
-  $config['buttonText']  = $config['buttonText'] ?: 'Baz';
-  $config['cancellable'] = $config['cancellable'] ?: true;
+    $config['title']       = $config['title'] ?: 'Foo';
+    $config['body']        = $config['body'] ?: 'Bar';
+    $config['buttonText']  = $config['buttonText'] ?: 'Baz';
+    $config['cancellable'] = $config['cancellable'] ?: true;
 }
 
 createMenu($menuConfig);
@@ -451,22 +453,22 @@ createMenu($menuConfig);
 **Good**:
 ```php
 $menuConfig = [
-  'title'       => 'Order',
-  // User did not include 'body' key
-  'buttonText'  => 'Send',
-  'cancellable' => true,
+    'title'       => 'Order',
+    // User did not include 'body' key
+    'buttonText'  => 'Send',
+    'cancellable' => true,
 ];
 
 function createMenu(&$config) {
-  $config = array_merge([
-    'title'       => 'Foo',
-    'body'        => 'Bar',
-    'buttonText'  => 'Baz',
-    'cancellable' => true,
-  ], $config);
-
-  // config now equals: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
-  // ...
+    $config = array_merge([
+        'title'       => 'Foo',
+        'body'        => 'Bar',
+        'buttonText'  => 'Baz',
+        'cancellable' => true,
+    ], $config);
+    
+    // config now equals: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
+    // ...
 }
 
 createMenu($menuConfig);
@@ -482,22 +484,22 @@ based on a boolean.
 **Bad:**
 ```php
 function createFile(name, temp = false) {
-  if (temp) {
-    touch('./temp/'.$name);
-  } else {
-    touch($name);
-  }
+    if (temp) {
+        touch('./temp/'.$name);
+    } else {
+        touch($name);
+    }
 }
 ```
 
 **Good**:
 ```php
 function createFile($name) {
-  touch(name);
+    touch(name);
 }
 
 function createTempFile($name) {
-  touch('./temp/'.$name);
+    touch('./temp/'.$name);
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -524,7 +526,7 @@ than the vast majority of other programmers.
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName() {
-  $name = preg_split('/ /', $name);
+    $name = preg_split('/ /', $name);
 }
 
 splitIntoFirstAndLastName();
@@ -537,7 +539,7 @@ var_dump($name); // ['Ryan', 'McDermott'];
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName($name) {
-  return preg_split('/ /', $name);
+    return preg_split('/ /', $name);
 }
 
 $name = 'Ryan McDermott';
@@ -559,25 +561,25 @@ would be much better to use singleton design pattern and simple set configuratio
 **Bad:**
 ```php
 function config() {
-  return  [
-    'foo': 'bar',
-  ]
+    return  [
+        'foo': 'bar',
+    ]
 };
 ```
 
 **Good:**
 ```php
 class Configuration {
-  private static $instance;
-  private function __construct($configuration) {/* */}
-  public static function getInstance() {
-     if(self::$instance === null) {
-         self::$instance = new Configuration();
-     }
-     return self::$instance;
- }
- public function get($key) {/* */}
- public function getAll() {/* */}
+    private static $instance;
+    private function __construct($configuration) {/* */}
+    public static function getInstance() {
+        if(self::$instance === null) {
+            self::$instance = new Configuration();
+        }
+        return self::$instance;
+    }
+    public function get($key) {/* */}
+    public function getAll() {/* */}
 }
 
 $singleton = Configuration::getInstance();
@@ -589,14 +591,14 @@ $singleton = Configuration::getInstance();
 **Bad:**
 ```php
 if ($fsm->state === 'fetching' && is_empty($listNode)) {
-  // ...
+    // ...
 }
 ```
 
 **Good**:
 ```php
 function shouldShowSpinner($fsm, $listNode) {
-  return $fsm->state === 'fetching' && is_empty(listNode);
+    return $fsm->state === 'fetching' && is_empty(listNode);
 }
 
 if (shouldShowSpinner($fsmInstance, $listNodeInstance)) {
@@ -610,22 +612,22 @@ if (shouldShowSpinner($fsmInstance, $listNodeInstance)) {
 **Bad:**
 ```php
 function isDOMNodeNotPresent($node) {
-  // ...
+    // ...
 }
 
 if (!isDOMNodeNotPresent($node)) {
-  // ...
+    // ...
 }
 ```
 
 **Good**:
 ```php
 function isDOMNodePresent($node) {
-  // ...
+    // ...
 }
 
 if (isDOMNodePresent($node)) {
-  // ...
+    // ...
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -643,45 +645,45 @@ just do one thing.
 **Bad:**
 ```php
 class Airplane {
-  // ...
-  public function getCruisingAltitude() {
-    switch (this.type) {
-      case '777':
-        return $this->getMaxAltitude() - $this->getPassengerCount();
-      case 'Air Force One':
-        return $this->getMaxAltitude();
-      case 'Cessna':
-        return $this->getMaxAltitude() - $this->getFuelExpenditure();
+    // ...
+    public function getCruisingAltitude() {
+        switch ($this->type) {
+            case '777':
+                return $this->getMaxAltitude() - $this->getPassengerCount();
+            case 'Air Force One':
+                return $this->getMaxAltitude();
+            case 'Cessna':
+                return $this->getMaxAltitude() - $this->getFuelExpenditure();
+        }
     }
-  }
 }
 ```
 
 **Good**:
 ```php
 class Airplane {
-  // ...
+    // ...
 }
 
 class Boeing777 extends Airplane {
-  // ...
-  public function getCruisingAltitude() {
-    return $this->getMaxAltitude() - $this->getPassengerCount();
-  }
+    // ...
+    public function getCruisingAltitude() {
+        return $this->getMaxAltitude() - $this->getPassengerCount();
+    }
 }
 
 class AirForceOne extends Airplane {
-  // ...
-  public function getCruisingAltitude() {
-    return $this->getMaxAltitude();
-  }
+    // ...
+    public function getCruisingAltitude() {
+        return $this->getMaxAltitude();
+    }
 }
 
 class Cessna extends Airplane {
-  // ...
-  public function getCruisingAltitude() {
-    return $this->getMaxAltitude() - $this->getFuelExpenditure();
-  }
+    // ...
+    public function getCruisingAltitude() {
+        return $this->getMaxAltitude() - $this->getFuelExpenditure();
+    }
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -695,11 +697,11 @@ The first thing to consider is consistent APIs.
 **Bad:**
 ```php
 function travelToTexas($vehicle) {
-  if ($vehicle instanceof Bicycle) {
-    $vehicle->peddle($this->currentLocation, new Location('texas'));
-  } else if ($vehicle instanceof Car) {
-    $vehicle->drive($this->currentLocation, new Location('texas'));
-  }
+    if ($vehicle instanceof Bicycle) {
+        $vehicle->peddle($this->currentLocation, new Location('texas'));
+    } else if ($vehicle instanceof Car) {
+        $vehicle->drive($this->currentLocation, new Location('texas'));
+    }
 }
 ```
 
@@ -724,18 +726,18 @@ type declaration or strict mode.
 **Bad:**
 ```php
 function combine($val1, $val2) {
-  if (is_numeric($val1) && is_numeric(val2)) {
-    return val1 + val2;
-  }
-
-  throw new \Exception('Must be of type Number');
+    if (is_numeric($val1) && is_numeric(val2)) {
+        return val1 + val2;
+    }
+    
+    throw new \Exception('Must be of type Number');
 }
 ```
 
 **Good**:
 ```php
 function combine(int $val1, int $val2) {
-  return $val1 + $val2;
+    return $val1 + $val2;
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -748,11 +750,11 @@ in your version history if you still need it.
 **Bad:**
 ```php
 function oldRequestModule($url) {
-  // ...
+    // ...
 }
 
 function newRequestModule($url) {
-  // ...
+    // ...
 }
 
 $req = new newRequestModule();
@@ -763,7 +765,7 @@ inventoryTracker('apples', $req, 'www.inventory-awesome.io');
 **Good**:
 ```php
 function newRequestModule($url) {
-  // ...
+    // ...
 }
 
 $req = new newRequestModule();
@@ -792,7 +794,7 @@ design principles.
 **Bad:**
 ```php
 class BankAccount {
-  public $balance = 1000;
+    public $balance = 1000;
 }
 
 $bankAccount = new BankAccount();
@@ -804,26 +806,26 @@ $bankAccount->balance -= 100;
 **Good**:
 ```php
 class BankAccount {
-  private $balance;
-  
-  public function __construct($balance = 1000) {
-    $this->balance = $balance;
-  }
-
-  public function withdrawBalance($amount) {
-    if($amount > $this->balance) {
-        throw new \Exception('Amount greater than available balance.');
+    private $balance;
+    
+    public function __construct($balance = 1000) {
+      $this->balance = $balance;
     }
-    $this->balance -= $amount;
-  }
-
-  public function depositBalance($amount) {
-    $this->balance += $amount;
-  }
-
-  public function getBalance() {
-    return $this->balance;
-  }
+    
+    public function withdrawBalance($amount) {
+        if($amount > $this->balance) {
+            throw new \Exception('Amount greater than available balance.');
+        }
+        $this->balance -= $amount;
+    }
+    
+    public function depositBalance($amount) {
+        $this->balance += $amount;
+    }
+    
+    public function getBalance() {
+        return $this->balance;
+    }
 }
 
 $bankAccount = new BankAccount();
@@ -843,11 +845,11 @@ $balance = $bankAccount->getBalance();
 **Bad:**
 ```php
 class Employee {
-  public $name;
-  
-  public function __construct($name) {
-    $this->name = $name;
-  }
+    public $name;
+    
+    public function __construct($name) {
+        $this->name = $name;
+    }
 };
 
 $employee = new Employee('John Doe');
@@ -857,14 +859,14 @@ echo 'Employee name: '.$employee->name; // Employee name: John Doe
 **Good**:
 ```php
 class Employee {
-  protected $name;
-  
-  public function __construct($name) {
-    $this->name = $name;
-  }
-  public function getName() {
-    return $this->name;
-  };
+    protected $name;
+    
+    public function __construct($name) {
+        $this->name = $name;
+    }
+    public function getName() {
+        return $this->name;
+    };
 };
 
 $employee = new Employee('John Doe');
@@ -888,49 +890,49 @@ your codebase.
 **Bad:**
 ```php
 class UserSettings {
-  private $user;
-  public function __construct($user) {
-    $this->user = user;
-  }
-
-  public function changeSettings($settings) {
-    if ($this->verifyCredentials()) {
-      // ...
+    private $user;
+    public function __construct($user) {
+        $this->user = user;
     }
-  }
-
-  private function verifyCredentials() {
-    // ...
-  }
+    
+    public function changeSettings($settings) {
+    if ($this->verifyCredentials()) {
+        // ...
+    }
+    }
+    
+    private function verifyCredentials() {
+        // ...
+    }
 }
 ```
 
 **Good:**
 ```php
 class UserAuth {
-  private $user;
-  public function __construct($user) {
-    $this->user = user;
-  }
-
-  protected function verifyCredentials() {
-    // ...
-  }
+    private $user;
+    public function __construct($user) {
+        $this->user = user;
+    }
+    
+    protected function verifyCredentials() {
+        // ...
+    }
 }
 
 
 class UserSettings {
-  private $user;
-  public function __construct($user) {
-    $this->user = $user;
-    $this->auth = new UserAuth($user);
-  }
-
-  public function changeSettings($settings) {
-    if ($this->auth->verifyCredentials()) {
-      // ...
+    private $user;
+    public function __construct($user) {
+        $this->user = $user;
+        $this->auth = new UserAuth($user);
     }
-  }
+    
+    public function changeSettings($settings) {
+        if ($this->auth->verifyCredentials()) {
+            // ...
+        }
+    }
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -944,86 +946,86 @@ add new functionalities without changing existing code.
 **Bad:**
 ```php
 abstract class Adapter {
-  protected $name;
-  public function getName() {
-    return $this->name;
-  }
+    protected $name;
+    public function getName() {
+        return $this->name;
+    }
 }
 class AjaxAdapter extends Adapter {
-  public function __construct() {
+    public function __construct() {
     parent::__construct();
-    $this->name = 'ajaxAdapter';
-  }
+        $this->name = 'ajaxAdapter';
+    }
 }
 
 class NodeAdapter extends Adapter {
-  public function __construct() {
-    parent::__construct();
-    $this->name = 'nodeAdapter';
-  }
+    public function __construct() {
+        parent::__construct();
+        $this->name = 'nodeAdapter';
+    }
 }
 
 class HttpRequester {
-  private $adapter;
-  public function __construct($adapter) {
-    $this->adapter = $adapter;
-  }
-
-  public function fetch($url) {
-    $adapterName = $this->adapter->getName();
-    if ($adapterName === 'ajaxAdapter') {
-      return $this->makeAjaxCall($url);
-    } else if ($adapterName === 'httpNodeAdapter') {
-      return $this->makeHttpCall($url);
+    private $adapter;
+    public function __construct($adapter) {
+        $this->adapter = $adapter;
     }
-  }
-
-  protected function makeAjaxCall(url) {
-    // request and return promise
-  }
-
-  protected function makeHttpCall(url) {
-    // request and return promise
-  }
+    
+    public function fetch($url) {
+        $adapterName = $this->adapter->getName();
+        if ($adapterName === 'ajaxAdapter') {
+            return $this->makeAjaxCall($url);
+        } else if ($adapterName === 'httpNodeAdapter') {
+            return $this->makeHttpCall($url);
+        }
+    }
+    
+    protected function makeAjaxCall(url) {
+        // request and return promise
+    }
+    
+    protected function makeHttpCall(url) {
+        // request and return promise
+    }
 }
 ```
 
 **Good:**
 ```php
 abstract class Adapter {
-  abstract protected function getName();
-  abstract public function request($url);
+    abstract protected function getName();
+    abstract public function request($url);
 }
 
 class AjaxAdapter extends Adapter {
-  protected function getName() {
-    return 'ajaxAdapter';
-  }
-
-  public function request($url) {
-    // request and return promise
-  }
+    protected function getName() {
+        return 'ajaxAdapter';
+    }
+    
+    public function request($url) {
+        // request and return promise
+    }
 }
 
 class NodeAdapter extends Adapter {
-  protected function getName() {
-    return 'nodeAdapter';
-  }
-
-  public function request($url) {
-    // request and return promise
-  }
+    protected function getName() {
+        return 'nodeAdapter';
+    }
+    
+    public function request($url) {
+        // request and return promise
+    }
 }
 
 class HttpRequester {
-  private $adapter;
-  public function __construct(Adapter $adapter) {
-    $this->adapter = $adapter;
-  }
-
-  public function fetch($url) {
-    return $this->adapter->request($url);
-  }
+    private $adapter;
+    public function __construct(Adapter $adapter) {
+        $this->adapter = $adapter;
+    }
+    
+    public function fetch($url) {
+        return $this->adapter->request($url);
+    }
 }
 
 ```
@@ -1047,50 +1049,51 @@ get into trouble.
 **Bad:**
 ```php
 class Rectangle {
-  private $width, $height;
-  public function __construct() {
-    $this->width = 0;
-    $this->height = 0;
-  }
-
-  public function setColor($color) {
-    // ...
-  }
-
-  public function render($area) {
-    // ...
-  }
-
-  public function setWidth($width) {
-    $this->width = $width;
-  }
-
-  public function setHeight($height) {
-    $this->height = $height;
-  }
-
-  public function getArea() {
-    return $this->width * $this->height;
-  }
+    private $width, $height;
+    
+    public function __construct() {
+        $this->width = 0;
+        $this->height = 0;
+    }
+    
+    public function setColor($color) {
+        // ...
+    }
+    
+    public function render($area) {
+        // ...
+    }
+    
+    public function setWidth($width) {
+        $this->width = $width;
+    }
+    
+    public function setHeight($height) {
+        $this->height = $height;
+    }
+    
+    public function getArea() {
+        return $this->width * $this->height;
+    }
 }
 
 class Square extends Rectangle {
-  public function setWidth($width) {
-    $this->width = $this->height = $width;
-  }
-
-  public function setHeight(height) {
-    $this->width = $this->height = $height;
-  }
+    public function setWidth($width) {
+        $this->width = $this->height = $width;
+    }
+    
+    public function setHeight(height) {
+        $this->width = $this->height = $height;
+    }
 }
 
 function renderLargeRectangles($rectangles) {
-  foreach($rectangle in $rectangles) {
-    $rectangle->setWidth(4);
-    $rectangle->setHeight(5);
-    $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
-    $rectangle->render($area);
-  });
+    foreach($rectangle in $rectangles) {
+        $rectangle->setWidth(4);
+        $rectangle->setHeight(5);
+        $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
+        $rectangle->render($area);
+    });
 }
 
 $rectangles = [new Rectangle(), new Rectangle(), new Square()];
@@ -1100,66 +1103,66 @@ renderLargeRectangles($rectangles);
 **Good:**
 ```php
 abstract class Shape {
-  private $width, $height;
-  
-  abstract public function getArea();
-  
-  public function setColor($color) {
-    // ...
-  }
-
-  public function render($area) {
-    // ...
-  }
+    private $width, $height;
+    
+    abstract public function getArea();
+    
+    public function setColor($color) {
+        // ...
+    }
+    
+    public function render($area) {
+        // ...
+    }
 }
 
 class Rectangle extends Shape {
-  public function __construct {
+    public function __construct {
     parent::__construct();
-    $this->width = 0;
-    $this->height = 0;
-  }
-
-  public function setWidth($width) {
-    $this->width = $width;
-  }
-
-  public function setHeight($height) {
-    $this->height = $height;
-  }
-
-  public function getArea() {
-    return $this->width * $this->height;
-  }
+        $this->width = 0;
+        $this->height = 0;
+    }
+    
+    public function setWidth($width) {
+        $this->width = $width;
+    }
+    
+    public function setHeight($height) {
+        $this->height = $height;
+    }
+    
+    public function getArea() {
+        return $this->width * $this->height;
+    }
 }
 
 class Square extends Shape {
-  public function __construct {
-    parent::__construct();
-    this.length = 0;
-  }
-
-  public function setLength($length) {
-    $this->length = $length;
-  }
-
-  public function getArea() {
-    return $this->length * $this->length;
-  }
+    public function __construct {
+        parent::__construct();
+        $this->length = 0;
+    }
+    
+    public function setLength($length) {
+        $this->length = $length;
+    }
+    
+    public function getArea() {
+        return $this->length * $this->length;
+    }
 }
 
 function renderLargeRectangles($rectangles) {
-  foreach($rectangle in $rectangles) {
-    if($rectangle instanceof Square) {
-      $rextangle->setLength(5);
-    } else if ($rectangle instanceof Rectangle) {
-      $rectangle->setWidth(4);
-      $rectangle->setHeight(5);
-    }
-    
-    $area = $rectangle->getArea(); 
-    $rectangle->render($area);
-  });
+    foreach($rectangle in $rectangles) {
+        if($rectangle instanceof Square) {
+            $rextangle->setLength(5);
+        } else if ($rectangle instanceof Rectangle) {
+            $rectangle->setWidth(4);
+            $rectangle->setHeight(5);
+        }
+        
+        $area = $rectangle->getArea(); 
+        $rectangle->render($area);
+    });
 }
 
 $shapes = [new Rectangle(), new Rectangle(), new Square()];
@@ -1293,16 +1296,16 @@ class Worker {
 }
 
 class Manager {
-  /** @var Worker $worker **/
-  private $worker;
-  
-  public function __construct(Worker $worker) {
-    $this->worker = $worker;
-  }
-  
-  public function manage() {
-    $this->worker->work();
-  }
+    /** @var Worker $worker **/
+    private $worker;
+    
+    public function __construct(Worker $worker) {
+        $this->worker = $worker;
+    }
+    
+    public function manage() {
+        $this->worker->work();
+    }
 }
 
 class SuperWorker extends Worker {
@@ -1315,32 +1318,32 @@ class SuperWorker extends Worker {
 **Good:**
 ```php
 interface WorkerInterface {
-  public function work();
+    public function work();
 }
 
 class Worker implements WorkerInterface {
-  public function work() {
-    // ....working
-  }
+    public function work() {
+        // ....working
+    }
 }
 
 class SuperWorker implements WorkerInterface {
-  public function work() {
-		//.... working much more
-  }
+    public function work() {
+        //.... working much more
+    }
 }
 
 class Manager {
-  /** @var Worker $worker **/
-  private $worker;
-  
-  public void __construct(WorkerInterface $worker) {
-		$this->worker = $worker;
-  }
-
-  public void manage() {
+    /** @var Worker $worker **/
+    private $worker;
+    
+    public void __construct(WorkerInterface $worker) {
+        $this->worker = $worker;
+    }
+    
+    public void manage() {
     $this->worker.work();
-  }
+    }
 }
 
 ```
@@ -1356,28 +1359,28 @@ and you can chain further class methods onto it.
 **Bad:**
 ```php
 class Car {
-  private $make, $model, $color;
-  
-  public function __construct() {
-    $this->make = 'Honda';
-    $this->model = 'Accord';
-    $this->color = 'white';
-  }
-  public function setMake($make) {
-    $this->make = $make;
-  }
-
-  public function setModel($model) {
-    $this->model = $model;
-  }
-
-  public function setColor($color) {
-    $this->color = $color;
-  }
-  
-  public function dump() {
-    var_export($this->make, $this->model, $this->color);
-  }
+    private $make, $model, $color;
+    
+    public function __construct() {
+        $this->make = 'Honda';
+        $this->model = 'Accord';
+        $this->color = 'white';
+    }
+    public function setMake($make) {
+        $this->make = $make;
+    }
+    
+    public function setModel($model) {
+        $this->model = $model;
+    }
+    
+    public function setColor($color) {
+        $this->color = $color;
+    }
+    
+    public function dump() {
+        var_export($this->make, $this->model, $this->color);
+    }
 }
 
 $car = new Car();
@@ -1390,38 +1393,38 @@ $car.dump();
 **Good:**
 ```php
 class Car {
-  private $make, $model, $color;
-  
-  public function __construct() {
-    $this->make = 'Honda';
-    $this->model = 'Accord';
-    $this->color = 'white';
-  }
-  
-  public function setMake($make) {
-    $this->make = $make;
-
-    // NOTE: Returning this for chaining
-    return this;
-  }
-
-  public function setModel($model) {
-    $this->model = $model;
-
-    // NOTE: Returning this for chaining
-    return this;
-  }
-
-  public function setColor($color) {
-    $this->color = $color;
+    private $make, $model, $color;
     
-    // NOTE: Returning this for chaining
-    return this;
-  }
-
-  public function dump() {
-    var_export($this->make, $this->model, $this->color);
-  }
+    public function __construct() {
+        $this->make = 'Honda';
+        $this->model = 'Accord';
+        $this->color = 'white';
+    }
+    
+    public function setMake($make) {
+        $this->make = $make;
+        
+        // NOTE: Returning this for chaining
+        return this;
+    }
+    
+    public function setModel($model) {
+        $this->model = $model;
+        
+        // NOTE: Returning this for chaining
+        return this;
+    }
+    
+    public function setColor($color) {
+        $this->color = $color;
+        
+        // NOTE: Returning this for chaining
+        return this;
+    }
+    
+    public function dump() {
+        var_export($this->make, $this->model, $this->color);
+    }
 }
 
 $car = (new Car())
@@ -1453,57 +1456,57 @@ relationship (Human->Animal vs. User->UserDetails).
 **Bad:**
 ```php
 class Employee {
-  private $name, $email;
-  
-  public function __construct($name, $email) {
-    $this->name = $name;
-    $this->email = $email;
-  }
-
-  // ...
+    private $name, $email;
+    
+    public function __construct($name, $email) {
+        $this->name = $name;
+        $this->email = $email;
+    }
+    
+    // ...
 }
 
 // Bad because Employees "have" tax data. 
 // EmployeeTaxData is not a type of Employee
 
 class EmployeeTaxData extends Employee {
-  private $ssn, $salary;
-  
-  public function __construct($ssn, $salary) {
-    parent::__construct();
-    $this->ssn = $ssn;
-    $this->salary = $salary;
-  }
-
-  // ...
+    private $ssn, $salary;
+    
+    public function __construct($ssn, $salary) {
+        parent::__construct();
+        $this->ssn = $ssn;
+        $this->salary = $salary;
+    }
+    
+    // ...
 }
 ```
 
 **Good:**
 ```php
 class EmployeeTaxData {
-  private $ssn, $salary;
+    private $ssn, $salary;
     
-  public function __construct($ssn, $salary) {
-    $this->ssn = $ssn;
-    $this->salary = $salary;
-  }
-
-  // ...
+    public function __construct($ssn, $salary) {
+        $this->ssn = $ssn;
+        $this->salary = $salary;
+    }
+    
+    // ...
 }
 
 class Employee {
-  private $name, $email, $taxData;
-  
-  public function __construct($name, $email) {
-    $this->name = $name;
-    $this->email = $email;
-  }
-
-  setTaxData($ssn, $salary) {
-    $this->taxData = new EmployeeTaxData($ssn, $salary);
-  }
-  // ...
+    private $name, $email, $taxData;
+    
+    public function __construct($name, $email) {
+        $this->name = $name;
+        $this->email = $email;
+    }
+    
+    public function setTaxData($ssn, $salary) {
+        $this->taxData = new EmployeeTaxData($ssn, $salary);
+    }
+    // ...
 }
 ```
 **[⬆ back to top](#table-of-contents)**
