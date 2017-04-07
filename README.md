@@ -1182,27 +1182,27 @@ all of the settings. Making them optional helps prevent having a "fat interface"
 **Bad:**
 ```php
 interface WorkerInterface {
-	public function work();
-	public function eat();
+    public function work();
+    public function eat();
 }
 
 class Worker implements WorkerInterface {
-	public function work() {
-		// ....working
-	}
-	public function eat() {
-		// ...... eating in launch break
-	}
+    public function work() {
+        // ....working
+    }
+    public function eat() {
+        // ...... eating in launch break
+    }
 }
 
 class SuperWorker implements WorkerInterface {
-	public function work() {
-		//.... working much more
-	}
+    public function work() {
+        //.... working much more
+    }
 
-	public function eat() {
-		//.... eating in launch break
-	}
+    public function eat() {
+        //.... eating in launch break
+    }
 }
 
 class Manager {
@@ -1210,12 +1210,12 @@ class Manager {
   private $worker;
   
   public void setWorker(WorkerInterface $worker) {
-		$this->worker = $worker;
-	}
+        $this->worker = $worker;
+    }
 
-	public function manage() {
-		$this->worker->work();
-	}
+    public function manage() {
+        $this->worker->work();
+    }
 }
 ```
 
@@ -1225,50 +1225,50 @@ interface WorkerInterface extends FeedableInterface, WorkableInterface {
 }
 
 interface WorkableInterface {
-	public function work();
+    public function work();
 }
 
 interface FeedableInterface {
-	public function eat();
+    public function eat();
 }
 
 class Worker implements WorkableInterface, FeedableInterface {
-	public function work() {
-		// ....working
-	}
+    public function work() {
+        // ....working
+    }
 
-	public function eat() {
-		//.... eating in launch break
-	}
+    public function eat() {
+        //.... eating in launch break
+    }
 }
 
 class Robot implements WorkableInterface {
-	public void work() {
-		// ....working
-	}
+    public void work() {
+        // ....working
+    }
 }
 
 class SuperWorker implements WorkerInterface  {
-	public function work() {
-		//.... working much more
-	}
+    public function work() {
+        //.... working much more
+    }
 
-	public function eat() {
-		//.... eating in launch break
-	}
+    public function eat() {
+        //.... eating in launch break
+    }
 }
 
 class Manager {
   /** @var $worker WorkableInterface **/
-	private $worker;
+    private $worker;
 
-	public function setWorker(WorkableInterface $w) {
-	  $this->worker = $w;
-	}
+    public function setWorker(WorkableInterface $w) {
+      $this->worker = $w;
+    }
 
-	public function manage() {
-		$this->worker->work();
-	}
+    public function manage() {
+        $this->worker->work();
+    }
 }
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -1309,9 +1309,9 @@ class Manager {
 }
 
 class SuperWorker extends Worker {
-	public function work() {
-		//.... working much more
-	}
+    public function work() {
+        //.... working much more
+    }
 }
 ```
 
