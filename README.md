@@ -499,7 +499,7 @@ function createFile(name, temp = false) {
 **Good**:
 ```php
 function createFile($name) {
-    touch(name);
+    touch($name);
 }
 
 function createTempFile($name) {
