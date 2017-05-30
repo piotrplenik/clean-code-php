@@ -96,7 +96,7 @@ $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
 list(, $city, $zipCode) = $matchers;
-saveCityZipCode(city, zipCode);
+saveCityZipCode($city, $zipCode);
 ```
 **[⬆ back to top](#table-of-contents)**
 
@@ -132,7 +132,7 @@ foreach($i=0; $i<count($locations); $i++) {
     // ...
     // ...
     // ...
-    dispatch(location);
+    dispatch($location);
 });
 ```
 **[⬆ back to top](#table-of-contents)**
@@ -241,7 +241,7 @@ of many developers.
 function emailClients($clients) {
     foreach ($clients as $client) {
         $clientRecord = $db->find($client);
-        if($clientRecord->isActive()) {
+        if ($clientRecord->isActive()) {
             email($client);
         }
     }
@@ -337,7 +337,7 @@ function tokenize($code) {
         });
     });
     
-    return tokens;
+    return $tokens;
 }
 
 function lexer($tokens) {
@@ -346,7 +346,7 @@ function lexer($tokens) {
         $ast[] = /* ... */;
     });
     
-    return ast;
+    return $ast;
 }
 
 function parseBetterJSAlternative($code) {
@@ -487,8 +487,8 @@ based on a boolean.
 
 **Bad:**
 ```php
-function createFile(name, temp = false) {
-    if (temp) {
+function createFile($name, $temp = false) {
+    if ($temp) {
         touch('./temp/'.$name);
     } else {
         touch($name);
@@ -547,7 +547,7 @@ function splitIntoFirstAndLastName($name) {
 }
 
 $name = 'Ryan McDermott';
-$newName = splitIntoFirstAndLastName(name);
+$newName = splitIntoFirstAndLastName($name);
 
 var_export($name); // 'Ryan McDermott';
 var_export($newName); // ['Ryan', 'McDermott'];
@@ -568,7 +568,7 @@ function config() {
     return  [
         'foo': 'bar',
     ]
-};
+}
 ```
 
 **Good:**
@@ -577,7 +577,7 @@ class Configuration {
     private static $instance;
     private function __construct($configuration) {/* */}
     public static function getInstance() {
-        if(self::$instance === null) {
+        if (self::$instance === null) {
             self::$instance = new Configuration();
         }
         return self::$instance;
@@ -602,7 +602,7 @@ if ($fsm->state === 'fetching' && is_empty($listNode)) {
 **Good**:
 ```php
 function shouldShowSpinner($fsm, $listNode) {
-    return $fsm->state === 'fetching' && is_empty(listNode);
+    return $fsm->state === 'fetching' && is_empty($listNode);
 }
 
 if (shouldShowSpinner($fsmInstance, $listNodeInstance)) {
@@ -730,8 +730,8 @@ type declaration or strict mode.
 **Bad:**
 ```php
 function combine($val1, $val2) {
-    if (is_numeric($val1) && is_numeric(val2)) {
-        return val1 + val2;
+    if (is_numeric($val1) && is_numeric($val2)) {
+        return $val1 + $val2;
     }
     
     throw new \Exception('Must be of type Number');
@@ -817,7 +817,7 @@ class BankAccount {
     }
     
     public function withdrawBalance($amount) {
-        if($amount > $this->balance) {
+        if ($amount > $this->balance) {
             throw new \Exception('Amount greater than available balance.');
         }
         $this->balance -= $amount;
@@ -854,7 +854,7 @@ class Employee {
     public function __construct($name) {
         $this->name = $name;
     }
-};
+}
 
 $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->name; // Employee name: John Doe
@@ -868,10 +868,11 @@ class Employee {
     public function __construct($name) {
         $this->name = $name;
     }
+    
     public function getName() {
         return $this->name;
-    };
-};
+    }
+}
 
 $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
@@ -900,9 +901,9 @@ class UserSettings {
     }
     
     public function changeSettings($settings) {
-    if ($this->verifyCredentials()) {
-        // ...
-    }
+        if ($this->verifyCredentials()) {
+            // ...
+        }
     }
     
     private function verifyCredentials() {
@@ -955,6 +956,7 @@ abstract class Adapter {
         return $this->name;
     }
 }
+
 class AjaxAdapter extends Adapter {
     public function __construct() {
     parent::__construct();
@@ -984,11 +986,11 @@ class HttpRequester {
         }
     }
     
-    protected function makeAjaxCall(url) {
+    protected function makeAjaxCall($url) {
         // request and return promise
     }
     
-    protected function makeHttpCall(url) {
+    protected function makeHttpCall($url) {
         // request and return promise
     }
 }
@@ -1157,8 +1159,8 @@ class Square extends Shape {
 
 function renderLargeRectangles($rectangles) {
     foreach($rectangle in $rectangles) {
-        if($rectangle instanceof Square) {
-            $rextangle->setLength(5);
+        if ($rectangle instanceof Square) {
+            $rectangle->setLength(5);
         } else if ($rectangle instanceof Rectangle) {
             $rectangle->setWidth(4);
             $rectangle->setHeight(5);
@@ -1346,7 +1348,7 @@ class Manager {
     }
     
     public void manage() {
-    $this->worker.work();
+        $this->worker->work();
     }
 }
 
@@ -1370,6 +1372,7 @@ class Car {
         $this->model = 'Accord';
         $this->color = 'white';
     }
+    
     public function setMake($make) {
         $this->make = $make;
     }
@@ -1391,7 +1394,7 @@ $car = new Car();
 $car->setColor('pink');
 $car->setMake('Ford');
 $car->setModel('F-150');
-$car.dump();
+$car->dump();
 ```
 
 **Good:**
@@ -1409,21 +1412,21 @@ class Car {
         $this->make = $make;
         
         // NOTE: Returning this for chaining
-        return this;
+        return $this;
     }
     
     public function setModel($model) {
         $this->model = $model;
         
         // NOTE: Returning this for chaining
-        return this;
+        return $this;
     }
     
     public function setColor($color) {
         $this->color = $color;
         
         // NOTE: Returning this for chaining
-        return this;
+        return $this;
     }
     
     public function dump() {
@@ -1432,10 +1435,10 @@ class Car {
 }
 
 $car = (new Car())
-  .setColor('pink')
-  .setMake('Ford')
-  .setModel('F-150')
-  .dump();
+  ->setColor('pink')
+  ->setMake('Ford')
+  ->setModel('F-150')
+  ->dump();
 ```
 **[⬆ back to top](#table-of-contents)**
 
