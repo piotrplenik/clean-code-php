@@ -1383,7 +1383,7 @@ class Car {
     }
     
     public function dump() {
-        var_export($this->make, $this->model, $this->color);
+        return var_export($this, true);
     }
 }
 
@@ -1427,7 +1427,7 @@ class Car {
     }
     
     public function dump() {
-        var_export($this->make, $this->model, $this->color);
+        return var_export($this, true);
     }
 }
 
