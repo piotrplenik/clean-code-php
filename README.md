@@ -433,53 +433,6 @@ function showList($employees) {
 ```
 **[⬆ back to top](#table-of-contents)**
 
-### Set default objects with Object.assign
-
-**Bad:**
-```php
-$menuConfig = [
-    'title'       => null,
-    'body'        => 'Bar',
-    'buttonText'  => null,
-    'cancellable' => true,
-];
-
-function createMenu(&$config) {
-    $config['title']       = $config['title'] ?: 'Foo';
-    $config['body']        = $config['body'] ?: 'Bar';
-    $config['buttonText']  = $config['buttonText'] ?: 'Baz';
-    $config['cancellable'] = $config['cancellable'] ?: true;
-}
-
-createMenu($menuConfig);
-```
-
-**Good**:
-```php
-$menuConfig = [
-    'title'       => 'Order',
-    // User did not include 'body' key
-    'buttonText'  => 'Send',
-    'cancellable' => true,
-];
-
-function createMenu(&$config) {
-    $config = array_merge([
-        'title'       => 'Foo',
-        'body'        => 'Bar',
-        'buttonText'  => 'Baz',
-        'cancellable' => true,
-    ], $config);
-    
-    // config now equals: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
-    // ...
-}
-
-createMenu($menuConfig);
-```
-**[⬆ back to top](#table-of-contents)**
-
-
 ### Don't use flags as function parameters
 Flags tell your user that this function does more than one thing. Functions should 
 do one thing. Split out your functions if they are following different code paths 
