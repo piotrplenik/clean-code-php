@@ -714,7 +714,7 @@ function newRequestModule($url) {
     // ...
 }
 
-$req = new newRequestModule();
+$req = new newRequestModule($requestUrl);
 inventoryTracker('apples', $req, 'www.inventory-awesome.io');
 
 ```
@@ -725,7 +725,7 @@ function newRequestModule($url) {
     // ...
 }
 
-$req = new newRequestModule();
+$req = new newRequestModule($requestUrl);
 inventoryTracker('apples', $req, 'www.inventory-awesome.io');
 ```
 **[⬆ back to top](#table-of-contents)**
