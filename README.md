@@ -549,8 +549,8 @@ function splitIntoFirstAndLastName($name) {
 $name = 'Ryan McDermott';
 $newName = splitIntoFirstAndLastName($name);
 
-var_export($name); // 'Ryan McDermott';
-var_export($newName); // ['Ryan', 'McDermott'];
+var_dump($name); // 'Ryan McDermott';
+var_dump($newName); // ['Ryan', 'McDermott'];
 ```
 **[⬆ back to top](#table-of-contents)**
 
@@ -1386,7 +1386,7 @@ class Car {
     }
     
     public function dump() {
-        var_export($this->make, $this->model, $this->color);
+        var_dump($this->make, $this->model, $this->color);
     }
 }
 
@@ -1430,7 +1430,7 @@ class Car {
     }
     
     public function dump() {
-        var_export($this->make, $this->model, $this->color);
+        var_dump($this->make, $this->model, $this->color);
     }
 }
 
