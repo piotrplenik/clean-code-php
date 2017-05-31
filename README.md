@@ -721,11 +721,11 @@ inventoryTracker('apples', $req, 'www.inventory-awesome.io');
 
 **Good**:
 ```php
-function newRequestModule($url) {
+function requestModule($url) {
     // ...
 }
 
-$req = new newRequestModule($requestUrl);
+$req = new requestModule($requestUrl);
 inventoryTracker('apples', $req, 'www.inventory-awesome.io');
 ```
 **[⬆ back to top](#table-of-contents)**
