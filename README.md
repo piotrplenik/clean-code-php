@@ -788,7 +788,7 @@ class BankAccount {
 $bankAccount = new BankAccount();
 
 // Buy shoes...
-$bankAccount->withdrawBalance(-$shoesPrice);
+$bankAccount->withdrawBalance($shoesPrice);
 
 // Get balance
 $balance = $bankAccount->getBalance();
