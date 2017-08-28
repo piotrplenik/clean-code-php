@@ -519,7 +519,7 @@ would be much better to use singleton design pattern and simple set configuratio
 ```php
 function config() {
     return  [
-        'foo': 'bar',
+        'foo' => 'bar',
     ]
 }
 ```
