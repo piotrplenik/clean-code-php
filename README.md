@@ -64,17 +64,20 @@ Make your names searchable.
 ```php
 // What the heck is 86400 for?
 addExpireAt(86400);
+```
 
+**Not bad:**
+
+Add a simple comment
+```php
+addExpireAt(86400); // 86400 = 1 day
 ```
 
 **Good**:
-```php
-// Declare them as capitalized `const` globals.
-interface DateGlobal {
-    const SECONDS_IN_A_DAY = 86400;
-}
 
-addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
+Change the logic and use the real date
+```php
+addExpireAt(new \DateTimeImmutable('+1 day'));
 ```
 **[⬆ back to top](#table-of-contents)**
 
