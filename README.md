@@ -1168,7 +1168,7 @@ class Manager {
   /** @var WorkerInterface $worker **/
   private $worker;
   
-  public void setWorker(WorkerInterface $worker) {
+  public function setWorker(WorkerInterface $worker) {
         $this->worker = $worker;
     }
 
