@@ -122,7 +122,7 @@ Explicit is better than implicit.
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
 
-foreach($i=0; $i<count($l); $i++) {
+for ($i = 0; $i < count($l); $i++) {
     $li = $l[$i];
     oStuff();
     doSomeOtherStuff();
@@ -138,9 +138,7 @@ foreach($i=0; $i<count($l); $i++) {
 ```php
 $locations = ['Austin', 'New York', 'San Francisco'];
 
-foreach($i=0; $i<count($locations); $i++) {
-    $location = $locations[$i];
-    
+foreach ($locations as $location) {
     doStuff();
     doSomeOtherStuff();
     // ...
