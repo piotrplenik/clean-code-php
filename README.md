@@ -220,7 +220,8 @@ function createMenu($title, $body, $buttonText, $cancellable) {
 
 **Good**:
 ```php
-class menuConfig() {
+class MenuConfig
+{
     public $title;
     public $body;
     public $buttonText;
