@@ -519,7 +519,7 @@ would be much better to use singleton design pattern and simple set configuratio
 ```php
 function config() {
     return  [
-        'foo': 'bar',
+        'foo' => 'bar',
     ]
 }
 ```
@@ -788,7 +788,7 @@ class BankAccount {
 $bankAccount = new BankAccount();
 
 // Buy shoes...
-$bankAccount->withdrawBalance(-$shoesPrice);
+$bankAccount->withdrawBalance($shoesPrice);
 
 // Get balance
 $balance = $bankAccount->getBalance();
@@ -1168,7 +1168,7 @@ class Manager {
   /** @var WorkerInterface $worker **/
   private $worker;
   
-  public void setWorker(WorkerInterface $worker) {
+  public function setWorker(WorkerInterface $worker) {
         $this->worker = $worker;
     }
 
@@ -1202,7 +1202,7 @@ class Worker implements WorkableInterface, FeedableInterface {
 }
 
 class Robot implements WorkableInterface {
-    public void work() {
+    public function work() {
         // ....working
     }
 }
@@ -1296,11 +1296,11 @@ class Manager {
     /** @var Worker $worker **/
     private $worker;
     
-    public void __construct(WorkerInterface $worker) {
+    public function __construct(WorkerInterface $worker) {
         $this->worker = $worker;
     }
     
-    public void manage() {
+    public function manage() {
         $this->worker->work();
     }
 }
