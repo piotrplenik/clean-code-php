@@ -1202,7 +1202,7 @@ class Worker implements WorkableInterface, FeedableInterface {
 }
 
 class Robot implements WorkableInterface {
-    public void work() {
+    public function work() {
         // ....working
     }
 }
@@ -1296,11 +1296,11 @@ class Manager {
     /** @var Worker $worker **/
     private $worker;
     
-    public void __construct(WorkerInterface $worker) {
+    public function __construct(WorkerInterface $worker) {
         $this->worker = $worker;
     }
     
-    public void manage() {
+    public function manage() {
         $this->worker->work();
     }
 }
