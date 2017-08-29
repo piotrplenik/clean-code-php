@@ -238,11 +238,21 @@ of many developers.
 
 **Bad:**
 ```php
-function emailClients($clients) {
-    foreach ($clients as $client) {
-        $clientRecord = $db->find($client);
-        if ($clientRecord->isActive()) {
-            email($client);
+class ClientEmailSender
+{
+    // ...
+
+    public function sendToClients(array $clients, $subject, $message)
+    {
+        foreach ($clients as $client) {
+            if ($client->isActive()) {
+                $mail = new Mail(
+                    $client->email(),
+                    $subject,
+                    sprintf($message, $client->name())
+                );
+                $this->sender->send($mail);
+            }
         }
     }
 }
@@ -250,18 +260,32 @@ function emailClients($clients) {
 
 **Good**:
 ```php
-function emailClients($clients) {
-    $activeClients = activeClients($clients);
-    array_walk($activeClients, 'email');
-}
+class ClientEmailSender
+{
+    // ...
 
-function activeClients($clients) {
-    return array_filter($clients, 'isClientActive');
-}
+    public function sendToClients(array $clients, $subject, $message)
+    {
+        foreach ($clients as $client) {
+            $this->sendMailToClient($client, $subject, $message);
+        }
+    }
 
-function isClientActive($client) {
-    $clientRecord = $db->find($client);
-    return $clientRecord->isActive();
+    public function sendToClient(Client $client, $subject, $message)
+    {
+        if ($client->isActive()) {
+            $this->sender->send($this->buildMail($client, $subject, $message));
+        }
+    }
+
+    private function buildMail($client, $subject, $message)
+    {
+        return new Mail(
+            $client->email(),
+            $subject,
+            sprintf($message, $client->name())
+        );
+    }
 }
 ```
 **[⬆ back to top](#table-of-contents)**
