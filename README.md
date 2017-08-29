@@ -418,16 +418,11 @@ function showManagerList($managers) {
 ```php
 function showList($employees) {
     foreach($employees as $employe) {
-        $expectedSalary = $employe->calculateExpectedSalary();
-        $experience = $employe->getExperience();
-        $githubLink = $employe->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
-        
-        render($data);
+        render([
+            $employe->calculateExpectedSalary(),
+            $employe->getExperience(),
+            $employe->getGithubLink()
+        ]);
     }
 }
 ```
