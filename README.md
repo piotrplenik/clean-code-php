@@ -79,7 +79,7 @@ addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
 **[⬆ back to top](#table-of-contents)**
 
 
-### Use explanatory variables
+### Use explanatory variables, verify data
 **Bad:**
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -92,10 +92,16 @@ saveCityZipCode($matches[1], $matches[2]);
 **Good**:
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
-$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
+$cityZipCodeRegex = '/^[^,\\]+[,-,]+[,\\\s]+(.+?)\s*(\d{5})?$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
-list(, $city, $zipCode) = $matchers;
+if (count($matches) != 3) {
+    throw new \Exception("Invalid address format");
+}
+
+$city    = trim($matches[1]);
+$zipCode = $matches[2];
+
 saveCityZipCode($city, $zipCode);
 ```
 **[⬆ back to top](#table-of-contents)**
