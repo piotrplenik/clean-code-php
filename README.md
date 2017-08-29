@@ -171,19 +171,23 @@ function paintCar(&$car) {
 
 ### Use default arguments instead of short circuiting or conditionals
 
-**Bad:**
+**Not bad:**
+
 ```php
-function createMicrobrewery($name = null) {
-    $breweryName = $name ?: 'Hipster Brew Co.';
+function createMicrobrewery($name = null)
+{
+    $breweryName = $name ?: 'Hipster Brew Co.';
     // ...
 }
 
 ```
 
-**Good**:
+**Good for PHP 7+**:
+
 ```php
-function createMicrobrewery($breweryName = 'Hipster Brew Co.') {
-    // ...
+function createMicrobrewery(string $breweryName = 'Hipster Brew Co.')
+{
+    // ...
 }
 
 ```
