@@ -84,9 +84,10 @@ addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
-preg_match($cityZipCodeRegex, $address, $matches);
 
-saveCityZipCode($matches[1], $matches[2]);
+if (preg_match($cityZipCodeRegex, $address, $matches)) {
+    saveCityZipCode($matches[1], $matches[2]);
+}
 ```
 
 **Not bad**:
@@ -96,10 +97,11 @@ It's better, but we are still heavily dependent on regex.
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
-preg_match($cityZipCodeRegex, $address, $matches);
 
-list(, $city, $zipCode) = $matchers;
-saveCityZipCode($city, $zipCode);
+if (preg_match($cityZipCodeRegex, $address, $matches)) {
+    list(, $city, $zipCode) = $matches;
+    saveCityZipCode($city, $zipCode);
+}
 ```
 
 **Good**:
@@ -108,9 +110,10 @@ Decrease dependence on regex by naming subpatterns.
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(?<city>.+?)\s*(?<zipCode>\d{5})?$/';
-preg_match($cityZipCodeRegex, $address, $matches);
 
-saveCityZipCode($matchers['city'], $matchers['zipCode']);
+if (preg_match($cityZipCodeRegex, $address, $matches)) {
+    saveCityZipCode($matches['city'], $matches['zipCode']);
+}
 ```
 **[⬆ back to top](#table-of-contents)**
 
