@@ -559,22 +559,21 @@ $singleton = Configuration::getInstance();
 ### Encapsulate conditionals
 
 **Bad:**
+
 ```php
-if ($fsm->state === 'fetching' && is_empty($listNode)) {
+if ($article->state === 'published') {
     // ...
 }
 ```
 
 **Good**:
-```php
-function shouldShowSpinner($fsm, $listNode) {
-    return $fsm->state === 'fetching' && is_empty($listNode);
-}
 
-if (shouldShowSpinner($fsmInstance, $listNodeInstance)) {
-  // ...
+```php
+if ($article->isPublished()) {
+    // ...
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid negative conditionals
