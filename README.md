@@ -151,34 +151,36 @@ foreach ($locations as $location) {
 
 
 ### Don't add unneeded context
+
 If your class/object name tells you something, don't repeat that in your
 variable name.
 
 **Bad:**
-```php
-$car = [
-    'carMake'  => 'Honda',
-    'carModel' => 'Accord',
-    'carColor' => 'Blue',
-];
 
-function paintCar(&$car) {
-    $car['carColor'] = 'Red';
+```php
+class Car
+{
+    public $carMake;
+    public $carModel;
+    public $carColor;
+
+    //...
 }
 ```
 
 **Good**:
-```php
-$car = [
-    'make'  => 'Honda',
-    'model' => 'Accord',
-    'color' => 'Blue',
-];
 
-function paintCar(&$car) {
-    $car['color'] = 'Red';
+```php
+class Car
+{
+    public $make;
+    public $model;
+    public $color;
+
+    //...
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use default arguments instead of short circuiting or conditionals
