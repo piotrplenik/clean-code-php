@@ -337,7 +337,8 @@ function parseBetterJSAlternative($code) {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
 function tokenize($code) {
     $regexes = [
@@ -397,9 +398,11 @@ a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
 updating multiple places anytime you want to change one thing.
 
 **Bad:**
+
 ```php
-function showDeveloperList($developers) {
-    foreach($developers as $developer) {
+function showDeveloperList($developers)
+{
+    foreach ($developers as $developer) {
         $expectedSalary = $developer->calculateExpectedSalary();
         $experience = $developer->getExperience();
         $githubLink = $developer->getGithubLink();
@@ -413,8 +416,9 @@ function showDeveloperList($developers) {
     }
 }
 
-function showManagerList($managers) {
-    foreach($managers as $manager) {
+function showManagerList($managers)
+{
+    foreach ($managers as $manager) {
         $expectedSalary = $manager->calculateExpectedSalary();
         $experience = $manager->getExperience();
         $githubLink = $manager->getGithubLink();
@@ -429,13 +433,15 @@ function showManagerList($managers) {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function showList($employees) {
-    foreach($employees as $employe) {
-        $expectedSalary = $employe->calculateExpectedSalary();
-        $experience = $employe->getExperience();
-        $githubLink = $employe->getGithubLink();
+function showList($employees)
+{
+    foreach ($employees as $employe) {
+        $expectedSalary = $employe->calculateExpectedSalary();
+        $experience = $employe->getExperience();
+        $githubLink = $employe->getGithubLink();
         $data = [
             $expectedSalary,
             $experience,
@@ -446,6 +452,24 @@ function showList($employees) {
     }
 }
 ```
+
+**Very good:**
+
+It is better to use a compact version of the code.
+
+```php
+function showList($employees)
+{
+    foreach ($employees as $employe) {
+        render([
+            $employe->calculateExpectedSalary(),
+            $employe->getExperience(),
+            $employe->getGithubLink()
+        ]);
+    }
+}
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use flags as function parameters
