@@ -171,7 +171,20 @@ function paintCar(&$car) {
 
 ### Use default arguments instead of short circuiting or conditionals
 
+**Not good:**
+
+This is not good because `$breweryName` can be `NULL`.
+
+```php
+function createMicrobrewery($breweryName = 'Hipster Brew Co.')
+{
+    // ...
+}
+```
+
 **Not bad:**
+
+This opinion is understandable than the previous version, but it better controls the value of the variable.
 
 ```php
 function createMicrobrewery($name = null)
@@ -179,18 +192,19 @@ function createMicrobrewery($name = null)
     $breweryName = $name ?: 'Hipster Brew Co.';
     // ...
 }
-
 ```
 
-**Good for PHP 7+**:
+**Good**:
+
+If you support only PHP 7+, then you can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.')
 {
     // ...
 }
-
 ```
+
 **[⬆ back to top](#table-of-contents)**
 ## **Functions**
 ### Function arguments (2 or fewer ideally)
