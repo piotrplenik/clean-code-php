@@ -525,38 +525,6 @@ function config()
 }
 ```
 
-**Bad too:**
-
-Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
-
-```php
-class Configuration
-{
-    private static $instance;
-
-    private function __construct($configuration)
-    {
-        // ...
-    }
-
-    public static function getInstance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new Configuration();
-        }
-
-        return self::$instance;
-    }
-
-    public function get($key)
-    {
-        // ...
-    }
-}
-
-$singleton = Configuration::getInstance();
-```
-
 **Good:**
 
 Create PHP configuration file or something else
@@ -592,6 +560,60 @@ $configuration = new Configuration($configuration);
 ```
 
 And now you must use instance of `Configuration` in your application.
+
+**[⬆ back to top](#table-of-contents)**
+
+### Don't use a Singleton pattern
+Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
+
+**Bad:**
+
+```php
+class DBConnection
+{
+    private static $instance;
+
+    private function __construct($dsn)
+    {
+        // ...
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    // ...
+}
+
+$singleton = DBConnection::getInstance();
+```
+
+**Good:**
+
+```php
+class DBConnection
+{
+    public function __construct(array $dsn)
+    {
+        // ...
+    }
+
+     // ...
+}
+```
+
+Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+
+```php
+$connection = new DBConnection($dsn);
+```
+
+And now you must use instance of `DBConnection` in your application.
 
 **[⬆ back to top](#table-of-contents)**
 
