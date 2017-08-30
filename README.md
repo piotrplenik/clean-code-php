@@ -89,7 +89,10 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
-**Good**:
+**Not bad**:
+
+It's better, but we are still heavily dependent on regex.
+
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
@@ -97,6 +100,17 @@ preg_match($cityZipCodeRegex, $address, $matches);
 
 list(, $city, $zipCode) = $matchers;
 saveCityZipCode($city, $zipCode);
+```
+
+**Good**:
+
+Decrease dependence on regex by naming subpatterns.
+```php
+$address = 'One Infinite Loop, Cupertino 95014';
+$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(?<city>.+?)\s*(?<zipCode>\d{5})?$/';
+preg_match($cityZipCodeRegex, $address, $matches);
+
+saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 **[⬆ back to top](#table-of-contents)**
 
@@ -108,9 +122,9 @@ Explicit is better than implicit.
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
 
-foreach($i=0; $i<count($l); $i++) {
+for ($i = 0; $i < count($l); $i++) {
     $li = $l[$i];
-    oStuff();
+    doStuff();
     doSomeOtherStuff();
     // ...
     // ...
@@ -124,9 +138,7 @@ foreach($i=0; $i<count($l); $i++) {
 ```php
 $locations = ['Austin', 'New York', 'San Francisco'];
 
-foreach($i=0; $i<count($locations); $i++) {
-    $location = $locations[$i];
-    
+foreach ($locations as $location) {
     doStuff();
     doSomeOtherStuff();
     // ...
@@ -208,7 +220,8 @@ function createMenu($title, $body, $buttonText, $cancellable) {
 
 **Good**:
 ```php
-class menuConfig() {
+class MenuConfig
+{
     public $title;
     public $body;
     public $buttonText;
@@ -519,7 +532,7 @@ would be much better to use singleton design pattern and simple set configuratio
 ```php
 function config() {
     return  [
-        'foo': 'bar',
+        'foo' => 'bar',
     ]
 }
 ```
@@ -788,7 +801,7 @@ class BankAccount {
 $bankAccount = new BankAccount();
 
 // Buy shoes...
-$bankAccount->withdrawBalance(-$shoesPrice);
+$bankAccount->withdrawBalance($shoesPrice);
 
 // Get balance
 $balance = $bankAccount->getBalance();
@@ -873,7 +886,7 @@ class UserAuth {
         $this->user = user;
     }
     
-    protected function verifyCredentials() {
+    public function verifyCredentials() {
         // ...
     }
 }
@@ -912,7 +925,7 @@ abstract class Adapter {
 
 class AjaxAdapter extends Adapter {
     public function __construct() {
-    parent::__construct();
+        parent::__construct();
         $this->name = 'ajaxAdapter';
     }
 }
@@ -1106,7 +1119,7 @@ class Square extends Shape {
     }
     
     public function getArea() {
-        return $this->length * $this->length;
+        return pow($this->length, 2);
     }
 }
 
@@ -1168,7 +1181,7 @@ class Manager {
   /** @var WorkerInterface $worker **/
   private $worker;
   
-  public void setWorker(WorkerInterface $worker) {
+  public function setWorker(WorkerInterface $worker) {
         $this->worker = $worker;
     }
 
@@ -1202,7 +1215,7 @@ class Worker implements WorkableInterface, FeedableInterface {
 }
 
 class Robot implements WorkableInterface {
-    public void work() {
+    public function work() {
         // ....working
     }
 }
@@ -1296,11 +1309,11 @@ class Manager {
     /** @var Worker $worker **/
     private $worker;
     
-    public void __construct(WorkerInterface $worker) {
+    public function __construct(WorkerInterface $worker) {
         $this->worker = $worker;
     }
     
-    public void manage() {
+    public function manage() {
         $this->worker->work();
     }
 }
