@@ -886,7 +886,7 @@ class UserAuth {
         $this->user = user;
     }
     
-    protected function verifyCredentials() {
+    public function verifyCredentials() {
         // ...
     }
 }
