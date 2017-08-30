@@ -515,6 +515,7 @@ You could write global function like `config()`, but it could clash with another
 that tried to do the same thing.
 
 **Bad:**
+
 ```php
 function config()
 {
@@ -524,9 +525,41 @@ function config()
 }
 ```
 
+**Bad too:**
+
+Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
+
+```php
+class Configuration
+{
+    private static $instance;
+
+    private function __construct($configuration)
+    {
+        // ...
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new Configuration();
+        }
+
+        return self::$instance;
+    }
+
+    public function get($key)
+    {
+        // ...
+    }
+}
+
+$singleton = Configuration::getInstance();
+```
+
 **Good:**
 
-Create configuration file
+Create PHP configuration file or something else
 
 ```php
 // config.php
@@ -534,16 +567,6 @@ return [
     'foo' => 'bar',
 ];
 ```
-
-Or a [YAML](https://en.wikipedia.org/wiki/YAML) configuration file
-
-```php
-// config.yml
-configuration:
-    foo: 'bar'
-```
-
-Or something else
 
 ```php
 class Configuration
