@@ -659,28 +659,34 @@ class Cessna extends Airplane {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 1)
+
 PHP is untyped, which means your functions can take any type of argument.
 Sometimes you are bitten by this freedom and it becomes tempting to do
 type-checking in your functions. There are many ways to avoid having to do this.
 The first thing to consider is consistent APIs.
 
 **Bad:**
+
 ```php
-function travelToTexas($vehicle) {
+function travelToTexas($vehicle)
+{
     if ($vehicle instanceof Bicycle) {
-        $vehicle->peddle($this->currentLocation, new Location('texas'));
-    } else if ($vehicle instanceof Car) {
-        $vehicle->drive($this->currentLocation, new Location('texas'));
+        $vehicle->peddleTo(new Location('texas'));
+    } elseif ($vehicle instanceof Car) {
+        $vehicle->driveTo(new Location('texas'));
     }
 }
 ```
 
 **Good**:
+
 ```php
-function travelToTexas($vehicle) {
-  $vehicle->move($this->currentLocation, new Location('texas'));
+function travelToTexas(Traveler $vehicle)
+{
+    $vehicle->travelTo(new Location('texas'));
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 2)
