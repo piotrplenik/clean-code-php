@@ -110,7 +110,7 @@ $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(?<city>.+?)\s*(?<zipCode>\d{5})?$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
-saveCityZipCode($matchers['city'], $matchers['zipCode']);
+saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 **[⬆ back to top](#table-of-contents)**
 
@@ -124,7 +124,7 @@ $l = ['Austin', 'New York', 'San Francisco'];
 
 for ($i = 0; $i < count($l); $i++) {
     $li = $l[$i];
-    oStuff();
+    doStuff();
     doSomeOtherStuff();
     // ...
     // ...
@@ -925,7 +925,7 @@ abstract class Adapter {
 
 class AjaxAdapter extends Adapter {
     public function __construct() {
-    parent::__construct();
+        parent::__construct();
         $this->name = 'ajaxAdapter';
     }
 }
@@ -1119,7 +1119,7 @@ class Square extends Shape {
     }
     
     public function getArea() {
-        return $this->length * $this->length;
+        return pow($this->length, 2);
     }
 }
 
