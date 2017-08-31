@@ -340,7 +340,9 @@ function parseBetterJSAlternative($code)
 }
 ```
 
-**Good:**
+**Bad too:**
+
+We have carried out some of the functionality, but the `parseBetterJSAlternative()` function is still very complex and not testable.
 
 ```php
 function tokenize($code)
@@ -379,6 +381,72 @@ function parseBetterJSAlternative($code)
     }
 }
 ```
+
+**Good:**
+
+The best solution is move out the dependencies of `parseBetterJSAlternative()` function.
+
+```php
+class Tokenizer
+{
+    public function tokenize($code)
+    {
+        $regexes = [
+            // ...
+        ];
+
+        $statements = split(' ', $code);
+        $tokens = [];
+        foreach ($regexes as $regex) {
+            foreach ($statements as $statement) {
+                $tokens[] = /* ... */;
+            }
+        }
+
+        return $tokens;
+    }
+}
+```
+
+```php
+class Lexer
+{
+    public function lexify($tokens)
+    {
+        $ast = [];
+        foreach ($tokens as $token) {
+            $ast[] = /* ... */;
+        }
+
+        return $ast;
+    }
+}
+```
+
+```php
+class BetterJSAlternative
+{
+    private $tokenizer;
+    private $lexer;
+
+    public function __construct(Tokenizer $tokenizer, Lexer $lexer)
+    {
+        $this->tokenizer = $tokenizer;
+        $this->lexer = $lexer;
+    }
+
+    public function parse($code)
+    {
+        $tokens = $this->tokenizer->tokenize($code);
+        $ast = $this->lexer->lexify($tokens);
+        foreach ($ast as $node) {
+            // parse...
+        }
+    }
+}
+```
+
+Now we can mock the dependencies and test only the work of method `BetterJSAlternative::parse()`.
 
 **[⬆ back to top](#table-of-contents)**
 
