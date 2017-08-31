@@ -307,31 +307,34 @@ addMonthToDate(1, $date);
 **[⬆ back to top](#table-of-contents)**
 
 ### Functions should only be one level of abstraction
+
 When you have more than one level of abstraction your function is usually
 doing too much. Splitting up functions leads to reusability and easier
 testing.
 
 **Bad:**
+
 ```php
-function parseBetterJSAlternative($code) {
+function parseBetterJSAlternative($code)
+{
     $regexes = [
         // ...
     ];
     
     $statements = split(' ', $code);
     $tokens = [];
-    foreach($regexes as $regex) {
-        foreach($statements as $statement) {
+    foreach ($regexes as $regex) {
+        foreach ($statements as $statement) {
             // ...
         }
     }
     
     $ast = [];
-    foreach($tokens as $token) {
+    foreach ($tokens as $token) {
         // lex...
     }
     
-    foreach($ast as $node) {
+    foreach ($ast as $node) {
         // parse...
     }
 }
@@ -340,39 +343,43 @@ function parseBetterJSAlternative($code) {
 **Good:**
 
 ```php
-function tokenize($code) {
+function tokenize($code)
+{
     $regexes = [
         // ...
     ];
     
     $statements = split(' ', $code);
     $tokens = [];
-    foreach($regexes as $regex) {
-        foreach($statements as $statement) {
+    foreach ($regexes as $regex) {
+        foreach ($statements as $statement) {
             $tokens[] = /* ... */;
-        });
-    });
+        }
+    }
     
     return $tokens;
 }
 
-function lexer($tokens) {
+function lexer($tokens)
+{
     $ast = [];
-    foreach($tokens as $token) {
+    foreach ($tokens as $token) {
         $ast[] = /* ... */;
-    });
+    }
     
     return $ast;
 }
 
-function parseBetterJSAlternative($code) {
+function parseBetterJSAlternative($code)
+{
     $tokens = tokenize($code);
     $ast = lexer($tokens);
-    foreach($ast as $node) {
+    foreach ($ast as $node) {
         // parse...
-    });
+    }
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove duplicate code
