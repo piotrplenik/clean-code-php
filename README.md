@@ -1014,14 +1014,12 @@ class HttpRequester
 **Good:**
 
 ```php
-abstract class Adapter
+interface Adapter
 {
-    abstract protected function getName();
-
-    abstract public function request($url);
+    public function request($url);
 }
 
-class AjaxAdapter extends Adapter
+class AjaxAdapter implements Adapter
 {
     protected function getName()
     {
@@ -1034,7 +1032,7 @@ class AjaxAdapter extends Adapter
     }
 }
 
-class NodeAdapter extends Adapter
+class NodeAdapter implements Adapter
 {
     protected function getName()
     {
@@ -1061,13 +1059,12 @@ class HttpRequester
         return $this->adapter->request($url);
     }
 }
-
 ```
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ### Liskov Substitution Principle (LSP)
+
 This is a scary term for a very simple concept. It's formally defined as "If S
 is a subtype of T, then objects of type T may be replaced with objects of type S
 (i.e., objects of type S may substitute objects of type T) without altering any
