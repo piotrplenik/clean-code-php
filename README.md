@@ -1279,6 +1279,7 @@ class Manager {
 **[⬆ back to top](#table-of-contents)**
 
 ### Dependency Inversion Principle (DIP)
+
 This principle states two essential things:
 1. High-level modules should not depend on low-level modules. Both should
 depend on abstractions.
@@ -1293,65 +1294,80 @@ the coupling between modules. Coupling is a very bad development pattern because
 it makes your code hard to refactor.
 
 **Bad:**
+
 ```php
-class Worker {
-  public function work() {
+class Worker
+{
+  public function work()
+  {
     // ....working
   }
 }
 
-class Manager {
-    /** @var Worker $worker **/
+class Manager
+{
     private $worker;
-    
-    public function __construct(Worker $worker) {
+
+    public function __construct(Worker $worker)
+    {
         $this->worker = $worker;
     }
-    
-    public function manage() {
+
+    public function manage()
+    {
         $this->worker->work();
     }
 }
 
-class SuperWorker extends Worker {
-    public function work() {
+class SuperWorker extends Worker
+{
+    public function work()
+    {
         //.... working much more
     }
 }
 ```
 
 **Good:**
+
 ```php
-interface WorkerInterface {
+interface WorkerInterface
+{
     public function work();
 }
 
-class Worker implements WorkerInterface {
-    public function work() {
+class Worker implements WorkerInterface
+{
+    public function work()
+    {
         // ....working
     }
 }
 
-class SuperWorker implements WorkerInterface {
-    public function work() {
+class SuperWorker implements WorkerInterface
+{
+    public function work()
+    {
         //.... working much more
     }
 }
 
-class Manager {
-    /** @var Worker $worker **/
+class Manager
+{
     private $worker;
-    
-    public function __construct(WorkerInterface $worker) {
+
+    public function __construct(WorkerInterface $worker)
+    {
         $this->worker = $worker;
     }
-    
-    public function manage() {
+
+    public function manage()
+    {
         $this->worker->work();
     }
 }
-
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use method chaining
