@@ -1222,16 +1222,18 @@ class Robot implements Employe
 
 class Manager
 {
-    private $employe;
+    private $employees;
 
     public function subdue(Employe $employe)
     {
-        $this->employe = $employe;
+        $this->employees[] = $employe;
     }
 
     public function manage()
     {
-        $this->employe->work();
+        foreach ($this->employees as $employe) {
+            $employe->work();
+        }
     }
 }
 ```
@@ -1277,16 +1279,18 @@ class Robot implements Workable
 
 class Manager
 {
-    private $employe;
+    private $employees;
 
     public function subdue(Workable $employe)
     {
-      $this->employe = $employe;
+        $this->employees[] = $employe;
     }
 
     public function manage()
     {
-        $this->employe->work();
+        foreach ($this->employees as $employe) {
+            $employe->work();
+        }
     }
 }
 ```
