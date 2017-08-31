@@ -528,10 +528,10 @@ function showManagerList($managers)
 ```php
 function showList($employees)
 {
-    foreach ($employees as $employe) {
-        $expectedSalary = $employe->calculateExpectedSalary();
-        $experience = $employe->getExperience();
-        $githubLink = $employe->getGithubLink();
+    foreach ($employees as $employee) {
+        $expectedSalary = $employee->calculateExpectedSalary();
+        $experience = $employee->getExperience();
+        $githubLink = $employee->getGithubLink();
         $data = [
             $expectedSalary,
             $experience,
@@ -550,11 +550,11 @@ It is better to use a compact version of the code.
 ```php
 function showList($employees)
 {
-    foreach ($employees as $employe) {
+    foreach ($employees as $employee) {
         render([
-            $employe->calculateExpectedSalary(),
-            $employe->getExperience(),
-            $employe->getGithubLink()
+            $employee->calculateExpectedSalary(),
+            $employee->getExperience(),
+            $employee->getGithubLink()
         ]);
     }
 }
