@@ -1246,6 +1246,8 @@ class Manager implements Employee
 
 **Good:**
 
+Not every worker is an employee, but every employee is an worker.
+
 ```php
 interface Workable
 {
