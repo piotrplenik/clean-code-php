@@ -1188,14 +1188,14 @@ all of the settings. Making them optional helps prevent having a "fat interface"
 **Bad:**
 
 ```php
-interface Employe
+interface Employee
 {
     public function work();
 
     public function eat();
 }
 
-class Human implements Employe
+class Human implements Employee
 {
     public function work()
     {
@@ -1208,7 +1208,7 @@ class Human implements Employe
     }
 }
 
-class Robot implements Employe
+class Robot implements Employee
 {
     public function work()
     {
@@ -1221,19 +1221,19 @@ class Robot implements Employe
     }
 }
 
-class Manager implements Employe
+class Manager implements Employee
 {
     private $employees = [];
 
-    public function subdue(Employe $employe)
+    public function subdue(Employee $employee)
     {
-        $this->employees[] = $employe;
+        $this->employees[] = $employee;
     }
 
     public function work()
     {
-        foreach ($this->employees as $employe) {
-            $employe->work();
+        foreach ($this->employees as $employee) {
+            $employee->work();
         }
     }
 
@@ -1257,11 +1257,11 @@ interface Feedable
     public function eat();
 }
 
-interface Employe extends Feedable, Workable
+interface Employee extends Feedable, Workable
 {
 }
 
-class Human implements Employe
+class Human implements Employee
 {
     public function work()
     {
@@ -1283,19 +1283,19 @@ class Robot implements Workable
     }
 }
 
-class Manager implements Employe
+class Manager implements Employee
 {
     private $employees = [];
 
-    public function subdue(Workable $employe)
+    public function subdue(Workable $employee)
     {
-        $this->employees[] = $employe;
+        $this->employees[] = $employee;
     }
 
     public function work()
     {
-        foreach ($this->employees as $employe) {
-            $employe->work();
+        foreach ($this->employees as $employee) {
+            $employee->work();
         }
     }
 
