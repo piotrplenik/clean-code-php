@@ -1188,13 +1188,13 @@ all of the settings. Making them optional helps prevent having a "fat interface"
 **Bad:**
 
 ```php
-interface WorkerInterface
+interface Employe
 {
     public function work();
     public function eat();
 }
 
-class Worker implements WorkerInterface
+class Human implements Employe
 {
     public function work()
     {
@@ -1207,7 +1207,7 @@ class Worker implements WorkerInterface
     }
 }
 
-class SuperWorker implements WorkerInterface
+class Robot implements Employe
 {
     public function work()
     {
@@ -1216,22 +1216,22 @@ class SuperWorker implements WorkerInterface
 
     public function eat()
     {
-        //.... eating in launch break
+        //.... robot can't eating, but it must implement this method
     }
 }
 
 class Manager
 {
-    private $worker;
+    private $employe;
 
-    public function setWorker(WorkerInterface $worker)
+    public function setWorker(Employe $employe)
     {
-        $this->worker = $worker;
+        $this->employe = $employe;
     }
 
     public function manage()
     {
-        $this->worker->work();
+        $this->employe->work();
     }
 }
 ```
@@ -1239,21 +1239,21 @@ class Manager
 **Good:**
 
 ```php
-interface WorkerInterface extends FeedableInterface, WorkableInterface
-{
-}
-
-interface WorkableInterface
+interface Workable
 {
     public function work();
 }
 
-interface FeedableInterface
+interface Feedable
 {
     public function eat();
 }
 
-class Worker implements WorkableInterface, FeedableInterface
+interface Employe extends Feedable, Workable
+{
+}
+
+class Human implements Employe
 {
     public function work()
     {
@@ -1266,39 +1266,26 @@ class Worker implements WorkableInterface, FeedableInterface
     }
 }
 
-class Robot implements WorkableInterface
+class Robot implements Workable
 {
     public function work()
     {
         // ....working
-    }
-}
-
-class SuperWorker implements WorkerInterface
-{
-    public function work()
-    {
-        //.... working much more
-    }
-
-    public function eat()
-    {
-        //.... eating in launch break
     }
 }
 
 class Manager
 {
-    private $worker;
+    private $employe;
 
-    public function setWorker(WorkableInterface $w)
+    public function setWorker(Workable $employe)
     {
-      $this->worker = $w;
+      $this->employe = $employe;
     }
 
     public function manage()
     {
-        $this->worker->work();
+        $this->employe->work();
     }
 }
 ```
