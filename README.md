@@ -1176,6 +1176,7 @@ renderLargeRectangles($shapes);
 **[⬆ back to top](#table-of-contents)**
 
 ### Interface Segregation Principle (ISP)
+
 ISP states that "Clients should not be forced to depend upon interfaces that
 they do not use." 
 
@@ -1185,97 +1186,123 @@ huge amounts of options is beneficial, because most of the time they won't need
 all of the settings. Making them optional helps prevent having a "fat interface".
 
 **Bad:**
+
 ```php
-interface WorkerInterface {
+interface WorkerInterface
+{
     public function work();
     public function eat();
 }
 
-class Worker implements WorkerInterface {
-    public function work() {
+class Worker implements WorkerInterface
+{
+    public function work()
+    {
         // ....working
     }
-    public function eat() {
+
+    public function eat()
+    {
         // ...... eating in launch break
     }
 }
 
-class SuperWorker implements WorkerInterface {
-    public function work() {
+class SuperWorker implements WorkerInterface
+{
+    public function work()
+    {
         //.... working much more
     }
 
-    public function eat() {
+    public function eat()
+    {
         //.... eating in launch break
     }
 }
 
-class Manager {
-  /** @var WorkerInterface $worker **/
-  private $worker;
-  
-  public function setWorker(WorkerInterface $worker) {
+class Manager
+{
+    private $worker;
+
+    public function setWorker(WorkerInterface $worker)
+    {
         $this->worker = $worker;
     }
 
-    public function manage() {
+    public function manage()
+    {
         $this->worker->work();
     }
 }
 ```
 
 **Good:**
+
 ```php
-interface WorkerInterface extends FeedableInterface, WorkableInterface {
+interface WorkerInterface extends FeedableInterface, WorkableInterface
+{
 }
 
-interface WorkableInterface {
+interface WorkableInterface
+{
     public function work();
 }
 
-interface FeedableInterface {
+interface FeedableInterface
+{
     public function eat();
 }
 
-class Worker implements WorkableInterface, FeedableInterface {
-    public function work() {
+class Worker implements WorkableInterface, FeedableInterface
+{
+    public function work()
+    {
         // ....working
     }
 
-    public function eat() {
+    public function eat()
+    {
         //.... eating in launch break
     }
 }
 
-class Robot implements WorkableInterface {
-    public function work() {
+class Robot implements WorkableInterface
+{
+    public function work()
+    {
         // ....working
     }
 }
 
-class SuperWorker implements WorkerInterface  {
-    public function work() {
+class SuperWorker implements WorkerInterface
+{
+    public function work()
+    {
         //.... working much more
     }
 
-    public function eat() {
+    public function eat()
+    {
         //.... eating in launch break
     }
 }
 
-class Manager {
-  /** @var $worker WorkableInterface **/
+class Manager
+{
     private $worker;
 
-    public function setWorker(WorkableInterface $w) {
+    public function setWorker(WorkableInterface $w)
+    {
       $this->worker = $w;
     }
 
-    public function manage() {
+    public function manage()
+    {
         $this->worker->work();
     }
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Dependency Inversion Principle (DIP)
