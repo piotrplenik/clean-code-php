@@ -1224,7 +1224,7 @@ class Manager
 {
     private $employe;
 
-    public function setWorker(Employe $employe)
+    public function subdue(Employe $employe)
     {
         $this->employe = $employe;
     }
@@ -1266,6 +1266,7 @@ class Human implements Employe
     }
 }
 
+// robot can only work
 class Robot implements Workable
 {
     public function work()
@@ -1278,7 +1279,7 @@ class Manager
 {
     private $employe;
 
-    public function setWorker(Workable $employe)
+    public function subdue(Workable $employe)
     {
       $this->employe = $employe;
     }
