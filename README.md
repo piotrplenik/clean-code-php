@@ -1285,17 +1285,17 @@ class Robot implements Workable
 
 class Manager implements Employee
 {
-    private $employees = [];
+    private $workers = [];
 
-    public function subdue(Workable $employee)
+    public function subdue(Workable $worker)
     {
-        $this->employees[] = $employee;
+        $this->workers[] = $worker;
     }
 
     public function work()
     {
-        foreach ($this->employees as $employee) {
-            $employee->work();
+        foreach ($this->workers as $worker) {
+            $worker->work();
         }
     }
 
