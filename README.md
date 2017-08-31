@@ -1021,11 +1021,6 @@ interface Adapter
 
 class AjaxAdapter implements Adapter
 {
-    protected function getName()
-    {
-        return 'ajaxAdapter';
-    }
-    
     public function request($url)
     {
         // request and return promise
@@ -1034,11 +1029,6 @@ class AjaxAdapter implements Adapter
 
 class NodeAdapter implements Adapter
 {
-    protected function getName()
-    {
-        return 'nodeAdapter';
-    }
-    
     public function request($url)
     {
         // request and return promise
