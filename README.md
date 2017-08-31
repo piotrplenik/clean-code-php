@@ -307,31 +307,76 @@ addMonthToDate(1, $date);
 **[⬆ back to top](#table-of-contents)**
 
 ### Functions should only be one level of abstraction
+
 When you have more than one level of abstraction your function is usually
 doing too much. Splitting up functions leads to reusability and easier
 testing.
 
 **Bad:**
+
 ```php
-function parseBetterJSAlternative($code) {
+function parseBetterJSAlternative($code)
+{
     $regexes = [
         // ...
     ];
     
     $statements = split(' ', $code);
     $tokens = [];
-    foreach($regexes as $regex) {
-        foreach($statements as $statement) {
+    foreach ($regexes as $regex) {
+        foreach ($statements as $statement) {
             // ...
         }
     }
     
     $ast = [];
-    foreach($tokens as $token) {
+    foreach ($tokens as $token) {
         // lex...
     }
     
-    foreach($ast as $node) {
+    foreach ($ast as $node) {
+        // parse...
+    }
+}
+```
+
+**Bad too:**
+
+We have carried out some of the functionality, but the `parseBetterJSAlternative()` function is still very complex and not testable.
+
+```php
+function tokenize($code)
+{
+    $regexes = [
+        // ...
+    ];
+    
+    $statements = split(' ', $code);
+    $tokens = [];
+    foreach ($regexes as $regex) {
+        foreach ($statements as $statement) {
+            $tokens[] = /* ... */;
+        }
+    }
+    
+    return $tokens;
+}
+
+function lexer($tokens)
+{
+    $ast = [];
+    foreach ($tokens as $token) {
+        $ast[] = /* ... */;
+    }
+    
+    return $ast;
+}
+
+function parseBetterJSAlternative($code)
+{
+    $tokens = tokenize($code);
+    $ast = lexer($tokens);
+    foreach ($ast as $node) {
         // parse...
     }
 }
@@ -339,40 +384,70 @@ function parseBetterJSAlternative($code) {
 
 **Good:**
 
+The best solution is move out the dependencies of `parseBetterJSAlternative()` function.
+
 ```php
-function tokenize($code) {
-    $regexes = [
-        // ...
-    ];
-    
-    $statements = split(' ', $code);
-    $tokens = [];
-    foreach($regexes as $regex) {
-        foreach($statements as $statement) {
-            $tokens[] = /* ... */;
-        });
-    });
-    
-    return $tokens;
-}
+class Tokenizer
+{
+    public function tokenize($code)
+    {
+        $regexes = [
+            // ...
+        ];
 
-function lexer($tokens) {
-    $ast = [];
-    foreach($tokens as $token) {
-        $ast[] = /* ... */;
-    });
-    
-    return $ast;
-}
+        $statements = split(' ', $code);
+        $tokens = [];
+        foreach ($regexes as $regex) {
+            foreach ($statements as $statement) {
+                $tokens[] = /* ... */;
+            }
+        }
 
-function parseBetterJSAlternative($code) {
-    $tokens = tokenize($code);
-    $ast = lexer($tokens);
-    foreach($ast as $node) {
-        // parse...
-    });
+        return $tokens;
+    }
 }
 ```
+
+```php
+class Lexer
+{
+    public function lexify($tokens)
+    {
+        $ast = [];
+        foreach ($tokens as $token) {
+            $ast[] = /* ... */;
+        }
+
+        return $ast;
+    }
+}
+```
+
+```php
+class BetterJSAlternative
+{
+    private $tokenizer;
+    private $lexer;
+
+    public function __construct(Tokenizer $tokenizer, Lexer $lexer)
+    {
+        $this->tokenizer = $tokenizer;
+        $this->lexer = $lexer;
+    }
+
+    public function parse($code)
+    {
+        $tokens = $this->tokenizer->tokenize($code);
+        $ast = $this->lexer->lexify($tokens);
+        foreach ($ast as $node) {
+            // parse...
+        }
+    }
+}
+```
+
+Now we can mock the dependencies and test only the work of method `BetterJSAlternative::parse()`.
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove duplicate code
