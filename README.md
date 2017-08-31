@@ -626,12 +626,13 @@ Polluting globals is a bad practice in very languages because you could clash wi
 library and the user of your API would be none-the-wiser until they get an exception in 
 production. Let's think about an example: what if you wanted to have configuration array. 
 You could write global function like `config()`, but it could clash with another library 
-that tried to do the same thing. This is why it
-would be much better to use singleton design pattern and simple set configuration.
+that tried to do the same thing.
 
 **Bad:**
+
 ```php
-function config() {
+function config()
+{
     return  [
         'foo' => 'bar',
     ]
@@ -639,22 +640,95 @@ function config() {
 ```
 
 **Good:**
+
+Create PHP configuration file or something else
+
 ```php
-class Configuration {
+// config.php
+return [
+    'foo' => 'bar',
+];
+```
+
+```php
+class Configuration
+{
+    private $configuration = [];
+
+    public function __construct(array $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    public function get($key)
+    {
+        return isset($this->configuration[$key]) ? $this->configuration[$key] : null;
+    }
+}
+```
+
+Load configuration from file and create instance of `Configuration` class 
+
+```php
+$configuration = new Configuration($configuration);
+```
+
+And now you must use instance of `Configuration` in your application.
+
+**[⬆ back to top](#table-of-contents)**
+
+### Don't use a Singleton pattern
+Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
+
+**Bad:**
+
+```php
+class DBConnection
+{
     private static $instance;
-    private function __construct($configuration) {/* */}
-    public static function getInstance() {
+
+    private function __construct($dsn)
+    {
+        // ...
+    }
+
+    public static function getInstance()
+    {
         if (self::$instance === null) {
-            self::$instance = new Configuration();
+            self::$instance = new self();
         }
+
         return self::$instance;
     }
-    public function get($key) {/* */}
-    public function getAll() {/* */}
+
+    // ...
 }
 
-$singleton = Configuration::getInstance();
+$singleton = DBConnection::getInstance();
 ```
+
+**Good:**
+
+```php
+class DBConnection
+{
+    public function __construct(array $dsn)
+    {
+        // ...
+    }
+
+     // ...
+}
+```
+
+Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+
+```php
+$connection = new DBConnection($dsn);
+```
+
+And now you must use instance of `DBConnection` in your application.
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Encapsulate conditionals
