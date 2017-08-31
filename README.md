@@ -284,26 +284,41 @@ function isClientActive($client) {
 ### Function names should say what they do
 
 **Bad:**
+
 ```php
-function addToDate($date, $month) {
-    // ...
+class Email
+{
+    //...
+
+    public function handle()
+    {
+        mail($this->to, $this->subject, $this->body);
+    }
 }
 
-$date = new \DateTime();
-
-// It's hard to to tell from the function name what is added
-addToDate($date, 1);
+$message = new Email(...);
+// What is this? A handle for the message? Are we writing to a file now?
+$message->handle();
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function addMonthToDate($month, $date) {
-    // ...
+class Email 
+{
+    //...
+
+    public function send()
+    {
+        mail($this->to, $this->subject, $this->body);
+    }
 }
 
-$date = new \DateTime();
-addMonthToDate(1, $date);
+$message = new Email(...);
+// Clear and obvious
+$message->send();
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Functions should only be one level of abstraction
