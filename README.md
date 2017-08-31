@@ -1191,6 +1191,7 @@ all of the settings. Making them optional helps prevent having a "fat interface"
 interface Employe
 {
     public function work();
+
     public function eat();
 }
 
@@ -1220,20 +1221,25 @@ class Robot implements Employe
     }
 }
 
-class Manager
+class Manager implements Employe
 {
-    private $employees;
+    private $employees = [];
 
     public function subdue(Employe $employe)
     {
         $this->employees[] = $employe;
     }
 
-    public function manage()
+    public function work()
     {
         foreach ($this->employees as $employe) {
             $employe->work();
         }
+    }
+
+    public function eat()
+    {
+        // ...... eating in launch break
     }
 }
 ```
@@ -1277,20 +1283,25 @@ class Robot implements Workable
     }
 }
 
-class Manager
+class Manager implements Employe
 {
-    private $employees;
+    private $employees = [];
 
     public function subdue(Workable $employe)
     {
         $this->employees[] = $employe;
     }
 
-    public function manage()
+    public function work()
     {
         foreach ($this->employees as $employe) {
             $employe->work();
         }
+    }
+
+    public function eat()
+    {
+        // ...... eating in launch break
     }
 }
 ```
