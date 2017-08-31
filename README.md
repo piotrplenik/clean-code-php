@@ -942,98 +942,128 @@ class UserSettings {
 **[⬆ back to top](#table-of-contents)**
 
 ### Open/Closed Principle (OCP)
+
 As stated by Bertrand Meyer, "software entities (classes, modules, functions,
 etc.) should be open for extension, but closed for modification." What does that
 mean though? This principle basically states that you should allow users to
 add new functionalities without changing existing code.
 
 **Bad:**
+
 ```php
-abstract class Adapter {
+abstract class Adapter
+{
     protected $name;
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 }
 
-class AjaxAdapter extends Adapter {
-    public function __construct() {
+class AjaxAdapter extends Adapter
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->name = 'ajaxAdapter';
     }
 }
 
-class NodeAdapter extends Adapter {
-    public function __construct() {
+class NodeAdapter extends Adapter
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->name = 'nodeAdapter';
     }
 }
 
-class HttpRequester {
+class HttpRequester
+{
     private $adapter;
-    public function __construct($adapter) {
+
+    public function __construct($adapter)
+    {
         $this->adapter = $adapter;
     }
     
-    public function fetch($url) {
+    public function fetch($url)
+    {
         $adapterName = $this->adapter->getName();
+
         if ($adapterName === 'ajaxAdapter') {
             return $this->makeAjaxCall($url);
-        } else if ($adapterName === 'httpNodeAdapter') {
+        } elseif ($adapterName === 'httpNodeAdapter') {
             return $this->makeHttpCall($url);
         }
     }
     
-    protected function makeAjaxCall($url) {
+    protected function makeAjaxCall($url)
+    {
         // request and return promise
     }
     
-    protected function makeHttpCall($url) {
+    protected function makeHttpCall($url)
+    {
         // request and return promise
     }
 }
 ```
 
 **Good:**
+
 ```php
-abstract class Adapter {
+abstract class Adapter
+{
     abstract protected function getName();
+
     abstract public function request($url);
 }
 
-class AjaxAdapter extends Adapter {
-    protected function getName() {
+class AjaxAdapter extends Adapter
+{
+    protected function getName()
+    {
         return 'ajaxAdapter';
     }
     
-    public function request($url) {
+    public function request($url)
+    {
         // request and return promise
     }
 }
 
-class NodeAdapter extends Adapter {
-    protected function getName() {
+class NodeAdapter extends Adapter
+{
+    protected function getName()
+    {
         return 'nodeAdapter';
     }
     
-    public function request($url) {
+    public function request($url)
+    {
         // request and return promise
     }
 }
 
-class HttpRequester {
+class HttpRequester
+{
     private $adapter;
-    public function __construct(Adapter $adapter) {
+
+    public function __construct(Adapter $adapter)
+    {
         $this->adapter = $adapter;
     }
     
-    public function fetch($url) {
+    public function fetch($url)
+    {
         return $this->adapter->request($url);
     }
 }
 
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 
