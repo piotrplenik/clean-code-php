@@ -151,34 +151,36 @@ foreach ($locations as $location) {
 
 
 ### Don't add unneeded context
+
 If your class/object name tells you something, don't repeat that in your
 variable name.
 
 **Bad:**
-```php
-$car = [
-    'carMake'  => 'Honda',
-    'carModel' => 'Accord',
-    'carColor' => 'Blue',
-];
 
-function paintCar(&$car) {
-    $car['carColor'] = 'Red';
+```php
+class Car
+{
+    public $carMake;
+    public $carModel;
+    public $carColor;
+
+    //...
 }
 ```
 
 **Good**:
-```php
-$car = [
-    'make'  => 'Honda',
-    'model' => 'Accord',
-    'color' => 'Blue',
-];
 
-function paintCar(&$car) {
-    $car['color'] = 'Red';
+```php
+class Car
+{
+    public $make;
+    public $model;
+    public $color;
+
+    //...
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use default arguments instead of short circuiting or conditionals
@@ -335,7 +337,8 @@ function parseBetterJSAlternative($code) {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
 function tokenize($code) {
     $regexes = [
@@ -395,9 +398,11 @@ a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
 updating multiple places anytime you want to change one thing.
 
 **Bad:**
+
 ```php
-function showDeveloperList($developers) {
-    foreach($developers as $developer) {
+function showDeveloperList($developers)
+{
+    foreach ($developers as $developer) {
         $expectedSalary = $developer->calculateExpectedSalary();
         $experience = $developer->getExperience();
         $githubLink = $developer->getGithubLink();
@@ -411,8 +416,9 @@ function showDeveloperList($developers) {
     }
 }
 
-function showManagerList($managers) {
-    foreach($managers as $manager) {
+function showManagerList($managers)
+{
+    foreach ($managers as $manager) {
         $expectedSalary = $manager->calculateExpectedSalary();
         $experience = $manager->getExperience();
         $githubLink = $manager->getGithubLink();
@@ -427,13 +433,15 @@ function showManagerList($managers) {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function showList($employees) {
-    foreach($employees as $employe) {
-        $expectedSalary = $employe->calculateExpectedSalary();
-        $experience = $employe->getExperience();
-        $githubLink = $employe->getGithubLink();
+function showList($employees)
+{
+    foreach ($employees as $employe) {
+        $expectedSalary = $employe->calculateExpectedSalary();
+        $experience = $employe->getExperience();
+        $githubLink = $employe->getGithubLink();
         $data = [
             $expectedSalary,
             $experience,
@@ -444,6 +452,24 @@ function showList($employees) {
     }
 }
 ```
+
+**Very good:**
+
+It is better to use a compact version of the code.
+
+```php
+function showList($employees)
+{
+    foreach ($employees as $employe) {
+        render([
+            $employe->calculateExpectedSalary(),
+            $employe->getExperience(),
+            $employe->getGithubLink()
+        ]);
+    }
+}
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use flags as function parameters
@@ -684,32 +710,39 @@ function travelToTexas($vehicle) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 2)
+
 If you are working with basic primitive values like strings, integers, and arrays,
-and you can't use polymorphism but you still feel the need to type-check,
-you should consider type declaration or strict mode. It provides you with static 
-typing on top of standard PHP syntax. The problem with manually type-checking is 
-that doing it well requires so much extra verbiage that the faux "type-safety" 
-you get doesn't make up for the lost readability. Keep your PHP clean, write good 
-tests, and have good code reviews. Otherwise, do all of that but with PHP strict 
-type declaration or strict mode.
+and you use PHP 7+ and you can't use polymorphism but you still feel the need to
+type-check, you should consider
+[type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
+or strict mode. It provides you with static typing on top of standard PHP syntax.
+The problem with manually type-checking is that doing it well requires so much
+extra verbiage that the faux "type-safety" you get doesn't make up for the lost
+readability. Keep your PHP clean, write good tests, and have good code reviews.
+Otherwise, do all of that but with PHP strict type declaration or strict mode.
 
 **Bad:**
+
 ```php
-function combine($val1, $val2) {
-    if (is_numeric($val1) && is_numeric($val2)) {
-        return $val1 + $val2;
+function combine($val1, $val2)
+{
+    if (!is_numeric($val1) || !is_numeric($val2)) {
+        throw new \Exception('Must be of type Number');
     }
-    
-    throw new \Exception('Must be of type Number');
+
+    return $val1 + $val2;
 }
 ```
 
 **Good**:
+
 ```php
-function combine(int $val1, int $val2) {
+function combine(int $val1, int $val2)
+{
     return $val1 + $val2;
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove dead code
