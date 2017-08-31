@@ -1304,6 +1304,14 @@ class Worker
   }
 }
 
+class SuperWorker extends Worker
+{
+    public function work()
+    {
+        //.... working much more
+    }
+}
+
 class Manager
 {
     private $worker;
@@ -1318,25 +1326,17 @@ class Manager
         $this->worker->work();
     }
 }
-
-class SuperWorker extends Worker
-{
-    public function work()
-    {
-        //.... working much more
-    }
-}
 ```
 
 **Good:**
 
 ```php
-interface WorkerInterface
+interface Worker
 {
     public function work();
 }
 
-class Worker implements WorkerInterface
+class SumeWorker implements Worker
 {
     public function work()
     {
@@ -1344,7 +1344,7 @@ class Worker implements WorkerInterface
     }
 }
 
-class SuperWorker implements WorkerInterface
+class SuperWorker implements Worker
 {
     public function work()
     {
@@ -1356,7 +1356,7 @@ class Manager
 {
     private $worker;
 
-    public function __construct(WorkerInterface $worker)
+    public function __construct(Worker $worker)
     {
         $this->worker = $worker;
     }
