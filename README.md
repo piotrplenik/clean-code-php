@@ -1220,28 +1220,6 @@ class Robot implements Employee
         //.... robot can't eating, but it must implement this method
     }
 }
-
-class Manager implements Employee
-{
-    private $employees = [];
-
-    public function subdue(Employee $employee)
-    {
-        $this->employees[] = $employee;
-    }
-
-    public function work()
-    {
-        foreach ($this->employees as $employee) {
-            $employee->work();
-        }
-    }
-
-    public function eat()
-    {
-        // ...... eating in launch break
-    }
-}
 ```
 
 **Good:**
@@ -1282,28 +1260,6 @@ class Robot implements Workable
     public function work()
     {
         // ....working
-    }
-}
-
-class Manager implements Employee
-{
-    private $workers = [];
-
-    public function subdue(Workable $worker)
-    {
-        $this->workers[] = $worker;
-    }
-
-    public function work()
-    {
-        foreach ($this->workers as $worker) {
-            $worker->work();
-        }
-    }
-
-    public function eat()
-    {
-        // ...... eating in launch break
     }
 }
 ```
