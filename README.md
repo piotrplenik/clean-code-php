@@ -1664,8 +1664,8 @@ class Employee {
 class EmployeeTaxData extends Employee {
     private $ssn, $salary;
     
-    public function __construct($ssn, $salary) {
-        parent::__construct();
+    public function __construct($name, $email, $ssn, $salary) {
+        parent::__construct($name, $email);
         $this->ssn = $ssn;
         $this->salary = $salary;
     }
