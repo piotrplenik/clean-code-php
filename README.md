@@ -80,7 +80,7 @@ addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
 **[⬆ back to top](#table-of-contents)**
 
 
-### Use explanatory variables
+### Use explanatory variables, verify data
 **Bad:**
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -96,10 +96,16 @@ It's better, but we are still heavily dependent on regex.
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
-$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
+$cityZipCodeRegex = '/^[^,\\]+[,-,]+[,\\\s]+(.+?)\s*(\d{5})?$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
-list(, $city, $zipCode) = $matchers;
+if (count($matches) != 3) {
+    throw new \Exception("Invalid address format");
+}
+
+$city    = trim($matches[1]);
+$zipCode = $matches[2];
+
 saveCityZipCode($city, $zipCode);
 ```
 
