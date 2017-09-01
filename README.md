@@ -516,6 +516,8 @@ than the vast majority of other programmers.
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName() {
+    global $name;
+
     $name = preg_split('/ /', $name);
 }
 
