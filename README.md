@@ -528,8 +528,6 @@ var_dump($name); // ['Ryan', 'McDermott'];
 
 **Good**:
 ```php
-$name = 'Ryan McDermott';
-
 function splitIntoFirstAndLastName($name) {
     return preg_split('/ /', $name);
 }
@@ -970,8 +968,9 @@ your codebase.
 ```php
 class UserSettings {
     private $user;
+
     public function __construct($user) {
-        $this->user = user;
+        $this->user = $user;
     }
     
     public function changeSettings($settings) {
@@ -990,8 +989,9 @@ class UserSettings {
 ```php
 class UserAuth {
     private $user;
+
     public function __construct($user) {
-        $this->user = user;
+        $this->user = $user;
     }
     
     public function verifyCredentials() {
@@ -1002,6 +1002,7 @@ class UserAuth {
 
 class UserSettings {
     private $user;
+
     public function __construct($user) {
         $this->user = $user;
         $this->auth = new UserAuth($user);
