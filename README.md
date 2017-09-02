@@ -99,7 +99,7 @@ $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
-list(, $city, $zipCode) = $matchers;
+list(, $city, $zipCode) = $matches;
 saveCityZipCode($city, $zipCode);
 ```
 
