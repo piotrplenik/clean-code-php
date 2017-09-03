@@ -528,8 +528,6 @@ var_dump($name); // ['Ryan', 'McDermott'];
 
 **Good**:
 ```php
-$name = 'Ryan McDermott';
-
 function splitIntoFirstAndLastName($name) {
     return preg_split('/ /', $name);
 }
@@ -970,8 +968,9 @@ your codebase.
 ```php
 class UserSettings {
     private $user;
+
     public function __construct($user) {
-        $this->user = user;
+        $this->user = $user;
     }
     
     public function changeSettings($settings) {
@@ -990,8 +989,9 @@ class UserSettings {
 ```php
 class UserAuth {
     private $user;
+
     public function __construct($user) {
-        $this->user = user;
+        $this->user = $user;
     }
     
     public function verifyCredentials() {
@@ -1002,6 +1002,7 @@ class UserAuth {
 
 class UserSettings {
     private $user;
+
     public function __construct($user) {
         $this->user = $user;
         $this->auth = new UserAuth($user);
@@ -1185,12 +1186,12 @@ class Square extends Rectangle {
 }
 
 function renderLargeRectangles($rectangles) {
-    foreach($rectangle in $rectangles) {
+    foreach($rectangles as $rectangle) {
         $rectangle->setWidth(4);
         $rectangle->setHeight(5);
         $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
         $rectangle->render($area);
-    });
+    }
 }
 
 $rectangles = [new Rectangle(), new Rectangle(), new Square()];
@@ -1249,7 +1250,7 @@ class Square extends Shape {
 }
 
 function renderLargeRectangles($rectangles) {
-    foreach($rectangle in $rectangles) {
+    foreach($rectangles as $rectangle) {
         if ($rectangle instanceof Square) {
             $rectangle->setLength(5);
         } else if ($rectangle instanceof Rectangle) {
@@ -1259,7 +1260,7 @@ function renderLargeRectangles($rectangles) {
         
         $area = $rectangle->getArea(); 
         $rectangle->render($area);
-    });
+    }
 }
 
 $shapes = [new Rectangle(), new Rectangle(), new Square()];
