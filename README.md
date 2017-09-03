@@ -1432,7 +1432,7 @@ class SuperWorker implements WorkerInterface {
 }
 
 class Manager {
-    /** @var Worker $worker **/
+    /** @var WorkerInterface $worker **/
     private $worker;
     
     public function __construct(WorkerInterface $worker) {
