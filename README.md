@@ -1181,7 +1181,7 @@ class Square extends Rectangle
     }
 }
 
-function rectangleAreaVerifier(Rectangle $rectangle)
+function areaVerifier(Rectangle $rectangle)
 {
     $rectangle->setWidth(4);
     $rectangle->setHeight(5);
@@ -1193,7 +1193,7 @@ function rectangleAreaVerifier(Rectangle $rectangle)
 $rectangles = [new Rectangle(), new Square()];
 
 foreach ($rectangles as $rectangle) {
-    if (!rectangleAreaVerifier($rectangle)) {
+    if (!areaVerifier($rectangle)) {
         throw new Exception('Bad area!');
     }
 }
@@ -1258,20 +1258,16 @@ function squareAreaVerifier(Square $square)
     return $square->area() == 25;
 }
 
-$rectangles = [new Rectangle()];
+$rectangle = new Rectangle();
 
-foreach ($rectangles as $rectangle) {
-    if (!rectangleAreaVerifier($rectangle)) {
-        throw new Exception('Bad area!');
-    }
+if (!rectangleAreaVerifier($rectangle)) {
+    throw new Exception('Bad area!');
 }
 
-$squares = [new Square()];
+$square = new Square();
 
-foreach ($squares as $square) {
-    if (!squareAreaVerifier($square)) {
-        throw new Exception('Bad area!');
-    }
+if (!squareAreaVerifier($square)) {
+    throw new Exception('Bad area!');
 }
 ```
 
