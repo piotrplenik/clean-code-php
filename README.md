@@ -541,7 +541,7 @@ var_dump($newName); // ['Ryan', 'McDermott'];
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't write to global functions
-Polluting globals is a bad practice in very languages because you could clash with another 
+Polluting globals is a bad practice in many languages because you could clash with another 
 library and the user of your API would be none-the-wiser until they get an exception in 
 production. Let's think about an example: what if you wanted to have configuration array. 
 You could write global function like `config()`, but it could clash with another library 
