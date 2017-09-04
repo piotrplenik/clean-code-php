@@ -1038,6 +1038,7 @@ class HttpRequester {
 
 
 ### Liskov Substitution Principle (LSP)
+
 This is a scary term for a very simple concept. It's formally defined as "If S
 is a subtype of T, then objects of type T may be replaced with objects of type S
 (i.e., objects of type S may substitute objects of type T) without altering any
@@ -1052,53 +1053,66 @@ if you model it using the "is-a" relationship via inheritance, you quickly
 get into trouble.
 
 **Bad:**
+
 ```php
-class Rectangle {
-    private $width, $height;
+class Rectangle
+{
+    private $width;
+    private $height;
     
-    public function __construct() {
+    public function __construct()
+    {
         $this->width = 0;
         $this->height = 0;
     }
     
-    public function setColor($color) {
+    public function setColor($color)
+    {
         // ...
     }
     
-    public function render($area) {
+    public function render($area)
+    {
         // ...
     }
     
-    public function setWidth($width) {
+    public function setWidth($width)
+    {
         $this->width = $width;
     }
     
-    public function setHeight($height) {
+    public function setHeight($height)
+    {
         $this->height = $height;
     }
     
-    public function getArea() {
+    public function getArea()
+    {
         return $this->width * $this->height;
     }
 }
 
-class Square extends Rectangle {
-    public function setWidth($width) {
+class Square extends Rectangle
+{
+    public function setWidth($width)
+    {
         $this->width = $this->height = $width;
     }
     
-    public function setHeight(height) {
+    public function setHeight(height)
+    {
         $this->width = $this->height = $height;
     }
 }
 
-function renderLargeRectangles($rectangles) {
-    foreach($rectangle in $rectangles) {
+function renderLargeRectangles($rectangles)
+{
+    foreach ($rectangle in $rectangles) {
         $rectangle->setWidth(4);
         $rectangle->setHeight(5);
         $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
         $rectangle->render($area);
-    });
+    }
 }
 
 $rectangles = [new Rectangle(), new Rectangle(), new Square()];
@@ -1106,73 +1120,89 @@ renderLargeRectangles($rectangles);
 ```
 
 **Good:**
+
 ```php
-abstract class Shape {
-    private $width, $height;
+abstract class Shape
+{
+    private $width;
+    private $height;
     
     abstract public function getArea();
     
-    public function setColor($color) {
+    public function setColor($color)
+    {
         // ...
     }
     
-    public function render($area) {
+    public function render($area)
+    {
         // ...
     }
 }
 
-class Rectangle extends Shape {
-    public function __construct {
-    parent::__construct();
+class Rectangle extends Shape
+{
+    public function __construct()
+    {
+        parent::__construct();
         $this->width = 0;
         $this->height = 0;
     }
     
-    public function setWidth($width) {
+    public function setWidth($width)
+    {
         $this->width = $width;
     }
     
-    public function setHeight($height) {
+    public function setHeight($height)
+    {
         $this->height = $height;
     }
     
-    public function getArea() {
+    public function getArea()
+    {
         return $this->width * $this->height;
     }
 }
 
-class Square extends Shape {
-    public function __construct {
+class Square extends Shape
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->length = 0;
     }
     
-    public function setLength($length) {
+    public function setLength($length)
+    {
         $this->length = $length;
     }
     
-    public function getArea() {
+    public function getArea()
+    {
         return pow($this->length, 2);
     }
 }
 
-function renderLargeRectangles($rectangles) {
-    foreach($rectangle in $rectangles) {
+function renderLargeRectangles($rectangles)
+{
+    foreach ($rectangle in $rectangles) {
         if ($rectangle instanceof Square) {
             $rectangle->setLength(5);
-        } else if ($rectangle instanceof Rectangle) {
+        } elseif ($rectangle instanceof Rectangle) {
             $rectangle->setWidth(4);
             $rectangle->setHeight(5);
         }
-        
+
         $area = $rectangle->getArea(); 
         $rectangle->render($area);
-    });
+    }
 }
 
 $shapes = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles($shapes);
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Interface Segregation Principle (ISP)
