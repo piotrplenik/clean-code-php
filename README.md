@@ -1059,33 +1059,28 @@ class Rectangle
 {
     private $width;
     private $height;
-    
+
     public function __construct()
     {
         $this->width = 0;
         $this->height = 0;
     }
-    
-    public function setColor($color)
-    {
-        // ...
-    }
-    
+
     public function render($area)
     {
         // ...
     }
-    
+
     public function setWidth($width)
     {
         $this->width = $width;
     }
-    
+
     public function setHeight($height)
     {
         $this->height = $height;
     }
-    
+
     public function getArea()
     {
         return $this->width * $this->height;
@@ -1098,7 +1093,7 @@ class Square extends Rectangle
     {
         $this->width = $this->height = $width;
     }
-    
+
     public function setHeight(height)
     {
         $this->width = $this->height = $height;
@@ -1128,12 +1123,7 @@ abstract class Shape
     private $height;
     
     abstract public function getArea();
-    
-    public function setColor($color)
-    {
-        // ...
-    }
-    
+
     public function render($area)
     {
         // ...
@@ -1148,17 +1138,17 @@ class Rectangle extends Shape
         $this->width = 0;
         $this->height = 0;
     }
-    
+
     public function setWidth($width)
     {
         $this->width = $width;
     }
-    
+
     public function setHeight($height)
     {
         $this->height = $height;
     }
-    
+
     public function getArea()
     {
         return $this->width * $this->height;
@@ -1172,12 +1162,12 @@ class Square extends Shape
         parent::__construct();
         $this->length = 0;
     }
-    
+
     public function setLength($length)
     {
         $this->length = $length;
     }
-    
+
     public function getArea()
     {
         return pow($this->length, 2);
