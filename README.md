@@ -1057,8 +1057,8 @@ get into trouble.
 ```php
 class Rectangle
 {
-    private $width;
-    private $height;
+    protected $width;
+    protected $height;
 
     public function __construct()
     {
@@ -1119,8 +1119,8 @@ renderLargeRectangles($rectangles);
 ```php
 abstract class Shape
 {
-    private $width;
-    private $height;
+    protected $width;
+    protected $height;
     
     abstract public function getArea();
 
