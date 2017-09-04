@@ -1149,19 +1149,8 @@ get into trouble.
 ```php
 class Rectangle
 {
-    protected $width;
-    protected $height;
-
-    public function __construct()
-    {
-        $this->width = 0;
-        $this->height = 0;
-    }
-
-    public function render($area)
-    {
-        // ...
-    }
+    protected $width = 0;
+    protected $height = 0;
 
     public function setWidth($width)
     {
@@ -1173,7 +1162,7 @@ class Rectangle
         $this->height = $height;
     }
 
-    public function getArea()
+    public function area()
     {
         return $this->width * $this->height;
     }
@@ -1186,50 +1175,42 @@ class Square extends Rectangle
         $this->width = $this->height = $width;
     }
 
-    public function setHeight(height)
+    public function setHeight($height)
     {
         $this->width = $this->height = $height;
     }
 }
 
-function renderLargeRectangles($rectangles)
+function rectangleAreaVerifier(Rectangle $rectangle)
 {
-    foreach ($rectangles as $rectangle) {
-        $rectangle->setWidth(4);
-        $rectangle->setHeight(5);
-        $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
-        $rectangle->render($area);
-    }
+    $rectangle->setWidth(4);
+    $rectangle->setHeight(5);
+ 
+    // BAD: Will return 25 for Square. Should be 20.
+    return $rectangle->area() == 20;
 }
 
-$rectangles = [new Rectangle(), new Rectangle(), new Square()];
-renderLargeRectangles($rectangles);
+$rectangles = [new Rectangle(), new Square()];
+
+foreach ($rectangles as $rectangle) {
+    if (!rectangleAreaVerifier($rectangle)) {
+        throw new Exception('Bad area!');
+    }
+}
 ```
 
 **Good:**
 
 ```php
-abstract class Shape
+interface Shape
 {
-    protected $width;
-    protected $height;
-
-    abstract public function getArea();
-
-    public function render($area)
-    {
-        // ...
-    }
+    public function area();
 }
 
-class Rectangle extends Shape
+class Rectangle implements Shape
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->width = 0;
-        $this->height = 0;
-    }
+    private $width = 0;
+    private $height = 0;
 
     public function setWidth($width)
     {
@@ -1241,48 +1222,57 @@ class Rectangle extends Shape
         $this->height = $height;
     }
 
-    public function getArea()
+    public function area()
     {
         return $this->width * $this->height;
     }
 }
 
-class Square extends Shape
+class Square implements Shape
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->length = 0;
-    }
+    private $length = 0;
 
     public function setLength($length)
     {
         $this->length = $length;
     }
 
-    public function getArea()
+    public function area()
     {
         return pow($this->length, 2);
     }
 }
 
-function renderLargeRectangles($rectangles)
+function rectangleAreaVerifier(Rectangle $rectangle)
 {
-    foreach ($rectangles as $rectangle) {
-        if ($rectangle instanceof Square) {
-            $rectangle->setLength(5);
-        } elseif ($rectangle instanceof Rectangle) {
-            $rectangle->setWidth(4);
-            $rectangle->setHeight(5);
-        }
-        
-        $area = $rectangle->getArea(); 
-        $rectangle->render($area);
+    $rectangle->setWidth(4);
+    $rectangle->setHeight(5);
+ 
+    return $rectangle->area() == 20;
+}
+
+function squareAreaVerifier(Square $square)
+{
+    $square->setLength(5);
+ 
+    return $square->area() == 25;
+}
+
+$rectangles = [new Rectangle()];
+
+foreach ($rectangles as $rectangle) {
+    if (!rectangleAreaVerifier($rectangle)) {
+        throw new Exception('Bad area!');
     }
 }
 
-$shapes = [new Rectangle(), new Rectangle(), new Square()];
-renderLargeRectangles($shapes);
+$squares = [new Square()];
+
+foreach ($squares as $square) {
+    if (!squareAreaVerifier($square)) {
+        throw new Exception('Bad area!');
+    }
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
