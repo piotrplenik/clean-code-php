@@ -1149,7 +1149,7 @@ get into trouble.
 ```php
 class Rectangle
 {
-    protected $width
+    protected $width;
     protected $height;
 
     public function __construct()
