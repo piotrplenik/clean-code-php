@@ -1145,48 +1145,56 @@ if you model it using the "is-a" relationship via inheritance, you quickly
 get into trouble.
 
 **Bad:**
+
 ```php
-class Rectangle {
-    private $width, $height;
-    
-    public function __construct() {
+class Rectangle
+{
+    protected $width
+    protected $height;
+
+    public function __construct()
+    {
         $this->width = 0;
         $this->height = 0;
     }
-    
-    public function setColor($color) {
+
+    public function render($area)
+    {
         // ...
     }
-    
-    public function render($area) {
-        // ...
-    }
-    
-    public function setWidth($width) {
+
+    public function setWidth($width)
+    {
         $this->width = $width;
     }
-    
-    public function setHeight($height) {
+
+    public function setHeight($height)
+    {
         $this->height = $height;
     }
-    
-    public function getArea() {
+
+    public function getArea()
+    {
         return $this->width * $this->height;
     }
 }
 
-class Square extends Rectangle {
-    public function setWidth($width) {
+class Square extends Rectangle
+{
+    public function setWidth($width)
+    {
         $this->width = $this->height = $width;
     }
-    
-    public function setHeight(height) {
+
+    public function setHeight(height)
+    {
         $this->width = $this->height = $height;
     }
 }
 
-function renderLargeRectangles($rectangles) {
-    foreach($rectangles as $rectangle) {
+function renderLargeRectangles($rectangles)
+{
+    foreach ($rectangles as $rectangle) {
         $rectangle->setWidth(4);
         $rectangle->setHeight(5);
         $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
@@ -1199,61 +1207,71 @@ renderLargeRectangles($rectangles);
 ```
 
 **Good:**
+
 ```php
-abstract class Shape {
-    protected $width, $height;
-    
+abstract class Shape
+{
+    protected $width;
+    protected $height;
+
     abstract public function getArea();
-    
-    public function setColor($color) {
-        // ...
-    }
-    
-    public function render($area) {
+
+    public function render($area)
+    {
         // ...
     }
 }
 
-class Rectangle extends Shape {
-    public function __construct() {
+class Rectangle extends Shape
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->width = 0;
         $this->height = 0;
     }
-    
-    public function setWidth($width) {
+
+    public function setWidth($width)
+    {
         $this->width = $width;
     }
-    
-    public function setHeight($height) {
+
+    public function setHeight($height)
+    {
         $this->height = $height;
     }
-    
-    public function getArea() {
+
+    public function getArea()
+    {
         return $this->width * $this->height;
     }
 }
 
-class Square extends Shape {
-    public function __construct() {
+class Square extends Shape
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->length = 0;
     }
-    
-    public function setLength($length) {
+
+    public function setLength($length)
+    {
         $this->length = $length;
     }
-    
-    public function getArea() {
+
+    public function getArea()
+    {
         return pow($this->length, 2);
     }
 }
 
-function renderLargeRectangles($rectangles) {
-    foreach($rectangles as $rectangle) {
+function renderLargeRectangles($rectangles)
+{
+    foreach ($rectangles as $rectangle) {
         if ($rectangle instanceof Square) {
             $rectangle->setLength(5);
-        } else if ($rectangle instanceof Rectangle) {
+        } elseif ($rectangle instanceof Rectangle) {
             $rectangle->setWidth(4);
             $rectangle->setHeight(5);
         }
@@ -1266,6 +1284,7 @@ function renderLargeRectangles($rectangles) {
 $shapes = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles($shapes);
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Interface Segregation Principle (ISP)
