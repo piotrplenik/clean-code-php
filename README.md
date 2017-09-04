@@ -11,6 +11,7 @@
      3. [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+  6. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
 
 ## Introduction
 
@@ -98,7 +99,7 @@ $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
-list(, $city, $zipCode) = $matchers;
+list(, $city, $zipCode) = $matches;
 saveCityZipCode($city, $zipCode);
 ```
 
@@ -284,191 +285,184 @@ function isClientActive($client) {
 ### Function names should say what they do
 
 **Bad:**
+
 ```php
-function addToDate($date, $month) {
-    // ...
+class Email
+{
+    //...
+
+    public function handle()
+    {
+        mail($this->to, $this->subject, $this->body);
+    }
 }
 
-$date = new \DateTime();
-
-// It's hard to to tell from the function name what is added
-addToDate($date, 1);
+$message = new Email(...);
+// What is this? A handle for the message? Are we writing to a file now?
+$message->handle();
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function addMonthToDate($month, $date) {
-    // ...
+class Email 
+{
+    //...
+
+    public function send()
+    {
+        mail($this->to, $this->subject, $this->body);
+    }
 }
 
-$date = new \DateTime();
-addMonthToDate(1, $date);
+$message = new Email(...);
+// Clear and obvious
+$message->send();
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Functions should only be one level of abstraction
+
 When you have more than one level of abstraction your function is usually
 doing too much. Splitting up functions leads to reusability and easier
 testing.
 
 **Bad:**
+
 ```php
-function parseBetterJSAlternative($code) {
+function parseBetterJSAlternative($code)
+{
     $regexes = [
         // ...
     ];
     
     $statements = split(' ', $code);
     $tokens = [];
-    foreach($regexes as $regex) {
-        foreach($statements as $statement) {
+    foreach ($regexes as $regex) {
+        foreach ($statements as $statement) {
             // ...
         }
     }
     
     $ast = [];
-    foreach($tokens as $token) {
+    foreach ($tokens as $token) {
         // lex...
     }
     
-    foreach($ast as $node) {
+    foreach ($ast as $node) {
         // parse...
     }
 }
 ```
 
-**Good:**
+**Bad too:**
+
+We have carried out some of the functionality, but the `parseBetterJSAlternative()` function is still very complex and not testable.
 
 ```php
-function tokenize($code) {
+function tokenize($code)
+{
     $regexes = [
         // ...
     ];
     
     $statements = split(' ', $code);
     $tokens = [];
-    foreach($regexes as $regex) {
-        foreach($statements as $statement) {
+    foreach ($regexes as $regex) {
+        foreach ($statements as $statement) {
             $tokens[] = /* ... */;
-        });
-    });
+        }
+    }
     
     return $tokens;
 }
 
-function lexer($tokens) {
+function lexer($tokens)
+{
     $ast = [];
-    foreach($tokens as $token) {
+    foreach ($tokens as $token) {
         $ast[] = /* ... */;
-    });
+    }
     
     return $ast;
 }
 
-function parseBetterJSAlternative($code) {
+function parseBetterJSAlternative($code)
+{
     $tokens = tokenize($code);
     $ast = lexer($tokens);
-    foreach($ast as $node) {
+    foreach ($ast as $node) {
         // parse...
-    });
-}
-```
-**[⬆ back to top](#table-of-contents)**
-
-### Remove duplicate code
-Do your absolute best to avoid duplicate code. Duplicate code is bad because 
-it means that there's more than one place to alter something if you need to 
-change some logic.
-
-Imagine if you run a restaurant and you keep track of your inventory: all your 
-tomatoes, onions, garlic, spices, etc. If you have multiple lists that
-you keep this on, then all have to be updated when you serve a dish with
-tomatoes in them. If you only have one list, there's only one place to update!
-
-Oftentimes you have duplicate code because you have two or more slightly
-different things, that share a lot in common, but their differences force you
-to have two or more separate functions that do much of the same things. Removing 
-duplicate code means creating an abstraction that can handle this set of different 
-things with just one function/module/class.
-
-Getting the abstraction right is critical, that's why you should follow the
-SOLID principles laid out in the *Classes* section. Bad abstractions can be
-worse than duplicate code, so be careful! Having said this, if you can make
-a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself 
-updating multiple places anytime you want to change one thing.
-
-**Bad:**
-
-```php
-function showDeveloperList($developers)
-{
-    foreach ($developers as $developer) {
-        $expectedSalary = $developer->calculateExpectedSalary();
-        $experience = $developer->getExperience();
-        $githubLink = $developer->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
-        
-        render($data);
-    }
-}
-
-function showManagerList($managers)
-{
-    foreach ($managers as $manager) {
-        $expectedSalary = $manager->calculateExpectedSalary();
-        $experience = $manager->getExperience();
-        $githubLink = $manager->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
-        
-        render($data);
     }
 }
 ```
 
 **Good:**
 
+The best solution is move out the dependencies of `parseBetterJSAlternative()` function.
+
 ```php
-function showList($employees)
+class Tokenizer
 {
-    foreach ($employees as $employe) {
-        $expectedSalary = $employe->calculateExpectedSalary();
-        $experience = $employe->getExperience();
-        $githubLink = $employe->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
+    public function tokenize($code)
+    {
+        $regexes = [
+            // ...
         ];
-        
-        render($data);
+
+        $statements = split(' ', $code);
+        $tokens = [];
+        foreach ($regexes as $regex) {
+            foreach ($statements as $statement) {
+                $tokens[] = /* ... */;
+            }
+        }
+
+        return $tokens;
     }
 }
 ```
-
-**Very good:**
-
-It is better to use a compact version of the code.
 
 ```php
-function showList($employees)
+class Lexer
 {
-    foreach ($employees as $employe) {
-        render([
-            $employe->calculateExpectedSalary(),
-            $employe->getExperience(),
-            $employe->getGithubLink()
-        ]);
+    public function lexify($tokens)
+    {
+        $ast = [];
+        foreach ($tokens as $token) {
+            $ast[] = /* ... */;
+        }
+
+        return $ast;
     }
 }
 ```
+
+```php
+class BetterJSAlternative
+{
+    private $tokenizer;
+    private $lexer;
+
+    public function __construct(Tokenizer $tokenizer, Lexer $lexer)
+    {
+        $this->tokenizer = $tokenizer;
+        $this->lexer = $lexer;
+    }
+
+    public function parse($code)
+    {
+        $tokens = $this->tokenizer->tokenize($code);
+        $ast = $this->lexer->lexify($tokens);
+        foreach ($ast as $node) {
+            // parse...
+        }
+    }
+}
+```
+
+Now we can mock the dependencies and test only the work of method `BetterJSAlternative::parse()`.
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -522,6 +516,8 @@ than the vast majority of other programmers.
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName() {
+    global $name;
+
     $name = preg_split('/ /', $name);
 }
 
@@ -532,8 +528,6 @@ var_dump($name); // ['Ryan', 'McDermott'];
 
 **Good**:
 ```php
-$name = 'Ryan McDermott';
-
 function splitIntoFirstAndLastName($name) {
     return preg_split('/ /', $name);
 }
@@ -547,16 +541,17 @@ var_dump($newName); // ['Ryan', 'McDermott'];
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't write to global functions
-Polluting globals is a bad practice in very languages because you could clash with another 
+Polluting globals is a bad practice in many languages because you could clash with another 
 library and the user of your API would be none-the-wiser until they get an exception in 
 production. Let's think about an example: what if you wanted to have configuration array. 
 You could write global function like `config()`, but it could clash with another library 
-that tried to do the same thing. This is why it
-would be much better to use singleton design pattern and simple set configuration.
+that tried to do the same thing.
 
 **Bad:**
+
 ```php
-function config() {
+function config()
+{
     return  [
         'foo' => 'bar',
     ]
@@ -564,43 +559,115 @@ function config() {
 ```
 
 **Good:**
+
+Create PHP configuration file or something else
+
 ```php
-class Configuration {
+// config.php
+return [
+    'foo' => 'bar',
+];
+```
+
+```php
+class Configuration
+{
+    private $configuration = [];
+
+    public function __construct(array $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    public function get($key)
+    {
+        return isset($this->configuration[$key]) ? $this->configuration[$key] : null;
+    }
+}
+```
+
+Load configuration from file and create instance of `Configuration` class 
+
+```php
+$configuration = new Configuration($configuration);
+```
+
+And now you must use instance of `Configuration` in your application.
+
+**[⬆ back to top](#table-of-contents)**
+
+### Don't use a Singleton pattern
+Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
+
+**Bad:**
+
+```php
+class DBConnection
+{
     private static $instance;
-    private function __construct($configuration) {/* */}
-    public static function getInstance() {
+
+    private function __construct($dsn)
+    {
+        // ...
+    }
+
+    public static function getInstance()
+    {
         if (self::$instance === null) {
-            self::$instance = new Configuration();
+            self::$instance = new self();
         }
+
         return self::$instance;
     }
-    public function get($key) {/* */}
-    public function getAll() {/* */}
+
+    // ...
 }
 
-$singleton = Configuration::getInstance();
+$singleton = DBConnection::getInstance();
 ```
+
+**Good:**
+
+```php
+class DBConnection
+{
+    public function __construct(array $dsn)
+    {
+        // ...
+    }
+
+     // ...
+}
+```
+
+Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+
+```php
+$connection = new DBConnection($dsn);
+```
+
+And now you must use instance of `DBConnection` in your application.
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Encapsulate conditionals
 
 **Bad:**
+
 ```php
-if ($fsm->state === 'fetching' && is_empty($listNode)) {
+if ($article->state === 'published') {
     // ...
 }
 ```
 
 **Good**:
-```php
-function shouldShowSpinner($fsm, $listNode) {
-    return $fsm->state === 'fetching' && is_empty($listNode);
-}
 
-if (shouldShowSpinner($fsmInstance, $listNodeInstance)) {
-  // ...
+```php
+if ($article->isPublished()) {
+    // ...
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid negative conditionals
@@ -685,28 +752,34 @@ class Cessna extends Airplane {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 1)
+
 PHP is untyped, which means your functions can take any type of argument.
 Sometimes you are bitten by this freedom and it becomes tempting to do
 type-checking in your functions. There are many ways to avoid having to do this.
 The first thing to consider is consistent APIs.
 
 **Bad:**
+
 ```php
-function travelToTexas($vehicle) {
+function travelToTexas($vehicle)
+{
     if ($vehicle instanceof Bicycle) {
-        $vehicle->peddle($this->currentLocation, new Location('texas'));
-    } else if ($vehicle instanceof Car) {
-        $vehicle->drive($this->currentLocation, new Location('texas'));
+        $vehicle->peddleTo(new Location('texas'));
+    } elseif ($vehicle instanceof Car) {
+        $vehicle->driveTo(new Location('texas'));
     }
 }
 ```
 
 **Good**:
+
 ```php
-function travelToTexas($vehicle) {
-  $vehicle->move($this->currentLocation, new Location('texas'));
+function travelToTexas(Traveler $vehicle)
+{
+    $vehicle->travelTo(new Location('texas'));
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 2)
@@ -760,8 +833,8 @@ function newRequestModule($url) {
     // ...
 }
 
-$req = new newRequestModule($requestUrl);
-inventoryTracker('apples', $req, 'www.inventory-awesome.io');
+$request = newRequestModule($requestUrl);
+inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 
 ```
 
@@ -771,8 +844,8 @@ function requestModule($url) {
     // ...
 }
 
-$req = new requestModule($requestUrl);
-inventoryTracker('apples', $req, 'www.inventory-awesome.io');
+$request = requestModule($requestUrl);
+inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 **[⬆ back to top](#table-of-contents)**
 
@@ -895,8 +968,9 @@ your codebase.
 ```php
 class UserSettings {
     private $user;
+
     public function __construct($user) {
-        $this->user = user;
+        $this->user = $user;
     }
     
     public function changeSettings($settings) {
@@ -915,8 +989,9 @@ class UserSettings {
 ```php
 class UserAuth {
     private $user;
+
     public function __construct($user) {
-        $this->user = user;
+        $this->user = $user;
     }
     
     public function verifyCredentials() {
@@ -927,6 +1002,7 @@ class UserAuth {
 
 class UserSettings {
     private $user;
+
     public function __construct($user) {
         $this->user = $user;
         $this->auth = new UserAuth($user);
@@ -942,102 +1018,119 @@ class UserSettings {
 **[⬆ back to top](#table-of-contents)**
 
 ### Open/Closed Principle (OCP)
+
 As stated by Bertrand Meyer, "software entities (classes, modules, functions,
 etc.) should be open for extension, but closed for modification." What does that
 mean though? This principle basically states that you should allow users to
 add new functionalities without changing existing code.
 
 **Bad:**
+
 ```php
-abstract class Adapter {
+abstract class Adapter
+{
     protected $name;
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 }
 
-class AjaxAdapter extends Adapter {
-    public function __construct() {
+class AjaxAdapter extends Adapter
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->name = 'ajaxAdapter';
     }
 }
 
-class NodeAdapter extends Adapter {
-    public function __construct() {
+class NodeAdapter extends Adapter
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->name = 'nodeAdapter';
     }
 }
 
-class HttpRequester {
+class HttpRequester
+{
     private $adapter;
-    public function __construct($adapter) {
+
+    public function __construct($adapter)
+    {
         $this->adapter = $adapter;
     }
     
-    public function fetch($url) {
+    public function fetch($url)
+    {
         $adapterName = $this->adapter->getName();
+
         if ($adapterName === 'ajaxAdapter') {
             return $this->makeAjaxCall($url);
-        } else if ($adapterName === 'httpNodeAdapter') {
+        } elseif ($adapterName === 'httpNodeAdapter') {
             return $this->makeHttpCall($url);
         }
     }
     
-    protected function makeAjaxCall($url) {
+    protected function makeAjaxCall($url)
+    {
         // request and return promise
     }
     
-    protected function makeHttpCall($url) {
+    protected function makeHttpCall($url)
+    {
         // request and return promise
     }
 }
 ```
 
 **Good:**
+
 ```php
-abstract class Adapter {
-    abstract protected function getName();
-    abstract public function request($url);
+interface Adapter
+{
+    public function request($url);
 }
 
-class AjaxAdapter extends Adapter {
-    protected function getName() {
-        return 'ajaxAdapter';
-    }
-    
-    public function request($url) {
+class AjaxAdapter implements Adapter
+{
+    public function request($url)
+    {
         // request and return promise
     }
 }
 
-class NodeAdapter extends Adapter {
-    protected function getName() {
-        return 'nodeAdapter';
-    }
-    
-    public function request($url) {
+class NodeAdapter implements Adapter
+{
+    public function request($url)
+    {
         // request and return promise
     }
 }
 
-class HttpRequester {
+class HttpRequester
+{
     private $adapter;
-    public function __construct(Adapter $adapter) {
+
+    public function __construct(Adapter $adapter)
+    {
         $this->adapter = $adapter;
     }
     
-    public function fetch($url) {
+    public function fetch($url)
+    {
         return $this->adapter->request($url);
     }
 }
-
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
-
 ### Liskov Substitution Principle (LSP)
+
 This is a scary term for a very simple concept. It's formally defined as "If S
 is a subtype of T, then objects of type T may be replaced with objects of type S
 (i.e., objects of type S may substitute objects of type T) without altering any
@@ -1093,12 +1186,12 @@ class Square extends Rectangle {
 }
 
 function renderLargeRectangles($rectangles) {
-    foreach($rectangle in $rectangles) {
+    foreach($rectangles as $rectangle) {
         $rectangle->setWidth(4);
         $rectangle->setHeight(5);
         $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
         $rectangle->render($area);
-    });
+    }
 }
 
 $rectangles = [new Rectangle(), new Rectangle(), new Square()];
@@ -1108,7 +1201,7 @@ renderLargeRectangles($rectangles);
 **Good:**
 ```php
 abstract class Shape {
-    private $width, $height;
+    protected $width, $height;
     
     abstract public function getArea();
     
@@ -1122,8 +1215,8 @@ abstract class Shape {
 }
 
 class Rectangle extends Shape {
-    public function __construct {
-    parent::__construct();
+    public function __construct() {
+        parent::__construct();
         $this->width = 0;
         $this->height = 0;
     }
@@ -1142,7 +1235,7 @@ class Rectangle extends Shape {
 }
 
 class Square extends Shape {
-    public function __construct {
+    public function __construct() {
         parent::__construct();
         $this->length = 0;
     }
@@ -1157,7 +1250,7 @@ class Square extends Shape {
 }
 
 function renderLargeRectangles($rectangles) {
-    foreach($rectangle in $rectangles) {
+    foreach($rectangles as $rectangle) {
         if ($rectangle instanceof Square) {
             $rectangle->setLength(5);
         } else if ($rectangle instanceof Rectangle) {
@@ -1167,7 +1260,7 @@ function renderLargeRectangles($rectangles) {
         
         $area = $rectangle->getArea(); 
         $rectangle->render($area);
-    });
+    }
 }
 
 $shapes = [new Rectangle(), new Rectangle(), new Square()];
@@ -1339,7 +1432,7 @@ class SuperWorker implements WorkerInterface {
 }
 
 class Manager {
-    /** @var Worker $worker **/
+    /** @var WorkerInterface $worker **/
     private $worker;
     
     public function __construct(WorkerInterface $worker) {
@@ -1478,8 +1571,8 @@ class Employee {
 class EmployeeTaxData extends Employee {
     private $ssn, $salary;
     
-    public function __construct($ssn, $salary) {
-        parent::__construct();
+    public function __construct($name, $email, $ssn, $salary) {
+        parent::__construct($name, $email);
         $this->ssn = $ssn;
         $this->salary = $salary;
     }
@@ -1515,4 +1608,104 @@ class Employee {
     // ...
 }
 ```
+**[⬆ back to top](#table-of-contents)**
+
+## Don’t repeat yourself (DRY)
+
+Try to observe the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.
+
+Do your absolute best to avoid duplicate code. Duplicate code is bad because 
+it means that there's more than one place to alter something if you need to 
+change some logic.
+
+Imagine if you run a restaurant and you keep track of your inventory: all your 
+tomatoes, onions, garlic, spices, etc. If you have multiple lists that
+you keep this on, then all have to be updated when you serve a dish with
+tomatoes in them. If you only have one list, there's only one place to update!
+
+Oftentimes you have duplicate code because you have two or more slightly
+different things, that share a lot in common, but their differences force you
+to have two or more separate functions that do much of the same things. Removing 
+duplicate code means creating an abstraction that can handle this set of different 
+things with just one function/module/class.
+
+Getting the abstraction right is critical, that's why you should follow the
+SOLID principles laid out in the [Classes](#classes) section. Bad abstractions can be
+worse than duplicate code, so be careful! Having said this, if you can make
+a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself 
+updating multiple places anytime you want to change one thing.
+
+**Bad:**
+
+```php
+function showDeveloperList($developers)
+{
+    foreach ($developers as $developer) {
+        $expectedSalary = $developer->calculateExpectedSalary();
+        $experience = $developer->getExperience();
+        $githubLink = $developer->getGithubLink();
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
+        
+        render($data);
+    }
+}
+
+function showManagerList($managers)
+{
+    foreach ($managers as $manager) {
+        $expectedSalary = $manager->calculateExpectedSalary();
+        $experience = $manager->getExperience();
+        $githubLink = $manager->getGithubLink();
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
+        
+        render($data);
+    }
+}
+```
+
+**Good:**
+
+```php
+function showList($employees)
+{
+    foreach ($employees as $employee) {
+        $expectedSalary = $employee->calculateExpectedSalary();
+        $experience = $employee->getExperience();
+        $githubLink = $employee->getGithubLink();
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
+        
+        render($data);
+    }
+}
+```
+
+**Very good:**
+
+It is better to use a compact version of the code.
+
+```php
+function showList($employees)
+{
+    foreach ($employees as $employee) {
+        render([
+            $employee->calculateExpectedSalary(),
+            $employee->getExperience(),
+            $employee->getGithubLink()
+        ]);
+    }
+}
+```
+
 **[⬆ back to top](#table-of-contents)**
