@@ -833,8 +833,8 @@ function newRequestModule($url) {
     // ...
 }
 
-$req = new newRequestModule($requestUrl);
-inventoryTracker('apples', $req, 'www.inventory-awesome.io');
+$request = newRequestModule($requestUrl);
+inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 
 ```
 
@@ -844,8 +844,8 @@ function requestModule($url) {
     // ...
 }
 
-$req = new requestModule($requestUrl);
-inventoryTracker('apples', $req, 'www.inventory-awesome.io');
+$request = requestModule($requestUrl);
+inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 **[⬆ back to top](#table-of-contents)**
 
@@ -1215,8 +1215,8 @@ abstract class Shape {
 }
 
 class Rectangle extends Shape {
-    public function __construct {
-    parent::__construct();
+    public function __construct() {
+        parent::__construct();
         $this->width = 0;
         $this->height = 0;
     }
@@ -1235,7 +1235,7 @@ class Rectangle extends Shape {
 }
 
 class Square extends Shape {
-    public function __construct {
+    public function __construct() {
         parent::__construct();
         $this->length = 0;
     }
