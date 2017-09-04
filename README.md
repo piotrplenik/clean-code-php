@@ -1199,7 +1199,10 @@ foreach ($rectangles as $rectangle) {
 }
 ```
 
-**Good:**
+**Not good:**
+
+You can separate client for differen shapes.
+But this is not a best solution becous the square is still must be a subtype of the rectangle.
 
 ```php
 interface Shape
