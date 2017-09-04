@@ -1201,7 +1201,7 @@ renderLargeRectangles($rectangles);
 **Good:**
 ```php
 abstract class Shape {
-    private $width, $height;
+    protected $width, $height;
     
     abstract public function getArea();
     
