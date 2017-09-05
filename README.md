@@ -1,4 +1,4 @@
-# clean-code-php
+# clean-code-python
 
 ## Table of Contents
   1. [Introduction](#introduction)
@@ -17,8 +17,8 @@
 
 Software engineering principles, from Robert C. Martin's book
 [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for PHP. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in PHP.
+adapted for Python. This is not a style guide. It's a guide to producing
+readable, reusable, and refactorable software in Python.
 
 Not every principle herein has to be strictly followed, and even fewer will be universally 
 agreed upon. These are guidelines and nothing more, but they are ones codified over many 
@@ -30,28 +30,28 @@ Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-cod
 ### Use meaningful and pronounceable variable names
 
 **Bad:**
-```php
-$ymdstr = $moment->format('y-m-d');
+```python
+ymdstr = datetime.date.today().strftime("%y-%m-%d")
 ```
 
 **Good**:
-```php
-$currentDate = $moment->format('y-m-d');
+```python
+current_date = datetime.date.today().strftime("%y-%m-%d")
 ```
 **[⬆ back to top](#table-of-contents)**
 
 ### Use the same vocabulary for the same type of variable
 
 **Bad:**
-```php
-getUserInfo();
-getClientData();
-getCustomerRecord();
+```python
+get_user_info()
+get_client_data()
+get_customer_record()
 ```
 
 **Good**:
-```php
-getUser();
+```python
+get_user()
 ```
 **[⬆ back to top](#table-of-contents)**
 
@@ -62,20 +62,18 @@ understanding our program, we hurt our readers.
 Make your names searchable.
 
 **Bad:**
-```php
-// What the heck is 86400 for?
-addExpireAt(86400);
+```python
+# What the heck is 86400 for?
+time.sleep(86400);
 
 ```
 
 **Good**:
-```php
-// Declare them as capitalized `const` globals.
-interface DateGlobal {
-    const SECONDS_IN_A_DAY = 86400;
-}
+```python
+# Declare them in the global namespace for the module.
+SECONDS_IN_A_DAY = 60 * 60 * 24
 
-addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
+time.sleep(SECONDS_IN_A_DAY)
 ```
 **[⬆ back to top](#table-of-contents)**
 
