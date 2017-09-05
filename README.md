@@ -691,19 +691,24 @@ if ($article->isPublished()) {
 ### Avoid negative conditionals
 
 **Bad:**
+
 ```php
-function isDOMNodeNotPresent($node) {
+function isDOMNodeNotPresent($node)
+{
     // ...
 }
 
-if (!isDOMNodeNotPresent($node)) {
+if (!isDOMNodeNotPresent($node))
+{
     // ...
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function isDOMNodePresent($node) {
+function isDOMNodePresent($node)
+{
     // ...
 }
 
@@ -711,6 +716,7 @@ if (isDOMNodePresent($node)) {
     // ...
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid conditionals
