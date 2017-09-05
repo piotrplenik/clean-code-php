@@ -852,6 +852,7 @@ inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 
 ## **Objects and Data Structures**
 ### Use getters and setters
+
 In PHP you can set `public`, `protected` and `private` keywords for methods. 
 Using it, you can control properties modification on an object. 
 
@@ -868,8 +869,10 @@ Additionally, this is part of Open/Closed principle, from object-oriented
 design principles.
 
 **Bad:**
+
 ```php
-class BankAccount {
+class BankAccount
+{
     public $balance = 1000;
 }
 
@@ -879,27 +882,34 @@ $bankAccount = new BankAccount();
 $bankAccount->balance -= 100;
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class BankAccount {
+class BankAccount
+{
     private $balance;
-    
-    public function __construct($balance = 1000) {
+
+    public function __construct($balance = 1000)
+    {
       $this->balance = $balance;
     }
-    
-    public function withdrawBalance($amount) {
+
+    public function withdrawBalance($amount)
+    {
         if ($amount > $this->balance) {
             throw new \Exception('Amount greater than available balance.');
         }
+
         $this->balance -= $amount;
     }
-    
-    public function depositBalance($amount) {
+
+    public function depositBalance($amount)
+    {
         $this->balance += $amount;
     }
-    
-    public function getBalance() {
+
+    public function getBalance()
+    {
         return $this->balance;
     }
 }
@@ -911,10 +921,9 @@ $bankAccount->withdrawBalance($shoesPrice);
 
 // Get balance
 $balance = $bankAccount->getBalance();
-
 ```
-**[⬆ back to top](#table-of-contents)**
 
+**[⬆ back to top](#table-of-contents)**
 
 ### Make objects have private/protected members
 
