@@ -937,11 +937,14 @@ $balance = $bankAccount->getBalance();
 ### Make objects have private/protected members
 
 **Bad:**
+
 ```php
-class Employee {
+class Employee
+{
     public $name;
-    
-    public function __construct($name) {
+
+    public function __construct($name)
+    {
         $this->name = $name;
     }
 }
@@ -950,12 +953,15 @@ $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->name; // Employee name: John Doe
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class Employee {
-    protected $name;
+class Employee
+{
+    private $name;
     
-    public function __construct($name) {
+    public function __construct($name)
+    {
         $this->name = $name;
     }
     
@@ -967,6 +973,7 @@ class Employee {
 $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 
