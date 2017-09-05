@@ -720,6 +720,7 @@ if (isDOMNodePresent($node)) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid conditionals
+
 This seems like an impossible task. Upon first hearing this, most people say,
 "how am I supposed to do anything without an `if` statement?" The answer is that
 you can use polymorphism to achieve the same task in many cases. The second
@@ -730,10 +731,14 @@ are telling your user that your function does more than one thing. Remember,
 just do one thing.
 
 **Bad:**
+
 ```php
-class Airplane {
+class Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         switch ($this->type) {
             case '777':
                 return $this->getMaxAltitude() - $this->getPassengerCount();
@@ -746,33 +751,45 @@ class Airplane {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class Airplane {
+class Airplane
+{
     // ...
 }
 
-class Boeing777 extends Airplane {
+class Boeing777 extends Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude() - $this->getPassengerCount();
     }
 }
 
-class AirForceOne extends Airplane {
+class AirForceOne extends Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude();
     }
 }
 
-class Cessna extends Airplane {
+class Cessna extends Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude() - $this->getFuelExpenditure();
     }
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 1)
