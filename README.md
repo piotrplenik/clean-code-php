@@ -1543,8 +1543,8 @@ class Manager {
 ### Use method chaining
 This pattern is very useful and commonly used it many libraries such
 as PHPUnit and Doctrine. It allows your code to be expressive, and less verbose.
-For that reason, I say, use method chaining and take a look at how clean your code
-will be. In your class functions, simply return `this` at the end of every function,
+For that reason, use method chaining and take a look at how clean your code
+will be. In your class functions, simply use `return $this` at the end of every `set` function,
 and you can chain further class methods onto it.
 
 **Bad:**
