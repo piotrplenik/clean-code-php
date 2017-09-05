@@ -1201,7 +1201,8 @@ foreach ($rectangles as $rectangle) {
 
 **Not bad:**
 
-You can solve the problem by making objects immutable, but this is not the best solution.
+You can solve the problem by making objects immutable.
+But this is not the best solution, because the square specifies the invariants of the rectangle.
 
 ```php
 class Rectangle
@@ -1255,9 +1256,10 @@ foreach ($rectangles as $rectangle) {
 
 **Good:**
 
-You must separate different shapes.
-Despite the apparent similarity of the square and the rectangle, this is not so.
-A square also has much in common with a rhombus, but it is not a subtype of a rhombus.
+The best way is separate the quadrangles.
+Despite the apparent similarity of the square and the rectangle, they are different.
+A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
+A square, a rectangle, a rhombus and a parallelogram are separate figures with their own properties, albeit similar.
 
 ```php
 class Rectangle
