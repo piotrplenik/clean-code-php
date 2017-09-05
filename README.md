@@ -184,7 +184,7 @@ function createMicrobrewery($breweryName = 'Hipster Brew Co.')
 
 **Not bad:**
 
-This opinion is understandable than the previous version, but it better controls the value of the variable.
+This opinion is more understandable than the previous version, but it better controls the value of the variable.
 
 ```php
 function createMicrobrewery($name = null)
