@@ -1260,12 +1260,7 @@ Despite the apparent similarity of the square and the rectangle, this is not so.
 A square also has much in common with a rhombus, but it is not a subtype of a rhombus.
 
 ```php
-interface Shape
-{
-    public function area();
-}
-
-class Rectangle implements Shape
+class Rectangle
 {
     private $width = 0;
     private $height = 0;
@@ -1286,7 +1281,7 @@ class Rectangle implements Shape
     }
 }
 
-class Square implements Shape
+class Square
 {
     private $length = 0;
 
