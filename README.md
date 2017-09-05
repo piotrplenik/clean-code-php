@@ -1447,8 +1447,6 @@ class SuperWorker implements Worker
 
 class Manager
 {
-    /** @var WorkerInterface $worker **/
-
     private $worker;
 
     public function __construct(Worker $worker)
