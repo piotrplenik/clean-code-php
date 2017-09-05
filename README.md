@@ -1382,7 +1382,7 @@ class Worker implements WorkerInterface {
         // ....working
     }
     public function eat() {
-        // ...... eating in launch break
+        // ...... eating in lunch break
     }
 }
 
@@ -1392,7 +1392,7 @@ class SuperWorker implements WorkerInterface {
     }
 
     public function eat() {
-        //.... eating in launch break
+        //.... eating in lunch break
     }
 }
 
@@ -1429,7 +1429,7 @@ class Worker implements WorkableInterface, FeedableInterface {
     }
 
     public function eat() {
-        //.... eating in launch break
+        //.... eating in lunch break
     }
 }
 
@@ -1445,7 +1445,7 @@ class SuperWorker implements WorkerInterface  {
     }
 
     public function eat() {
-        //.... eating in launch break
+        //.... eating in lunch break
     }
 }
 
@@ -1541,7 +1541,7 @@ class Manager {
 **[⬆ back to top](#table-of-contents)**
 
 ### Use method chaining
-This pattern is very useful and commonly used it many libraries such
+This pattern is very useful and commonly used in many libraries such
 as PHPUnit and Doctrine. It allows your code to be expressive, and less verbose.
 For that reason, use method chaining and take a look at how clean your code
 will be. In your class functions, simply use `return $this` at the end of every `set` function,
