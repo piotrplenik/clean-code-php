@@ -495,6 +495,7 @@ function createTempFile($name) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Side Effects
+
 A function produces a side effect if it does anything other than take a value in and 
 return another value or values. A side effect could be writing to a file, modifying 
 some global variable, or accidentally wiring all your money to a stranger.
@@ -510,12 +511,14 @@ centralizing where your side effects occur. If you can do this, you will be happ
 than the vast majority of other programmers.
 
 **Bad:**
+
 ```php
 // Global variable referenced by following function.
 // If we had another function that used this name, now it'd be an array and it could break it.
 $name = 'Ryan McDermott';
 
-function splitIntoFirstAndLastName() {
+function splitIntoFirstAndLastName()
+{
     global $name;
 
     $name = preg_split('/ /', $name);
@@ -526,9 +529,11 @@ splitIntoFirstAndLastName();
 var_dump($name); // ['Ryan', 'McDermott'];
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function splitIntoFirstAndLastName($name) {
+function splitIntoFirstAndLastName($name)
+{
     return preg_split('/ /', $name);
 }
 
@@ -538,6 +543,7 @@ $newName = splitIntoFirstAndLastName($name);
 var_dump($name); // 'Ryan McDermott';
 var_dump($newName); // ['Ryan', 'McDermott'];
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't write to global functions
