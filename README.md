@@ -819,34 +819,40 @@ function combine(int $val1, int $val2)
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove dead code
+
 Dead code is just as bad as duplicate code. There's no reason to keep it in
 your codebase. If it's not being called, get rid of it! It will still be safe
 in your version history if you still need it.
 
 **Bad:**
+
 ```php
-function oldRequestModule($url) {
+function oldRequestModule($url)
+{
     // ...
 }
 
-function newRequestModule($url) {
+function newRequestModule($url)
+{
     // ...
 }
 
 $request = newRequestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
-
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function requestModule($url) {
+function requestModule($url)
+{
     // ...
 }
 
 $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 
