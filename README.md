@@ -467,13 +467,16 @@ Now we can mock the dependencies and test only the work of method `BetterJSAlter
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use flags as function parameters
+
 Flags tell your user that this function does more than one thing. Functions should 
 do one thing. Split out your functions if they are following different code paths 
 based on a boolean.
 
 **Bad:**
+
 ```php
-function createFile($name, $temp = false) {
+function createFile($name, $temp = false)
+{
     if ($temp) {
         touch('./temp/'.$name);
     } else {
@@ -483,15 +486,19 @@ function createFile($name, $temp = false) {
 ```
 
 **Good**:
+
 ```php
-function createFile($name) {
+function createFile($name)
+{
     touch($name);
 }
 
-function createTempFile($name) {
+function createTempFile($name)
+{
     touch('./temp/'.$name);
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Side Effects
