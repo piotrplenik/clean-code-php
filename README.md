@@ -1389,7 +1389,7 @@ it makes your code hard to refactor.
 **Bad:**
 
 ```php
-class Worker
+class Employee
 {
   public function work()
   {
@@ -1397,7 +1397,7 @@ class Worker
   }
 }
 
-class SuperWorker extends Worker
+class Robot extends Employee
 {
     public function work()
     {
@@ -1407,16 +1407,16 @@ class SuperWorker extends Worker
 
 class Manager
 {
-    private $worker;
+    private $employee;
 
-    public function __construct(Worker $worker)
+    public function __construct(Employee $employee)
     {
-        $this->worker = $worker;
+        $this->employee = $employee;
     }
 
     public function manage()
     {
-        $this->worker->work();
+        $this->employee->work();
     }
 }
 ```
@@ -1424,12 +1424,12 @@ class Manager
 **Good:**
 
 ```php
-interface Worker
+interface Employee
 {
     public function work();
 }
 
-class SumeWorker implements Worker
+class Human implements Employee
 {
     public function work()
     {
@@ -1437,7 +1437,7 @@ class SumeWorker implements Worker
     }
 }
 
-class SuperWorker implements Worker
+class Robot implements Employee
 {
     public function work()
     {
@@ -1447,16 +1447,16 @@ class SuperWorker implements Worker
 
 class Manager
 {
-    private $worker;
+    private $employee;
 
-    public function __construct(Worker $worker)
+    public function __construct(Employee $employee)
     {
-        $this->worker = $worker;
+        $this->employee = $employee;
     }
 
     public function manage()
     {
-        $this->worker->work();
+        $this->employee->work();
     }
 }
 ```
