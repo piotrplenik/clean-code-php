@@ -462,8 +462,6 @@ class BetterJSAlternative
 }
 ```
 
-Now we can mock the dependencies and test only the work of method `BetterJSAlternative::parse()`.
-
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use flags as function parameters
