@@ -1199,10 +1199,11 @@ foreach ($rectangles as $rectangle) {
 }
 ```
 
-**Not good:**
+**Good:**
 
-You can separate client for differen shapes.
-But this is not a best solution becous the square is still must be a subtype of the rectangle.
+You must separate different shapes.
+Despite the apparent similarity of the square and the rectangle, this is not so.
+A square also has much in common with a rhombus, but it is not a subtype of a rhombus.
 
 ```php
 interface Shape
