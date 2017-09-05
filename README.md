@@ -80,9 +80,9 @@ time.sleep(SECONDS_IN_A_DAY)
 
 ### Use explanatory variables
 **Bad:**
-```php
-$address = 'One Infinite Loop, Cupertino 95014';
-$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
+```python
+address = 'One Infinite Loop, Cupertino 95014'
+city_zip_code_regex = r'/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/'
 preg_match($cityZipCodeRegex, $address, $matches);
 
 saveCityZipCode($matches[1], $matches[2]);
