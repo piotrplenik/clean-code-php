@@ -1453,6 +1453,7 @@ class Robot implements Workable
 **[⬆ back to top](#table-of-contents)**
 
 ### Dependency Inversion Principle (DIP)
+
 This principle states two essential things:
 1. High-level modules should not depend on low-level modules. Both should
 depend on abstractions.
@@ -1467,65 +1468,80 @@ the coupling between modules. Coupling is a very bad development pattern because
 it makes your code hard to refactor.
 
 **Bad:**
+
 ```php
-class Worker {
-  public function work() {
+class Employee
+{
+  public function work()
+  {
     // ....working
   }
 }
 
-class Manager {
-    /** @var Worker $worker **/
-    private $worker;
-    
-    public function __construct(Worker $worker) {
-        $this->worker = $worker;
-    }
-    
-    public function manage() {
-        $this->worker->work();
+class Robot extends Employee
+{
+    public function work()
+    {
+        //.... working much more
     }
 }
 
-class SuperWorker extends Worker {
-    public function work() {
-        //.... working much more
+class Manager
+{
+    private $employee;
+
+    public function __construct(Employee $employee)
+    {
+        $this->employee = $employee;
+    }
+
+    public function manage()
+    {
+        $this->employee->work();
     }
 }
 ```
 
 **Good:**
+
 ```php
-interface WorkerInterface {
+interface Employee
+{
     public function work();
 }
 
-class Worker implements WorkerInterface {
-    public function work() {
+class Human implements Employee
+{
+    public function work()
+    {
         // ....working
     }
 }
 
-class SuperWorker implements WorkerInterface {
-    public function work() {
+class Robot implements Employee
+{
+    public function work()
+    {
         //.... working much more
     }
 }
 
-class Manager {
-    /** @var WorkerInterface $worker **/
-    private $worker;
-    
-    public function __construct(WorkerInterface $worker) {
-        $this->worker = $worker;
+class Manager
+{
+    private $employee;
+
+    public function __construct(Employee $employee)
+    {
+        $this->employee = $employee;
     }
-    
-    public function manage() {
-        $this->worker->work();
+
+    public function manage()
+    {
+        $this->employee->work();
     }
 }
-
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use method chaining
