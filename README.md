@@ -1223,19 +1223,8 @@ get into trouble.
 ```php
 class Rectangle
 {
-    protected $width;
-    protected $height;
-
-    public function __construct()
-    {
-        $this->width = 0;
-        $this->height = 0;
-    }
-
-    public function render($area)
-    {
-        // ...
-    }
+    protected $width = 0;
+    protected $height = 0;
 
     public function setWidth($width)
     {
@@ -1247,7 +1236,7 @@ class Rectangle
         $this->height = $height;
     }
 
-    public function getArea()
+    public function area()
     {
         return $this->width * $this->height;
     }
@@ -1260,50 +1249,97 @@ class Square extends Rectangle
         $this->width = $this->height = $width;
     }
 
-    public function setHeight(height)
+    public function setHeight($height)
     {
         $this->width = $this->height = $height;
     }
 }
 
-function renderLargeRectangles($rectangles)
+function areaVerifier(Rectangle $rectangle)
 {
-    foreach ($rectangles as $rectangle) {
-        $rectangle->setWidth(4);
-        $rectangle->setHeight(5);
-        $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
-        $rectangle->render($area);
+    $rectangle->setWidth(4);
+    $rectangle->setHeight(5);
+ 
+    // BAD: Will return 25 for Square. Should be 20.
+    return $rectangle->area() == 20;
+}
+
+$rectangles = [new Rectangle(), new Square()];
+
+foreach ($rectangles as $rectangle) {
+    if (!areaVerifier($rectangle)) {
+        throw new Exception('Bad area!');
+    }
+}
+```
+
+**Not bad:**
+
+You can solve the problem by making objects immutable.
+But this is not the best solution, because the square specifies the invariants of the rectangle.
+
+```php
+class Rectangle
+{
+    private $width = 0;
+    private $height = 0;
+
+    public function __construct($width, $height)
+    {
+        $this->width = $width;
+        $this->height = $height;
+    }
+
+    public function width()
+    {
+        return $this->width;
+    }
+
+    public function height()
+    {
+        return $this->height;
+    }
+
+    public function area()
+    {
+        return $this->width * $this->height;
     }
 }
 
-$rectangles = [new Rectangle(), new Rectangle(), new Square()];
-renderLargeRectangles($rectangles);
+class Square extends Rectangle
+{
+    public function __construct($length)
+    {
+        parent::__construct($length, $length);
+    }
+}
+
+function areaVerifier(Rectangle $rectangle)
+{
+    return $rectangle->area() == $rectangle->width() * $rectangle->height();
+}
+
+$rectangles = [new Rectangle(4, 5), new Square(5)];
+
+foreach ($rectangles as $rectangle) {
+    if (!areaVerifier($rectangle)) {
+        throw new Exception('Bad area!');
+    }
+}
 ```
 
 **Good:**
 
+The best way is separate the quadrangles.
+Despite the apparent similarity of the square and the rectangle, they are different.
+A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
+A square, a rectangle, a rhombus and a parallelogram are separate figures with their own properties, albeit similar.
+
 ```php
-abstract class Shape
+class Rectangle
 {
-    protected $width;
-    protected $height;
-
-    abstract public function getArea();
-
-    public function render($area)
-    {
-        // ...
-    }
-}
-
-class Rectangle extends Shape
-{
-    public function __construct()
-    {
-        parent::__construct();
-        $this->width = 0;
-        $this->height = 0;
-    }
+    private $width = 0;
+    private $height = 0;
 
     public function setWidth($width)
     {
@@ -1315,48 +1351,53 @@ class Rectangle extends Shape
         $this->height = $height;
     }
 
-    public function getArea()
+    public function area()
     {
         return $this->width * $this->height;
     }
 }
 
-class Square extends Shape
+class Square
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->length = 0;
-    }
+    private $length = 0;
 
     public function setLength($length)
     {
         $this->length = $length;
     }
 
-    public function getArea()
+    public function area()
     {
         return pow($this->length, 2);
     }
 }
 
-function renderLargeRectangles($rectangles)
+function rectangleAreaVerifier(Rectangle $rectangle)
 {
-    foreach ($rectangles as $rectangle) {
-        if ($rectangle instanceof Square) {
-            $rectangle->setLength(5);
-        } elseif ($rectangle instanceof Rectangle) {
-            $rectangle->setWidth(4);
-            $rectangle->setHeight(5);
-        }
-        
-        $area = $rectangle->getArea(); 
-        $rectangle->render($area);
-    }
+    $rectangle->setWidth(4);
+    $rectangle->setHeight(5);
+ 
+    return $rectangle->area() == 20;
 }
 
-$shapes = [new Rectangle(), new Rectangle(), new Square()];
-renderLargeRectangles($shapes);
+function squareAreaVerifier(Square $square)
+{
+    $square->setLength(5);
+ 
+    return $square->area() == 25;
+}
+
+$rectangle = new Rectangle();
+
+if (!rectangleAreaVerifier($rectangle)) {
+    throw new Exception('Bad area!');
+}
+
+$square = new Square();
+
+if (!squareAreaVerifier($square)) {
+    throw new Exception('Bad area!');
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
