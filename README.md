@@ -1,4 +1,4 @@
-# clean-code-php
+# Clean Code PHP
 
 ## Table of Contents
   1. [Introduction](#introduction)
