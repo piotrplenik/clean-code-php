@@ -842,7 +842,7 @@ and you use PHP 7+ and you can't use polymorphism but you still feel the need to
 type-check, you should consider
 [type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
 or strict mode. It provides you with static typing on top of standard PHP syntax.
-The problem with manually type-checking is that doing it well requires so much
+The problem with manually type-checking is that doing it will require so much
 extra verbiage that the faux "type-safety" you get doesn't make up for the lost
 readability. Keep your PHP clean, write good tests, and have good code reviews.
 Otherwise, do all of that but with PHP strict type declaration or strict mode.
