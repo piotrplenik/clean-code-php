@@ -52,13 +52,13 @@ The simplicity of this code has no changed, it continues to do the same, but now
 
 ```php
 public function getFlaggedCells(){
-    flaggedCells = new ArrayObject([]);
+    $flaggedCells = new ArrayObject([]);
     foreach($cell as $this->gameBoard){
         if($cell[STATUS_VALUE] == FLAGGED){
-            flaggedCells.append($cell);
+            $flaggedCells.append($cell);
         }
     }
-    return flaggedCells;
+    return $flaggedCells;
 }
 ```
 
