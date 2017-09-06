@@ -287,7 +287,7 @@ function emailClients($clients) {
 ```php
 function emailClients($clients) {
     $activeClients = activeClients($clients);
-    array_walk($activeClients, 'email');
+    array_walk($activeClients, 'activeClients');
 }
 
 function activeClients($clients) {
