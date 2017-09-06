@@ -27,8 +27,42 @@ years of collective experience by the authors of *Clean Code*.
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
 ## **Variables**
-### Use meaningful and pronounceable variable names
 
+### Use names that reveal intensions
+
+Everyone who reads your code will thank you.
+
+Example:
+
+```php
+public function getThem(){
+    $list = new ArrayObject([]);
+    foreach($x as $this->theList){
+        if($x[0] == 4){
+            $list->append($x);
+        }
+    }
+    return $list;
+}
+```
+
+**Better**
+
+The simplicity of this code has no changed, it continues to do the same, but now it much more explicit.
+
+```php
+public function getFlaggedCells(){
+    flaggedCells = new ArrayObject([]);
+    foreach($cell as $this->gameBoard){
+        if($cell[STATUS_VALUE] == FLAGGED){
+            flaggedCells.append($cell);
+        }
+    }
+    return flaggedCells;
+}
+```
+
+### Use meaningful and pronounceable variable names
 **Bad:**
 ```php
 $ymdstr = $moment->format('y-m-d');
