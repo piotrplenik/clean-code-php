@@ -1333,11 +1333,10 @@ interface Shape {
 
 class Rectangle implement Shape
 {
-    public function __construct()
+    public function __construct($width, $heigth)
     {
-        parent::__construct();
-        $this->width = 0;
-        $this->height = 0;
+        $this->width = $width;
+        $this->height = $height;
     }
 
     public function setWidth($width)
@@ -1354,13 +1353,13 @@ class Rectangle implement Shape
     {
         return $this->width * $this->height;
     }
+    public function render($area){}
 }
 
 class Square implement Shape
 {
     public function __construct()
     {
-        parent::__construct();
         $this->length = 0;
     }
 
@@ -1373,6 +1372,7 @@ class Square implement Shape
     {
         return pow($this->length, 2);
     }
+    public function render($area){}
 }
 
 class Area {
@@ -1381,9 +1381,9 @@ class Area {
     }
 }
 
-object = new Area()
-area = object->getArea(new Rectangle());
-area = object->getArea(new Square());
+$object = new Area()
+$area = $object->getArea(new Rectangle(45, 6));
+$area = $object->getArea(new Square(67, 32));
 
 ```
 
