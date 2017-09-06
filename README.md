@@ -35,10 +35,13 @@ Everyone who reads your code will thank you.
 Example:
 
 ```php
-public function getThem(){
+public function getThem()
+{
     $list = new ArrayObject([]);
-    foreach($x as $this->theList){
-        if($x[0] == 4){
+    foreach($x as $this->theList)
+    {
+        if($x[0] == 4)
+        {
             $list->append($x);
         }
     }
@@ -51,10 +54,13 @@ public function getThem(){
 The simplicity of this code has no changed, it continues to do the same, but now it much more explicit.
 
 ```php
-public function getFlaggedCells(){
+public function getFlaggedCells()
+{
     $flaggedCells = new ArrayObject([]);
-    foreach($cell as $this->gameBoard){
-        if($cell[STATUS_VALUE] == FLAGGED){
+    foreach($cell as $this->gameBoard)
+    {
+        if($cell[STATUS_VALUE] == FLAGGED)
+        {
             $flaggedCells.append($cell);
         }
     }
@@ -1318,7 +1324,8 @@ renderLargeRectangles($rectangles);
 
 ```php
 
-interface Shape {
+interface Shape 
+{
     /**
     * return int
     */
@@ -1375,7 +1382,8 @@ class Square implement Shape
     public function render($area){}
 }
 
-class Area {
+class Area 
+{
     public function getArea(Shape $figure){
         return $figure->getArea()
     }
