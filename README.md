@@ -1,77 +1,71 @@
 # clean-code-php
 
-## Table of Contents
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-  3. [Functions](#functions)
-  4. [Objects and Data Structures](#objects-and-data-structures)
-  5. [Classes](#classes)
+## สารบัญ
+  1. [คำนำ](#introduction)
+  2. [ตัวแปร](#variables)
+  3. [ฟังก์ชัน](#functions)
+  4. [ออบเจคและโครงสร้างข้อมูล](#objects-and-data-structures)
+  5. [คลาส](#classes)
      1. [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      2. [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
      3. [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
   6. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  7. [Tanslations](#translations)
+  7. [การแปล](#translations)
 
-## Introduction
+## คำนำ
 
-Software engineering principles, from Robert C. Martin's book
+หลักการทางวิศวกรรมซอฟแวร์ จากหนังสือของโรเบิร์ต ซี. มาร์ติน เรื่อง
 [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for PHP. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in PHP.
+โดยปรับตัวอย่างให้เป็นภาษา PHP เอกสารนี้ไม่ใช่แนวทางการเขียนโปรแกรมให้สวยงาม แต่มันเป็นแนวทางในการสร้างซอฟแวร์ด้วย PHP ที่อ่านง่าย นำกลับมาใช้ได้ และสามารถปรับปรุงได้
 
-Not every principle herein has to be strictly followed, and even fewer will be universally 
-agreed upon. These are guidelines and nothing more, but they are ones codified over many 
-years of collective experience by the authors of *Clean Code*.
+คุณไม่จำเป็นต้องยึดถือหลักการในเอกสารนี้อย่างเข้มงวดและไม่จำเป็นต้องเห็นด้วยในบางเรื่อง เนื้อหานี้เป็นเพียงแนวทางเท่านั้น หากแต่มันเป็นผลผลิตจากการเก็บเกี่ยวประสบการณ์หลายปีของผู้เขียนหนังสือ *Clean Code*
 
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
+ได้รับแรงบันดาลใจจาก [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
-## **Variables**
-### Use meaningful and pronounceable variable names
+## **ตัวแปร**
+### ใช้ชื่อตัวแปรที่มีความหมายและอ่านออกเสียงได้
 
-**Bad:**
+**ไม่ดี:**
 ```php
 $ymdstr = $moment->format('y-m-d');
 ```
 
-**Good**:
+**ดี**:
 ```php
 $currentDate = $moment->format('y-m-d');
 ```
 **[⬆ back to top](#table-of-contents)**
 
-### Use the same vocabulary for the same type of variable
+### ใช้ศัพท์เดียวกันสำหรับตัวแปรชนิดเดียวกัน
 
-**Bad:**
+**ไม่ดี:**
 ```php
 getUserInfo();
 getClientData();
 getCustomerRecord();
 ```
 
-**Good**:
+**ดี**:
 ```php
 getUser();
 ```
 **[⬆ back to top](#table-of-contents)**
 
-### Use searchable names
-We will read more code than we will ever write. It's important that the code we do write is 
-readable and searchable. By *not* naming variables that end up being meaningful for 
-understanding our program, we hurt our readers.
-Make your names searchable.
+### ใช้ชื่อที่ค้นหาเจอได้
+เราต้องอ่านโค้ดมากกว่าเขียน จึงจำเป็นที่โค้ดของเราต้องอ่านง่ายและหาสิ่งที่ต้องการได้ง่าย ตั้งชื่อตัวแปรที่เข้าใจยากมันทำร้ายคนอ่าน ใช้ชื่อที่ค้นหาได้
 
-**Bad:**
+**ไม่ดี:**
 ```php
-// What the heck is 86400 for?
+// 86400 คืออะไรฟระ?
 addExpireAt(86400);
 
 ```
 
-**Good**:
+**ดี**:
 ```php
-// Declare them as capitalized `const` globals.
+// ประกาศเป็นค่าคงที่ตัวพิมพ์ใหญ่ในระดับโกลบอลเลย
 interface DateGlobal {
     const SECONDS_IN_A_DAY = 86400;
 }
@@ -81,8 +75,8 @@ addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
 **[⬆ back to top](#table-of-contents)**
 
 
-### Use explanatory variables
-**Bad:**
+### ใช้ตัวแปรที่อธิบายตัวเองได้
+**ไม่ดี:**
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
@@ -91,9 +85,9 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
-**Not bad**:
+**ไม่เลว**:
 
-It's better, but we are still heavily dependent on regex.
+ดีขึ้น แต่เรายังต้องพึ่งพา regex มากไป
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -104,9 +98,9 @@ list(, $city, $zipCode) = $matches;
 saveCityZipCode($city, $zipCode);
 ```
 
-**Good**:
+**ดี**:
 
-Decrease dependence on regex by naming subpatterns.
+ลดการพึ่งพา regex ด้วยการตั้งชื่อให้แพทเทินย่อย
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(?<city>.+?)\s*(?<zipCode>\d{5})?$/';
@@ -116,11 +110,10 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 **[⬆ back to top](#table-of-contents)**
 
-### Avoid Mental Mapping
-Don’t force the reader of your code to translate what the variable means.
-Explicit is better than implicit.
+### หลีกเลี่ยงการต้องไล่ลำดับเอง
+อย่าบังคับให้คนที่อ่านโค้ดคุณต้องไล่เรียงว่าตัวแปรนั้นหมายถึงอะไร ประกาศแบบเฉพาะเจาะจงดีกว่า
 
-**Bad:**
+**ไม่ดี:**
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
 
@@ -136,7 +129,7 @@ for ($i = 0; $i < count($l); $i++) {
 }
 ```
 
-**Good**:
+**ดี**:
 ```php
 $locations = ['Austin', 'New York', 'San Francisco'];
 
@@ -152,12 +145,11 @@ foreach ($locations as $location) {
 **[⬆ back to top](#table-of-contents)**
 
 
-### Don't add unneeded context
+### อย่าเพิ่มสิ่งที่ไม่จำเป็น
 
-If your class/object name tells you something, don't repeat that in your
-variable name.
+ถ้าชื่อคลาสหรือออบเจคบอกอะไรบางอย่างอยู่แล้ว อย่าใส่มันในชื่อตัวแปรภายในอีก
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 class Car
@@ -170,7 +162,7 @@ class Car
 }
 ```
 
-**Good**:
+**ดี**:
 
 ```php
 class Car
@@ -185,11 +177,11 @@ class Car
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use default arguments instead of short circuiting or conditionals
+### ใช้ค่าเริ่มต้นของอาร์กิวเมนต์ แทนที่การใช้ทางลัดหรือใช้การเช็คเงื่อนไข
 
-**Not good:**
+**ไม่ดี:**
 
-This is not good because `$breweryName` can be `NULL`.
+ไม่ดีเพราะ `$breweryName` สามารถเป็น `NULL`.
 
 ```php
 function createMicrobrewery($breweryName = 'Hipster Brew Co.')
@@ -198,9 +190,9 @@ function createMicrobrewery($breweryName = 'Hipster Brew Co.')
 }
 ```
 
-**Not bad:**
+**ไม่เลว:**
 
-This opinion is more understandable than the previous version, but it better controls the value of the variable.
+โค้ดชุดนี้เข้าใจได้ง่ายกว่าชุดที่แล้ว มีการตรวจสอบตัวแปร
 
 ```php
 function createMicrobrewery($name = null)
@@ -210,9 +202,9 @@ function createMicrobrewery($name = null)
 }
 ```
 
-**Good**:
+**ดี**:
 
-If you support only PHP 7+, then you can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+ถ้าคุณใช้ PHP 7+ คุณสามารถใช้ [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) และแน่ใจได้ว่า `$breweryName` จะไม่เป็น `NULL`.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.')
