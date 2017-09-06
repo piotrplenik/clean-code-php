@@ -627,7 +627,7 @@ And now you must use instance of `Configuration` in your application.
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use a Singleton pattern
-Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
+Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
 
 **Bad:**
 
