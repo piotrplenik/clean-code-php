@@ -118,33 +118,26 @@ Don’t force the reader of your code to translate what the variable means.
 Explicit is better than implicit.
 
 **Bad:**
-```php
-$l = ['Austin', 'New York', 'San Francisco'];
+```python
+seq = ('Austin', 'New York', 'San Francisco')
 
-for ($i = 0; $i < count($l); $i++) {
-    $li = $l[$i];
-    doStuff();
-    doSomeOtherStuff();
-    // ...
-    // ...
-    // ...
-    // Wait, what is `$li` for again?
-    dispatch($li);
-}
+for item in seq:
+    do_stuff()
+    do_some_other_stuff()
+    # ...
+    # Wait, what's `item` for again?
+    dispatch(item)
 ```
 
 **Good**:
-```php
-$locations = ['Austin', 'New York', 'San Francisco'];
+```python
+locations = ('Austin', 'New York', 'San Francisco')
 
-foreach ($locations as $location) {
-    doStuff();
-    doSomeOtherStuff();
-    // ...
-    // ...
-    // ...
-    dispatch($location);
-});
+for location in locations:
+    do_stuff()
+    do_some_other_stuff()
+    # ...
+    dispatch(location)
 ```
 **[⬆ back to top](#table-of-contents)**
 
