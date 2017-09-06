@@ -82,23 +82,24 @@ time.sleep(SECONDS_IN_A_DAY)
 **Bad:**
 ```python
 address = 'One Infinite Loop, Cupertino 95014'
-city_zip_code_regex = r'/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/'
-preg_match($cityZipCodeRegex, $address, $matches);
+city_zip_code_regex = '^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$'
+matches = re.match(city_zip_code_regex, address)
 
-saveCityZipCode($matches[1], $matches[2]);
+save_city_zip_code(matches[1], matches[2])
 ```
 
 **Not bad**:
 
 It's better, but we are still heavily dependent on regex.
 
-```php
-$address = 'One Infinite Loop, Cupertino 95014';
-$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
-preg_match($cityZipCodeRegex, $address, $matches);
+```python
+address = 'One Infinite Loop, Cupertino 95014'
+city_zip_code_regex = '^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$'
+matches = re.match(city_zip_code_regex, address)
 
-list(, $city, $zipCode) = $matches;
-saveCityZipCode($city, $zipCode);
+city, zip_code = matches.groups()
+
+save_city_zip_code(city, zip_code)
 ```
 
 **Good**:
