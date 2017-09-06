@@ -12,6 +12,7 @@
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
   6. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  7. [Tanslations](#Translations)
 
 ## Introduction
 
@@ -1731,7 +1732,7 @@ function showList($employees)
 
 
 
-## Translation
+## Translations
 
 This is also available in other languages:
   - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese**:
