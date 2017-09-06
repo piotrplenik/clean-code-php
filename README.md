@@ -91,12 +91,12 @@ if ($user->access & 4) {
 ```php
 class User
 {
-    const ACCESS_NONE = 0; // 0000
-    const ACCESS_READ = 1 << 0; // 0001
-    const ACCESS_CREATE = 1 << 1; // 0010
-    const ACCESS_EDIT = 1 << 2; // 0100
-    const ACCESS_DELETE = 1 << 3; // 1000
-    const ACCESS_FULL = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_EDIT | self::ACCESS_DELETE; // 1111
+    const ACCESS_NONE = 0;
+    const ACCESS_READ = 1;
+    const ACCESS_CREATE = 2;
+    const ACCESS_EDIT = 4;
+    const ACCESS_DELETE = 8;
+    const ACCESS_FULL = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_EDIT | self::ACCESS_DELETE;
 }
 
 if ($user->access & User::ACCESS_EDIT) {
