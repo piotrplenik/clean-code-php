@@ -56,27 +56,25 @@ getUser();
 **[⬆ back to top](#table-of-contents)**
 
 ### Use searchable names
+
 We will read more code than we will ever write. It's important that the code we do write is 
 readable and searchable. By *not* naming variables that end up being meaningful for 
 understanding our program, we hurt our readers.
 Make your names searchable.
 
 **Bad:**
-```php
-// What the heck is 86400 for?
-addExpireAt(86400);
 
+```php
+// What the heck is 448 for?
+$result = serialize($data, 448);
 ```
 
-**Good**:
-```php
-// Declare them as capitalized `const` globals.
-interface DateGlobal {
-    const SECONDS_IN_A_DAY = 86400;
-}
+**Good:**
 
-addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
+```php
+$json = serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 
