@@ -1,4 +1,4 @@
-# clean-code-php
+# Clean Code PHP
 
 ## Table of Contents
   1. [Introduction](#introduction)
@@ -12,6 +12,7 @@
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
   6. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  7. [Translations](#translations)
 
 ## Introduction
 
@@ -666,7 +667,7 @@ And now you must use instance of `Configuration` in your application.
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use a Singleton pattern
-Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
+Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
 
 **Bad:**
 
@@ -1080,20 +1081,24 @@ your codebase.
 
 **Bad:**
 ```php
-class UserSettings {
+class UserSettings
+{
     private $user;
 
-    public function __construct($user) {
+    public function __construct($user)
+    {
         $this->user = $user;
     }
     
-    public function changeSettings($settings) {
+    public function changeSettings($settings)
+    {
         if ($this->verifyCredentials()) {
             // ...
         }
     }
     
-    private function verifyCredentials() {
+    private function verifyCredentials()
+    {
         // ...
     }
 }
@@ -1101,28 +1106,35 @@ class UserSettings {
 
 **Good:**
 ```php
-class UserAuth {
+class UserAuth 
+{
     private $user;
 
-    public function __construct($user) {
+    public function __construct($user)
+    {
         $this->user = $user;
     }
     
-    public function verifyCredentials() {
+    public function verifyCredentials()
+    {
         // ...
     }
 }
 
 
-class UserSettings {
+class UserSettings 
+{
     private $user;
+    private $auth;
 
-    public function __construct($user) {
+    public function __construct($user) 
+    {
         $this->user = $user;
         $this->auth = new UserAuth($user);
     }
-    
-    public function changeSettings($settings) {
+
+    public function changeSettings($settings)
+    {
         if ($this->auth->verifyCredentials()) {
             // ...
         }
@@ -1156,6 +1168,7 @@ class AjaxAdapter extends Adapter
     public function __construct()
     {
         parent::__construct();
+
         $this->name = 'ajaxAdapter';
     }
 }
@@ -1165,6 +1178,7 @@ class NodeAdapter extends Adapter
     public function __construct()
     {
         parent::__construct();
+
         $this->name = 'nodeAdapter';
     }
 }
@@ -1177,7 +1191,7 @@ class HttpRequester
     {
         $this->adapter = $adapter;
     }
-    
+
     public function fetch($url)
     {
         $adapterName = $this->adapter->getName();
@@ -1188,12 +1202,12 @@ class HttpRequester
             return $this->makeHttpCall($url);
         }
     }
-    
+
     protected function makeAjaxCall($url)
     {
         // request and return promise
     }
-    
+
     protected function makeHttpCall($url)
     {
         // request and return promise
@@ -1263,14 +1277,8 @@ get into trouble.
 ```php
 class Rectangle
 {
-    protected $width;
-    protected $height;
-
-    public function __construct()
-    {
-        $this->width = 0;
-        $this->height = 0;
-    }
+    protected $width = 0;
+    protected $height = 0;
 
     public function render($area)
     {
@@ -1323,7 +1331,6 @@ renderLargeRectangles($rectangles);
 **Good:**
 
 ```php
-
 interface Shape 
 {
     /**
@@ -1365,9 +1372,12 @@ class Rectangle implement Shape
 
 class Square implement Shape
 {
-    public function __construct()
+    protected $length = 0;
+
+    public function __construct($width, $heigth)
     {
-        $this->length = 0;
+        $this->width = $width;
+        $this->height = $height;
     }
 
     public function setLength($length)
@@ -1379,6 +1389,7 @@ class Square implement Shape
     {
         return pow($this->length, 2);
     }
+
     public function render($area){}
 }
 
@@ -1589,28 +1600,29 @@ and you can chain further class methods onto it.
 
 **Bad:**
 ```php
-class Car {
-    private $make, $model, $color;
-    
-    public function __construct() {
-        $this->make = 'Honda';
-        $this->model = 'Accord';
-        $this->color = 'white';
-    }
-    
-    public function setMake($make) {
+class Car 
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
         $this->make = $make;
     }
-    
-    public function setModel($model) {
+
+    public function setModel($model)
+    {
         $this->model = $model;
     }
-    
-    public function setColor($color) {
+
+    public function setColor($color)
+    {
         $this->color = $color;
     }
-    
-    public function dump() {
+
+    public function dump()
+    {
         var_dump($this->make, $this->model, $this->color);
     }
 }
@@ -1624,37 +1636,38 @@ $car->dump();
 
 **Good:**
 ```php
-class Car {
-    private $make, $model, $color;
-    
-    public function __construct() {
-        $this->make = 'Honda';
-        $this->model = 'Accord';
-        $this->color = 'white';
-    }
-    
-    public function setMake($make) {
+class Car 
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
         $this->make = $make;
         
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function setModel($model) {
+
+    public function setModel($model)
+    {
         $this->model = $model;
-        
+
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function setColor($color) {
+
+    public function setColor($color)
+    {
         $this->color = $color;
-        
+
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function dump() {
+
+    public function dump()
+    {
         var_dump($this->make, $this->model, $this->color);
     }
 }
@@ -1687,54 +1700,68 @@ relationship (Human->Animal vs. User->UserDetails).
 
 **Bad:**
 ```php
-class Employee {
-    private $name, $email;
+class Employee 
+{
+    private $name;
+    private $email;
     
-    public function __construct($name, $email) {
+    public function __construct($name, $email)
+    {
         $this->name = $name;
         $this->email = $email;
     }
-    
+
     // ...
 }
 
 // Bad because Employees "have" tax data. 
 // EmployeeTaxData is not a type of Employee
 
-class EmployeeTaxData extends Employee {
-    private $ssn, $salary;
+class EmployeeTaxData extends Employee 
+{
+    private $ssn;
+    private $salary;
     
-    public function __construct($name, $email, $ssn, $salary) {
+    public function __construct($name, $email, $ssn, $salary)
+    {
         parent::__construct($name, $email);
+
         $this->ssn = $ssn;
         $this->salary = $salary;
     }
-    
+
     // ...
 }
 ```
 
 **Good:**
 ```php
-class EmployeeTaxData {
-    private $ssn, $salary;
+class EmployeeTaxData 
+{
+    private $ssn;
+    private $salary;
     
-    public function __construct($ssn, $salary) {
+    public function __construct($ssn, $salary)
+    {
         $this->ssn = $ssn;
         $this->salary = $salary;
     }
-    
+
     // ...
 }
 
-class Employee {
-    private $name, $email, $taxData;
-    
-    public function __construct($name, $email) {
+class Employee 
+{
+    private $name;
+    private $email;
+    private $taxData;
+
+    public function __construct($name, $email)
+    {
         $this->name = $name;
         $this->email = $email;
     }
-    
+
     public function setTaxData($ssn, $salary) {
         $this->taxData = new EmployeeTaxData($ssn, $salary);
     }
@@ -1840,5 +1867,16 @@ function showList($employees)
     }
 }
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+
+
+## Translations
+
+This is also available in other languages:
+  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese**:
+    - [yangweijie/clean-code-php](https://github.com/yangweijie/clean-code-php)
+    - [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
