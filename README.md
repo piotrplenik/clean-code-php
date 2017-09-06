@@ -82,7 +82,7 @@ time.sleep(SECONDS_IN_A_DAY)
 **Bad:**
 ```python
 address = 'One Infinite Loop, Cupertino 95014'
-city_zip_code_regex = '^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$'
+city_zip_code_regex = r'^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$'
 matches = re.match(city_zip_code_regex, address)
 
 save_city_zip_code(matches[1], matches[2])
@@ -94,23 +94,22 @@ It's better, but we are still heavily dependent on regex.
 
 ```python
 address = 'One Infinite Loop, Cupertino 95014'
-city_zip_code_regex = '^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$'
+city_zip_code_regex = r'^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$'
 matches = re.match(city_zip_code_regex, address)
 
 city, zip_code = matches.groups()
-
 save_city_zip_code(city, zip_code)
 ```
 
 **Good**:
 
 Decrease dependence on regex by naming subpatterns.
-```php
-$address = 'One Infinite Loop, Cupertino 95014';
-$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(?<city>.+?)\s*(?<zipCode>\d{5})?$/';
-preg_match($cityZipCodeRegex, $address, $matches);
+```python
+address = 'One Infinite Loop, Cupertino 95014'
+city_zip_code_regex = r'^[^,\\]+[,\\\s]+(?P<city>.+?)\s*(?P<zip_code>\d{5})?$'
+matches = re.match(city_zip_code_regex, address)
 
-saveCityZipCode($matches['city'], $matches['zipCode']);
+save_city_zip_code(matches['city'], matches['zip_code'])
 ```
 **[⬆ back to top](#table-of-contents)**
 
