@@ -1283,20 +1283,21 @@ renderLargeRectangles($rectangles);
 **Good:**
 
 ```php
-abstract class Shape
-{
-    protected $width;
-    protected $height;
 
-    abstract public function getArea();
-
-    public function render($area)
-    {
-        // ...
-    }
+interface Shape {
+    /**
+    * return int
+    */
+    public function getArea();
+    /**
+    * param int $area
+    * return int
+    */
+    public function render($area);
 }
 
-class Rectangle extends Shape
+
+class Rectangle implement Shape
 {
     public function __construct()
     {
@@ -1321,7 +1322,7 @@ class Rectangle extends Shape
     }
 }
 
-class Square extends Shape
+class Square implement Shape
 {
     public function __construct()
     {
@@ -1340,23 +1341,16 @@ class Square extends Shape
     }
 }
 
-function renderLargeRectangles($rectangles)
-{
-    foreach ($rectangles as $rectangle) {
-        if ($rectangle instanceof Square) {
-            $rectangle->setLength(5);
-        } elseif ($rectangle instanceof Rectangle) {
-            $rectangle->setWidth(4);
-            $rectangle->setHeight(5);
-        }
-        
-        $area = $rectangle->getArea(); 
-        $rectangle->render($area);
+class Area {
+    public function getArea(Shape $figure){
+        return $figure->getArea()
     }
 }
 
-$shapes = [new Rectangle(), new Rectangle(), new Square()];
-renderLargeRectangles($shapes);
+object = new Area()
+area = object->getArea(new Rectangle());
+area = object->getArea(new Square());
+
 ```
 
 **[⬆ back to top](#table-of-contents)**
