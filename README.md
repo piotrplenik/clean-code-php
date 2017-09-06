@@ -82,6 +82,7 @@ $json = serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESC
 ```php
 // What the heck is 4 for?
 if ($user->access & 4) {
+    // ...
 }
 ```
 
@@ -95,7 +96,7 @@ class User
     const ACCESS_CREATE = 1 << 1; // 0010
     const ACCESS_EDIT = 1 << 2; // 0100
     const ACCESS_DELETE = 1 << 3; // 1000
-    const ACCESS_ALL = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_EDIT | self::ACCESS_DELETE; // 1111
+    const ACCESS_FULL = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_EDIT | self::ACCESS_DELETE; // 1111
 }
 
 if ($user->access & User::ACCESS_EDIT) {
