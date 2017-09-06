@@ -55,7 +55,7 @@ getUser();
 ```
 **[⬆ back to top](#table-of-contents)**
 
-### Use searchable names
+### Use searchable names (part 1)
 
 We will read more code than we will ever write. It's important that the code we do write is 
 readable and searchable. By *not* naming variables that end up being meaningful for 
@@ -73,6 +73,34 @@ $result = serialize($data, 448);
 
 ```php
 $json = serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+```
+
+### Use searchable names (part 2)
+
+**Bad:**
+
+```php
+// What the heck is 4 for?
+if ($user->access & 4) {
+}
+```
+
+**Good:**
+
+```php
+class User
+{
+    const ACCESS_NONE = 0; // 0000
+    const ACCESS_READ = 1 << 0; // 0001
+    const ACCESS_CREATE = 1 << 1; // 0010
+    const ACCESS_EDIT = 1 << 2; // 0100
+    const ACCESS_DELETE = 1 << 3; // 1000
+    const ACCESS_ALL = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_EDIT | self::ACCESS_DELETE; // 1111
+}
+
+if ($user->access & User::ACCESS_EDIT) {
+    // do edit ...
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
