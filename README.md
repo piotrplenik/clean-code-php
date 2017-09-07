@@ -91,15 +91,13 @@ if ($user->access & 4) {
 ```php
 class User
 {
-    const ACCESS_NONE = 0;
     const ACCESS_READ = 1;
     const ACCESS_CREATE = 2;
-    const ACCESS_EDIT = 4;
+    const ACCESS_UPDATE = 4;
     const ACCESS_DELETE = 8;
-    const ACCESS_FULL = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_EDIT | self::ACCESS_DELETE;
 }
 
-if ($user->access & User::ACCESS_EDIT) {
+if ($user->access & User::ACCESS_UPDATE) {
     // do edit ...
 }
 ```
