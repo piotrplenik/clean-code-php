@@ -1400,7 +1400,7 @@ class Robot implements Employee
 
     public function eat()
     {
-        //.... robot can't eating, but it must implement this method
+        //.... robot can't eat, but it must implement this method
     }
 }
 ```
