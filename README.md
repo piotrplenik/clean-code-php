@@ -64,7 +64,7 @@ getUser();
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use searchable names
+### Use searchable names (part 1)
 
 We will read more code than we will ever write. It's important that the code we do write is 
 readable and searchable. By *not* naming variables that end up being meaningful for 
@@ -74,20 +74,41 @@ Make your names searchable.
 **Bad:**
 
 ```php
-// What the heck is 86400 for?
-addExpireAt(86400);
+// What the heck is 448 for?
+$result = $serializer->serialize($data, 448);
 ```
 
 **Good:**
 
 ```php
-// Declare them as capitalized `const` globals.
-interface DateGlobal
+$json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+```
+
+### Use searchable names (part 2)
+
+**Bad:**
+
+```php
+// What the heck is 4 for?
+if ($user->access & 4) {
+    // ...
+}
+```
+
+**Good:**
+
+```php
+class User
 {
-    const SECONDS_IN_A_DAY = 86400;
+    const ACCESS_READ = 1;
+    const ACCESS_CREATE = 2;
+    const ACCESS_UPDATE = 4;
+    const ACCESS_DELETE = 8;
 }
 
-addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
+if ($user->access & User::ACCESS_UPDATE) {
+    // do edit ...
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -796,12 +817,14 @@ class Airplane
 **Good:**
 
 ```php
-class Airplane
+interface Airplane
 {
     // ...
+
+    public function getCruisingAltitude();
 }
 
-class Boeing777 extends Airplane
+class Boeing777 implements Airplane
 {
     // ...
 
@@ -811,7 +834,7 @@ class Boeing777 extends Airplane
     }
 }
 
-class AirForceOne extends Airplane
+class AirForceOne implements Airplane
 {
     // ...
 
@@ -821,7 +844,7 @@ class AirForceOne extends Airplane
     }
 }
 
-class Cessna extends Airplane
+class Cessna implements Airplane
 {
     // ...
 
@@ -872,7 +895,7 @@ and you use PHP 7+ and you can't use polymorphism but you still feel the need to
 type-check, you should consider
 [type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
 or strict mode. It provides you with static typing on top of standard PHP syntax.
-The problem with manually type-checking is that doing it well requires so much
+The problem with manually type-checking is that doing it will require so much
 extra verbiage that the faux "type-safety" you get doesn't make up for the lost
 readability. Keep your PHP clean, write good tests, and have good code reviews.
 Otherwise, do all of that but with PHP strict type declaration or strict mode.
