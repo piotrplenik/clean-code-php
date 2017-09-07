@@ -1,4 +1,4 @@
-# clean-code-php
+# Clean Code PHP
 
 ## Table of Contents
   1. [Introduction](#introduction)
@@ -12,6 +12,7 @@
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
   6. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  7. [Translations](#translations)
 
 ## Introduction
 
@@ -186,22 +187,40 @@ class Car
 
 ### Use default arguments instead of short circuiting or conditionals
 
-**Bad:**
+**Not good:**
+
+This is not good because `$breweryName` can be `NULL`.
+
 ```php
-function createMicrobrewery($name = null) {
-    $breweryName = $name ?: 'Hipster Brew Co.';
+function createMicrobrewery($breweryName = 'Hipster Brew Co.')
+{
+    // ...
+}
+```
+
+**Not bad:**
+
+This opinion is more understandable than the previous version, but it better controls the value of the variable.
+
+```php
+function createMicrobrewery($name = null)
+{
+    $breweryName = $name ?: 'Hipster Brew Co.';
     // ...
 }
-
 ```
 
 **Good**:
-```php
-function createMicrobrewery($breweryName = 'Hipster Brew Co.') {
-    // ...
-}
 
+If you support only PHP 7+, then you can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+
+```php
+function createMicrobrewery(string $breweryName = 'Hipster Brew Co.')
+{
+    // ...
+}
 ```
+
 **[⬆ back to top](#table-of-contents)**
 ## **Functions**
 ### Function arguments (2 or fewer ideally)
@@ -462,18 +481,19 @@ class BetterJSAlternative
 }
 ```
 
-Now we can mock the dependencies and test only the work of method `BetterJSAlternative::parse()`.
-
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use flags as function parameters
+
 Flags tell your user that this function does more than one thing. Functions should 
 do one thing. Split out your functions if they are following different code paths 
 based on a boolean.
 
 **Bad:**
+
 ```php
-function createFile($name, $temp = false) {
+function createFile($name, $temp = false)
+{
     if ($temp) {
         touch('./temp/'.$name);
     } else {
@@ -483,18 +503,23 @@ function createFile($name, $temp = false) {
 ```
 
 **Good**:
+
 ```php
-function createFile($name) {
+function createFile($name)
+{
     touch($name);
 }
 
-function createTempFile($name) {
+function createTempFile($name)
+{
     touch('./temp/'.$name);
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Side Effects
+
 A function produces a side effect if it does anything other than take a value in and 
 return another value or values. A side effect could be writing to a file, modifying 
 some global variable, or accidentally wiring all your money to a stranger.
@@ -510,12 +535,14 @@ centralizing where your side effects occur. If you can do this, you will be happ
 than the vast majority of other programmers.
 
 **Bad:**
+
 ```php
 // Global variable referenced by following function.
 // If we had another function that used this name, now it'd be an array and it could break it.
 $name = 'Ryan McDermott';
 
-function splitIntoFirstAndLastName() {
+function splitIntoFirstAndLastName()
+{
     global $name;
 
     $name = preg_split('/ /', $name);
@@ -526,9 +553,11 @@ splitIntoFirstAndLastName();
 var_dump($name); // ['Ryan', 'McDermott'];
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function splitIntoFirstAndLastName($name) {
+function splitIntoFirstAndLastName($name)
+{
     return preg_split('/ /', $name);
 }
 
@@ -538,6 +567,7 @@ $newName = splitIntoFirstAndLastName($name);
 var_dump($name); // 'Ryan McDermott';
 var_dump($newName); // ['Ryan', 'McDermott'];
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't write to global functions
@@ -597,7 +627,7 @@ And now you must use instance of `Configuration` in your application.
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use a Singleton pattern
-Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
+Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
 
 **Bad:**
 
@@ -673,19 +703,24 @@ if ($article->isPublished()) {
 ### Avoid negative conditionals
 
 **Bad:**
+
 ```php
-function isDOMNodeNotPresent($node) {
+function isDOMNodeNotPresent($node)
+{
     // ...
 }
 
-if (!isDOMNodeNotPresent($node)) {
+if (!isDOMNodeNotPresent($node))
+{
     // ...
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function isDOMNodePresent($node) {
+function isDOMNodePresent($node)
+{
     // ...
 }
 
@@ -693,9 +728,11 @@ if (isDOMNodePresent($node)) {
     // ...
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid conditionals
+
 This seems like an impossible task. Upon first hearing this, most people say,
 "how am I supposed to do anything without an `if` statement?" The answer is that
 you can use polymorphism to achieve the same task in many cases. The second
@@ -706,10 +743,14 @@ are telling your user that your function does more than one thing. Remember,
 just do one thing.
 
 **Bad:**
+
 ```php
-class Airplane {
+class Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         switch ($this->type) {
             case '777':
                 return $this->getMaxAltitude() - $this->getPassengerCount();
@@ -722,33 +763,45 @@ class Airplane {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class Airplane {
+class Airplane
+{
     // ...
 }
 
-class Boeing777 extends Airplane {
+class Boeing777 extends Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude() - $this->getPassengerCount();
     }
 }
 
-class AirForceOne extends Airplane {
+class AirForceOne extends Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude();
     }
 }
 
-class Cessna extends Airplane {
+class Cessna extends Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude() - $this->getFuelExpenditure();
     }
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 1)
@@ -819,39 +872,46 @@ function combine(int $val1, int $val2)
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove dead code
+
 Dead code is just as bad as duplicate code. There's no reason to keep it in
 your codebase. If it's not being called, get rid of it! It will still be safe
 in your version history if you still need it.
 
 **Bad:**
+
 ```php
-function oldRequestModule($url) {
+function oldRequestModule($url)
+{
     // ...
 }
 
-function newRequestModule($url) {
+function newRequestModule($url)
+{
     // ...
 }
 
 $request = newRequestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
-
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function requestModule($url) {
+function requestModule($url)
+{
     // ...
 }
 
 $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 
 ## **Objects and Data Structures**
 ### Use getters and setters
+
 In PHP you can set `public`, `protected` and `private` keywords for methods. 
 Using it, you can control properties modification on an object. 
 
@@ -868,8 +928,10 @@ Additionally, this is part of Open/Closed principle, from object-oriented
 design principles.
 
 **Bad:**
+
 ```php
-class BankAccount {
+class BankAccount
+{
     public $balance = 1000;
 }
 
@@ -879,27 +941,34 @@ $bankAccount = new BankAccount();
 $bankAccount->balance -= 100;
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class BankAccount {
+class BankAccount
+{
     private $balance;
-    
-    public function __construct($balance = 1000) {
+
+    public function __construct($balance = 1000)
+    {
       $this->balance = $balance;
     }
-    
-    public function withdrawBalance($amount) {
+
+    public function withdrawBalance($amount)
+    {
         if ($amount > $this->balance) {
             throw new \Exception('Amount greater than available balance.');
         }
+
         $this->balance -= $amount;
     }
-    
-    public function depositBalance($amount) {
+
+    public function depositBalance($amount)
+    {
         $this->balance += $amount;
     }
-    
-    public function getBalance() {
+
+    public function getBalance()
+    {
         return $this->balance;
     }
 }
@@ -911,19 +980,21 @@ $bankAccount->withdrawBalance($shoesPrice);
 
 // Get balance
 $balance = $bankAccount->getBalance();
-
 ```
-**[⬆ back to top](#table-of-contents)**
 
+**[⬆ back to top](#table-of-contents)**
 
 ### Make objects have private/protected members
 
 **Bad:**
+
 ```php
-class Employee {
+class Employee
+{
     public $name;
-    
-    public function __construct($name) {
+
+    public function __construct($name)
+    {
         $this->name = $name;
     }
 }
@@ -932,12 +1003,15 @@ $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->name; // Employee name: John Doe
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class Employee {
-    protected $name;
+class Employee
+{
+    private $name;
     
-    public function __construct($name) {
+    public function __construct($name)
+    {
         $this->name = $name;
     }
     
@@ -949,6 +1023,7 @@ class Employee {
 $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 
@@ -966,20 +1041,24 @@ your codebase.
 
 **Bad:**
 ```php
-class UserSettings {
+class UserSettings
+{
     private $user;
 
-    public function __construct($user) {
+    public function __construct($user)
+    {
         $this->user = $user;
     }
     
-    public function changeSettings($settings) {
+    public function changeSettings($settings)
+    {
         if ($this->verifyCredentials()) {
             // ...
         }
     }
     
-    private function verifyCredentials() {
+    private function verifyCredentials()
+    {
         // ...
     }
 }
@@ -987,28 +1066,35 @@ class UserSettings {
 
 **Good:**
 ```php
-class UserAuth {
+class UserAuth 
+{
     private $user;
 
-    public function __construct($user) {
+    public function __construct($user)
+    {
         $this->user = $user;
     }
     
-    public function verifyCredentials() {
+    public function verifyCredentials()
+    {
         // ...
     }
 }
 
 
-class UserSettings {
+class UserSettings 
+{
     private $user;
+    private $auth;
 
-    public function __construct($user) {
+    public function __construct($user) 
+    {
         $this->user = $user;
         $this->auth = new UserAuth($user);
     }
-    
-    public function changeSettings($settings) {
+
+    public function changeSettings($settings)
+    {
         if ($this->auth->verifyCredentials()) {
             // ...
         }
@@ -1042,6 +1128,7 @@ class AjaxAdapter extends Adapter
     public function __construct()
     {
         parent::__construct();
+
         $this->name = 'ajaxAdapter';
     }
 }
@@ -1051,6 +1138,7 @@ class NodeAdapter extends Adapter
     public function __construct()
     {
         parent::__construct();
+
         $this->name = 'nodeAdapter';
     }
 }
@@ -1063,7 +1151,7 @@ class HttpRequester
     {
         $this->adapter = $adapter;
     }
-    
+
     public function fetch($url)
     {
         $adapterName = $this->adapter->getName();
@@ -1074,12 +1162,12 @@ class HttpRequester
             return $this->makeHttpCall($url);
         }
     }
-    
+
     protected function makeAjaxCall($url)
     {
         // request and return promise
     }
-    
+
     protected function makeHttpCall($url)
     {
         // request and return promise
@@ -1145,48 +1233,50 @@ if you model it using the "is-a" relationship via inheritance, you quickly
 get into trouble.
 
 **Bad:**
+
 ```php
-class Rectangle {
-    private $width, $height;
-    
-    public function __construct() {
-        $this->width = 0;
-        $this->height = 0;
-    }
-    
-    public function setColor($color) {
+class Rectangle
+{
+    protected $width = 0;
+    protected $height = 0;
+
+    public function render($area)
+    {
         // ...
     }
-    
-    public function render($area) {
-        // ...
-    }
-    
-    public function setWidth($width) {
+
+    public function setWidth($width)
+    {
         $this->width = $width;
     }
-    
-    public function setHeight($height) {
+
+    public function setHeight($height)
+    {
         $this->height = $height;
     }
-    
-    public function getArea() {
+
+    public function getArea()
+    {
         return $this->width * $this->height;
     }
 }
 
-class Square extends Rectangle {
-    public function setWidth($width) {
+class Square extends Rectangle
+{
+    public function setWidth($width)
+    {
         $this->width = $this->height = $width;
     }
-    
-    public function setHeight(height) {
+
+    public function setHeight(height)
+    {
         $this->width = $this->height = $height;
     }
 }
 
-function renderLargeRectangles($rectangles) {
-    foreach($rectangles as $rectangle) {
+function renderLargeRectangles($rectangles)
+{
+    foreach ($rectangles as $rectangle) {
         $rectangle->setWidth(4);
         $rectangle->setHeight(5);
         $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
@@ -1199,61 +1289,60 @@ renderLargeRectangles($rectangles);
 ```
 
 **Good:**
+
 ```php
-abstract class Shape {
-    protected $width, $height;
-    
+abstract class Shape
+{
+    protected $width = 0;
+    protected $height = 0;
+
     abstract public function getArea();
-    
-    public function setColor($color) {
-        // ...
-    }
-    
-    public function render($area) {
+
+    public function render($area)
+    {
         // ...
     }
 }
 
-class Rectangle extends Shape {
-    public function __construct() {
-        parent::__construct();
-        $this->width = 0;
-        $this->height = 0;
-    }
-    
-    public function setWidth($width) {
+class Rectangle extends Shape
+{
+    public function setWidth($width)
+    {
         $this->width = $width;
     }
-    
-    public function setHeight($height) {
+
+    public function setHeight($height)
+    {
         $this->height = $height;
     }
-    
-    public function getArea() {
+
+    public function getArea()
+    {
         return $this->width * $this->height;
     }
 }
 
-class Square extends Shape {
-    public function __construct() {
-        parent::__construct();
-        $this->length = 0;
-    }
-    
-    public function setLength($length) {
+class Square extends Shape
+{
+    protected $length = 0;
+
+    public function setLength($length)
+    {
         $this->length = $length;
     }
-    
-    public function getArea() {
+
+    public function getArea()
+    {
         return pow($this->length, 2);
     }
 }
 
-function renderLargeRectangles($rectangles) {
-    foreach($rectangles as $rectangle) {
+function renderLargeRectangles($rectangles)
+{
+    foreach ($rectangles as $rectangle) {
         if ($rectangle instanceof Square) {
             $rectangle->setLength(5);
-        } else if ($rectangle instanceof Rectangle) {
+        } elseif ($rectangle instanceof Rectangle) {
             $rectangle->setWidth(4);
             $rectangle->setHeight(5);
         }
@@ -1266,9 +1355,11 @@ function renderLargeRectangles($rectangles) {
 $shapes = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles($shapes);
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Interface Segregation Principle (ISP)
+
 ISP states that "Clients should not be forced to depend upon interfaces that
 they do not use." 
 
@@ -1278,100 +1369,88 @@ huge amounts of options is beneficial, because most of the time they won't need
 all of the settings. Making them optional helps prevent having a "fat interface".
 
 **Bad:**
+
 ```php
-interface WorkerInterface {
+interface Employee
+{
     public function work();
+
     public function eat();
 }
 
-class Worker implements WorkerInterface {
-    public function work() {
+class Human implements Employee
+{
+    public function work()
+    {
         // ....working
     }
-    public function eat() {
-        // ...... eating in launch break
+
+    public function eat()
+    {
+        // ...... eating in lunch break
     }
 }
 
-class SuperWorker implements WorkerInterface {
-    public function work() {
+class Robot implements Employee
+{
+    public function work()
+    {
         //.... working much more
     }
 
-    public function eat() {
-        //.... eating in launch break
-    }
-}
-
-class Manager {
-  /** @var WorkerInterface $worker **/
-  private $worker;
-  
-  public function setWorker(WorkerInterface $worker) {
-        $this->worker = $worker;
-    }
-
-    public function manage() {
-        $this->worker->work();
+    public function eat()
+    {
+        //.... robot can't eating, but it must implement this method
     }
 }
 ```
 
 **Good:**
-```php
-interface WorkerInterface extends FeedableInterface, WorkableInterface {
-}
 
-interface WorkableInterface {
+Not every worker is an employee, but every employee is an worker.
+
+```php
+interface Workable
+{
     public function work();
 }
 
-interface FeedableInterface {
+interface Feedable
+{
     public function eat();
 }
 
-class Worker implements WorkableInterface, FeedableInterface {
-    public function work() {
+interface Employee extends Feedable, Workable
+{
+}
+
+class Human implements Employee
+{
+    public function work()
+    {
         // ....working
     }
 
-    public function eat() {
-        //.... eating in launch break
+    public function eat()
+    {
+        //.... eating in lunch break
     }
 }
 
-class Robot implements WorkableInterface {
-    public function work() {
+// robot can only work
+class Robot implements Workable
+{
+    public function work()
+    {
         // ....working
-    }
-}
-
-class SuperWorker implements WorkerInterface  {
-    public function work() {
-        //.... working much more
-    }
-
-    public function eat() {
-        //.... eating in launch break
-    }
-}
-
-class Manager {
-  /** @var $worker WorkableInterface **/
-    private $worker;
-
-    public function setWorker(WorkableInterface $w) {
-      $this->worker = $w;
-    }
-
-    public function manage() {
-        $this->worker->work();
     }
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Dependency Inversion Principle (DIP)
+
 This principle states two essential things:
 1. High-level modules should not depend on low-level modules. Both should
 depend on abstractions.
@@ -1386,98 +1465,114 @@ the coupling between modules. Coupling is a very bad development pattern because
 it makes your code hard to refactor.
 
 **Bad:**
+
 ```php
-class Worker {
-  public function work() {
+class Employee
+{
+  public function work()
+  {
     // ....working
   }
 }
 
-class Manager {
-    /** @var Worker $worker **/
-    private $worker;
-    
-    public function __construct(Worker $worker) {
-        $this->worker = $worker;
-    }
-    
-    public function manage() {
-        $this->worker->work();
+class Robot extends Employee
+{
+    public function work()
+    {
+        //.... working much more
     }
 }
 
-class SuperWorker extends Worker {
-    public function work() {
-        //.... working much more
+class Manager
+{
+    private $employee;
+
+    public function __construct(Employee $employee)
+    {
+        $this->employee = $employee;
+    }
+
+    public function manage()
+    {
+        $this->employee->work();
     }
 }
 ```
 
 **Good:**
+
 ```php
-interface WorkerInterface {
+interface Employee
+{
     public function work();
 }
 
-class Worker implements WorkerInterface {
-    public function work() {
+class Human implements Employee
+{
+    public function work()
+    {
         // ....working
     }
 }
 
-class SuperWorker implements WorkerInterface {
-    public function work() {
+class Robot implements Employee
+{
+    public function work()
+    {
         //.... working much more
     }
 }
 
-class Manager {
-    /** @var WorkerInterface $worker **/
-    private $worker;
-    
-    public function __construct(WorkerInterface $worker) {
-        $this->worker = $worker;
+class Manager
+{
+    private $employee;
+
+    public function __construct(Employee $employee)
+    {
+        $this->employee = $employee;
     }
-    
-    public function manage() {
-        $this->worker->work();
+
+    public function manage()
+    {
+        $this->employee->work();
     }
 }
-
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use method chaining
-This pattern is very useful and commonly used it many libraries such
+This pattern is very useful and commonly used in many libraries such
 as PHPUnit and Doctrine. It allows your code to be expressive, and less verbose.
-For that reason, I say, use method chaining and take a look at how clean your code
-will be. In your class functions, simply return `this` at the end of every function,
+For that reason, use method chaining and take a look at how clean your code
+will be. In your class functions, simply use `return $this` at the end of every `set` function,
 and you can chain further class methods onto it.
 
 **Bad:**
 ```php
-class Car {
-    private $make, $model, $color;
-    
-    public function __construct() {
-        $this->make = 'Honda';
-        $this->model = 'Accord';
-        $this->color = 'white';
-    }
-    
-    public function setMake($make) {
+class Car 
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
         $this->make = $make;
     }
-    
-    public function setModel($model) {
+
+    public function setModel($model)
+    {
         $this->model = $model;
     }
-    
-    public function setColor($color) {
+
+    public function setColor($color)
+    {
         $this->color = $color;
     }
-    
-    public function dump() {
+
+    public function dump()
+    {
         var_dump($this->make, $this->model, $this->color);
     }
 }
@@ -1491,37 +1586,38 @@ $car->dump();
 
 **Good:**
 ```php
-class Car {
-    private $make, $model, $color;
-    
-    public function __construct() {
-        $this->make = 'Honda';
-        $this->model = 'Accord';
-        $this->color = 'white';
-    }
-    
-    public function setMake($make) {
+class Car 
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
         $this->make = $make;
         
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function setModel($model) {
+
+    public function setModel($model)
+    {
         $this->model = $model;
-        
+
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function setColor($color) {
+
+    public function setColor($color)
+    {
         $this->color = $color;
-        
+
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function dump() {
+
+    public function dump()
+    {
         var_dump($this->make, $this->model, $this->color);
     }
 }
@@ -1554,54 +1650,68 @@ relationship (Human->Animal vs. User->UserDetails).
 
 **Bad:**
 ```php
-class Employee {
-    private $name, $email;
+class Employee 
+{
+    private $name;
+    private $email;
     
-    public function __construct($name, $email) {
+    public function __construct($name, $email)
+    {
         $this->name = $name;
         $this->email = $email;
     }
-    
+
     // ...
 }
 
 // Bad because Employees "have" tax data. 
 // EmployeeTaxData is not a type of Employee
 
-class EmployeeTaxData extends Employee {
-    private $ssn, $salary;
+class EmployeeTaxData extends Employee 
+{
+    private $ssn;
+    private $salary;
     
-    public function __construct($name, $email, $ssn, $salary) {
+    public function __construct($name, $email, $ssn, $salary)
+    {
         parent::__construct($name, $email);
+
         $this->ssn = $ssn;
         $this->salary = $salary;
     }
-    
+
     // ...
 }
 ```
 
 **Good:**
 ```php
-class EmployeeTaxData {
-    private $ssn, $salary;
+class EmployeeTaxData 
+{
+    private $ssn;
+    private $salary;
     
-    public function __construct($ssn, $salary) {
+    public function __construct($ssn, $salary)
+    {
         $this->ssn = $ssn;
         $this->salary = $salary;
     }
-    
+
     // ...
 }
 
-class Employee {
-    private $name, $email, $taxData;
-    
-    public function __construct($name, $email) {
+class Employee 
+{
+    private $name;
+    private $email;
+    private $taxData;
+
+    public function __construct($name, $email)
+    {
         $this->name = $name;
         $this->email = $email;
     }
-    
+
     public function setTaxData($ssn, $salary) {
         $this->taxData = new EmployeeTaxData($ssn, $salary);
     }
@@ -1707,5 +1817,16 @@ function showList($employees)
     }
 }
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+
+
+## Translations
+
+This is also available in other languages:
+  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese**:
+    - [yangweijie/clean-code-php](https://github.com/yangweijie/clean-code-php)
+    - [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
