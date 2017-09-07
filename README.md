@@ -634,6 +634,8 @@ Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
  3. They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under test rather difficult in many cases.
  4. They carry state around for the lifetime of the application. Another hit to testing since you can end up with a situation where tests need to be ordered which is a big no no for unit tests. Why? Because each unit test should be independent from the other.
 
+There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
+
 **Bad:**
 
 ```php
