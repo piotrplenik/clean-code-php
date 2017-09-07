@@ -356,7 +356,7 @@ function parseBetterJSAlternative($code)
         // ...
     ];
     
-    $statements = split(' ', $code);
+    $statements = explode(' ', $code);
     $tokens = [];
     foreach ($regexes as $regex) {
         foreach ($statements as $statement) {
@@ -386,7 +386,7 @@ function tokenize($code)
         // ...
     ];
     
-    $statements = split(' ', $code);
+    $statements = explode(' ', $code);
     $tokens = [];
     foreach ($regexes as $regex) {
         foreach ($statements as $statement) {
@@ -430,7 +430,7 @@ class Tokenizer
             // ...
         ];
 
-        $statements = split(' ', $code);
+        $statements = explode(' ', $code);
         $tokens = [];
         foreach ($regexes as $regex) {
             foreach ($statements as $statement) {
