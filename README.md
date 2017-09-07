@@ -791,12 +791,14 @@ class Airplane
 **Good:**
 
 ```php
-class Airplane
+interface Airplane
 {
     // ...
+
+    public function getCruisingAltitude();
 }
 
-class Boeing777 extends Airplane
+class Boeing777 implements Airplane
 {
     // ...
 
@@ -806,7 +808,7 @@ class Boeing777 extends Airplane
     }
 }
 
-class AirForceOne extends Airplane
+class AirForceOne implements Airplane
 {
     // ...
 
@@ -816,7 +818,7 @@ class AirForceOne extends Airplane
     }
 }
 
-class Cessna extends Airplane
+class Cessna implements Airplane
 {
     // ...
 
