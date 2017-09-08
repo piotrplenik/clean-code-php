@@ -595,7 +595,7 @@ function splitIntoFirstAndLastName()
 {
     global $name;
 
-    $name = preg_split('/ /', $name);
+    $name = explode(' ', $name);
 }
 
 splitIntoFirstAndLastName();
@@ -608,7 +608,7 @@ var_dump($name); // ['Ryan', 'McDermott'];
 ```php
 function splitIntoFirstAndLastName($name)
 {
-    return preg_split('/ /', $name);
+    return explode(' ', $name);
 }
 
 $name = 'Ryan McDermott';
