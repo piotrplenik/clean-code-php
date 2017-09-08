@@ -52,8 +52,9 @@ $currentDate = $moment->format('y-m-d');
 
 ```php
 getUserInfo();
-getClientData();
-getCustomerRecord();
+getUserData();
+getUserRecord();
+getUserProfile();
 ```
 
 **Good:**
@@ -408,8 +409,8 @@ function parseBetterJSAlternative($code)
     $regexes = [
         // ...
     ];
-
-    $statements = split(' ', $code);
+    
+    $statements = explode(' ', $code);
     $tokens = [];
     foreach ($regexes as $regex) {
         foreach ($statements as $statement) {
@@ -438,8 +439,8 @@ function tokenize($code)
     $regexes = [
         // ...
     ];
-
-    $statements = split(' ', $code);
+    
+    $statements = explode(' ', $code);
     $tokens = [];
     foreach ($regexes as $regex) {
         foreach ($statements as $statement) {
@@ -483,7 +484,7 @@ class Tokenizer
             // ...
         ];
 
-        $statements = split(' ', $code);
+        $statements = explode(' ', $code);
         $tokens = [];
         foreach ($regexes as $regex) {
             foreach ($statements as $statement) {
@@ -640,15 +641,6 @@ function config()
 
 **Good:**
 
-Create PHP configuration file or something else
-
-```php
-// config.php
-return [
-    'foo' => 'bar',
-];
-```
-
 ```php
 class Configuration
 {
@@ -666,10 +658,12 @@ class Configuration
 }
 ```
 
-Load configuration from file and create instance of `Configuration` class 
+Load configuration and create instance of `Configuration` class 
 
 ```php
-$configuration = new Configuration($configuration);
+$configuration = new Configuration([
+    'foo' => 'bar',
+]);
 ```
 
 And now you must use instance of `Configuration` in your application.
