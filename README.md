@@ -28,8 +28,48 @@ years of collective experience by the authors of *Clean Code*.
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
 ## **Variables**
-### Use meaningful and pronounceable variable names
 
+### Use names that reveal intensions
+
+Everyone who reads your code will thank you.
+
+Example:
+
+```php
+public function getThem()
+{
+    $list = new ArrayObject([]);
+    foreach($x as $this->theList)
+    {
+        if($x[0] == 4)
+        {
+            $list->append($x);
+        }
+    }
+    return $list;
+}
+```
+
+**Better**
+
+The simplicity of this code has no changed, it continues to do the same, but now it much more explicit.
+
+```php
+public function getFlaggedCells()
+{
+    $flaggedCells = new ArrayObject([]);
+    foreach($cell as $this->gameBoard)
+    {
+        if($cell[STATUS_VALUE] == FLAGGED)
+        {
+            $flaggedCells.append($cell);
+        }
+    }
+    return $flaggedCells;
+}
+```
+
+### Use meaningful and pronounceable variable names
 **Bad:**
 ```php
 $ymdstr = $moment->format('y-m-d');
@@ -1312,21 +1352,28 @@ renderLargeRectangles($rectangles);
 **Good:**
 
 ```php
-abstract class Shape
+interface Shape 
 {
-    protected $width = 0;
-    protected $height = 0;
-
-    abstract public function getArea();
-
-    public function render($area)
-    {
-        // ...
-    }
+    /**
+    * return int
+    */
+    public function getArea();
+    /**
+    * param int $area
+    * return int
+    */
+    public function render($area);
 }
 
-class Rectangle extends Shape
+
+class Rectangle implement Shape
 {
+    public function __construct($width, $heigth)
+    {
+        $this->width = $width;
+        $this->height = $height;
+    }
+
     public function setWidth($width)
     {
         $this->width = $width;
@@ -1341,11 +1388,18 @@ class Rectangle extends Shape
     {
         return $this->width * $this->height;
     }
+    public function render($area){}
 }
 
-class Square extends Shape
+class Square implement Shape
 {
     protected $length = 0;
+
+    public function __construct($width, $heigth)
+    {
+        $this->width = $width;
+        $this->height = $height;
+    }
 
     public function setLength($length)
     {
@@ -1356,25 +1410,21 @@ class Square extends Shape
     {
         return pow($this->length, 2);
     }
+
+    public function render($area){}
 }
 
-function renderLargeRectangles($rectangles)
+class Area 
 {
-    foreach ($rectangles as $rectangle) {
-        if ($rectangle instanceof Square) {
-            $rectangle->setLength(5);
-        } elseif ($rectangle instanceof Rectangle) {
-            $rectangle->setWidth(4);
-            $rectangle->setHeight(5);
-        }
-        
-        $area = $rectangle->getArea(); 
-        $rectangle->render($area);
+    public function getArea(Shape $figure){
+        return $figure->getArea()
     }
 }
 
-$shapes = [new Rectangle(), new Rectangle(), new Square()];
-renderLargeRectangles($shapes);
+$object = new Area()
+$area = $object->getArea(new Rectangle(45, 6));
+$area = $object->getArea(new Square(67, 32));
+
 ```
 
 **[⬆ back to top](#table-of-contents)**
