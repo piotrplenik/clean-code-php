@@ -409,7 +409,7 @@ function parseBetterJSAlternative($code)
     $regexes = [
         // ...
     ];
-    
+
     $statements = explode(' ', $code);
     $tokens = [];
     foreach ($regexes as $regex) {
@@ -439,7 +439,7 @@ function tokenize($code)
     $regexes = [
         // ...
     ];
-    
+
     $statements = explode(' ', $code);
     $tokens = [];
     foreach ($regexes as $regex) {
