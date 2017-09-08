@@ -46,8 +46,9 @@ $currentDate = $moment->format('y-m-d');
 **Bad:**
 ```php
 getUserInfo();
-getClientData();
-getCustomerRecord();
+getUserData();
+getUserRecord();
+getUserProfile();
 ```
 
 **Good**:
