@@ -153,6 +153,26 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 **[⬆ back to top](#table-of-contents)**
 
+### Checking index in array
+
+**Bad:**
+
+```php
+if(isset($array['index'])){
+   // ...
+}
+```
+
+**Good:**
+
+```php
+if(array_key_exists('index',$array)){
+   // ...
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
+
 ### Avoid Mental Mapping
 
 Don’t force the reader of your code to translate what the variable means.
@@ -653,7 +673,7 @@ class Configuration
 
     public function get($key)
     {
-        return isset($this->configuration[$key]) ? $this->configuration[$key] : null;
+        return array_key_exists($key,$this->configuration) ? $this->configuration[$key] : null;
     }
 }
 ```
