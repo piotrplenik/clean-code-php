@@ -153,6 +153,65 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 **[⬆ back to top](#table-of-contents)**
 
+### Avoid nesting too deeply and return early
+
+Nesting if else too deeply makes reader difficult to follow. Explicit is better
+than implicit.
+
+**Bad:**
+
+```php
+function checkEmailExist()
+{
+    if (isset($_POST['action'])) {
+        if (isset($_POST['email'])) {
+            if (isset($_POST['user_id'])) {
+                $user = User::find($_POST['user_id']);
+                if ($user) {
+                    $emails = $user->getEmails();
+                    if (count($emails) > 0) {
+                        foreach ($emails as $email) {
+                            if ($email === $_POST['email']) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
+}
+```
+
+**Good:**
+
+```php
+function checkEmailExist()
+{
+    if (! isset($_POST['action'], $_POST['email'], $_POST['user_id'])) {
+        return false;
+    }
+
+    $user = User::find($_POST['user_id']);
+
+    if (! $user) {
+        return false; // Or throw exception.
+    }
+
+    $emails = $user->getEmails();
+
+    if (empty($emails)) {
+        return false;
+    }
+
+    return in_array($_POST['email'], $emails);
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
+
 ### Avoid Mental Mapping
 
 Don’t force the reader of your code to translate what the variable means.
