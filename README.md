@@ -1,6 +1,7 @@
-# clean-code-php
+# Clean Code PHP
 
 ## Table of Contents
+
   1. [Introduction](#introduction)
   2. [Variables](#variables)
   3. [Functions](#functions)
@@ -12,6 +13,7 @@
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
   6. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  7. [Translations](#translations)
 
 ## Introduction
 
@@ -26,62 +28,96 @@ years of collective experience by the authors of *Clean Code*.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
-## **Variables**
+## Variables
+
 ### Use meaningful and pronounceable variable names
 
 **Bad:**
+
 ```php
 $ymdstr = $moment->format('y-m-d');
 ```
 
-**Good**:
+**Good:**
+
 ```php
 $currentDate = $moment->format('y-m-d');
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use the same vocabulary for the same type of variable
 
 **Bad:**
+
 ```php
 getUserInfo();
-getClientData();
-getCustomerRecord();
+getUserData();
+getUserRecord();
+getUserProfile();
 ```
 
-**Good**:
+**Good:**
+
 ```php
 getUser();
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
-### Use searchable names
+### Use searchable names (part 1)
+
 We will read more code than we will ever write. It's important that the code we do write is 
 readable and searchable. By *not* naming variables that end up being meaningful for 
 understanding our program, we hurt our readers.
 Make your names searchable.
 
 **Bad:**
-```php
-// What the heck is 86400 for?
-addExpireAt(86400);
 
+```php
+// What the heck is 448 for?
+$result = $serializer->serialize($data, 448);
 ```
 
-**Good**:
+**Good:**
+
 ```php
-// Declare them as capitalized `const` globals.
-interface DateGlobal {
-    const SECONDS_IN_A_DAY = 86400;
+$json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+```
+
+### Use searchable names (part 2)
+
+**Bad:**
+
+```php
+// What the heck is 4 for?
+if ($user->access & 4) {
+    // ...
+}
+```
+
+**Good:**
+
+```php
+class User
+{
+    const ACCESS_READ = 1;
+    const ACCESS_CREATE = 2;
+    const ACCESS_UPDATE = 4;
+    const ACCESS_DELETE = 8;
 }
 
-addExpireAt(DateGlobal::SECONDS_IN_A_DAY);
+if ($user->access & User::ACCESS_UPDATE) {
+    // do edit ...
+}
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
-
 ### Use explanatory variables
+
 **Bad:**
+
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
@@ -90,7 +126,7 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
-**Not bad**:
+**Not bad:**
 
 It's better, but we are still heavily dependent on regex.
 
@@ -103,9 +139,10 @@ list(, $city, $zipCode) = $matches;
 saveCityZipCode($city, $zipCode);
 ```
 
-**Good**:
+**Good:**
 
 Decrease dependence on regex by naming subpatterns.
+
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(?<city>.+?)\s*(?<zipCode>\d{5})?$/';
@@ -113,13 +150,16 @@ preg_match($cityZipCodeRegex, $address, $matches);
 
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Mental Mapping
+
 Don’t force the reader of your code to translate what the variable means.
 Explicit is better than implicit.
 
 **Bad:**
+
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
 
@@ -135,7 +175,8 @@ for ($i = 0; $i < count($l); $i++) {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
 $locations = ['Austin', 'New York', 'San Francisco'];
 
@@ -146,10 +187,10 @@ foreach ($locations as $location) {
     // ...
     // ...
     dispatch($location);
-});
+}
 ```
-**[⬆ back to top](#table-of-contents)**
 
+**[⬆ back to top](#table-of-contents)**
 
 ### Don't add unneeded context
 
@@ -169,7 +210,7 @@ class Car
 }
 ```
 
-**Good**:
+**Good:**
 
 ```php
 class Car
@@ -186,25 +227,46 @@ class Car
 
 ### Use default arguments instead of short circuiting or conditionals
 
-**Bad:**
-```php
-function createMicrobrewery($name = null) {
-    $breweryName = $name ?: 'Hipster Brew Co.';
-    // ...
-}
+**Not good:**
 
+This is not good because `$breweryName` can be `NULL`.
+
+```php
+function createMicrobrewery($breweryName = 'Hipster Brew Co.')
+{
+    // ...
+}
 ```
 
-**Good**:
+**Not bad:**
+
+This opinion is more understandable than the previous version, but it better controls the value of the variable.
+
 ```php
-function createMicrobrewery($breweryName = 'Hipster Brew Co.') {
+function createMicrobrewery($name = null)
+{
+    $breweryName = $name ?: 'Hipster Brew Co.';
     // ...
 }
-
 ```
+
+**Good:**
+
+If you support only PHP 7+, then you can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+
+```php
+function createMicrobrewery(string $breweryName = 'Hipster Brew Co.')
+{
+    // ...
+}
+```
+
 **[⬆ back to top](#table-of-contents)**
-## **Functions**
+
+## Functions
+
 ### Function arguments (2 or fewer ideally)
+
 Limiting the amount of function parameters is incredibly important because it makes 
 testing your function easier. Having more than three leads to a combinatorial explosion 
 where you have to test tons of different cases with each separate argument.
@@ -215,13 +277,16 @@ arguments then your function is trying to do too much. In cases where it's not, 
 of the time a higher-level object will suffice as an argument.
 
 **Bad:**
+
 ```php
-function createMenu($title, $body, $buttonText, $cancellable) {
+function createMenu($title, $body, $buttonText, $cancellable)
+{
     // ...
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
 class MenuConfig
 {
@@ -237,15 +302,16 @@ $config->body = 'Bar';
 $config->buttonText = 'Baz';
 $config->cancellable = true;
 
-function createMenu(MenuConfig $config) {
+function createMenu(MenuConfig $config)
+{
     // ...
 }
-
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
-
 ### Functions should do one thing
+
 This is by far the most important rule in software engineering. When functions do more 
 than one thing, they are harder to compose, test, and reason about. When you can isolate 
 a function to just one action, they can be refactored easily and your code will read much 
@@ -254,7 +320,8 @@ of many developers.
 
 **Bad:**
 ```php
-function emailClients($clients) {
+function emailClients($clients)
+{
     foreach ($clients as $client) {
         $clientRecord = $db->find($client);
         if ($clientRecord->isActive()) {
@@ -264,22 +331,28 @@ function emailClients($clients) {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function emailClients($clients) {
+function emailClients($clients)
+{
     $activeClients = activeClients($clients);
     array_walk($activeClients, 'email');
 }
 
-function activeClients($clients) {
+function activeClients($clients)
+{
     return array_filter($clients, 'isClientActive');
 }
 
-function isClientActive($client) {
+function isClientActive($client)
+{
     $clientRecord = $db->find($client);
+
     return $clientRecord->isActive();
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Function names should say what they do
@@ -336,20 +409,20 @@ function parseBetterJSAlternative($code)
     $regexes = [
         // ...
     ];
-    
-    $statements = split(' ', $code);
+
+    $statements = explode(' ', $code);
     $tokens = [];
     foreach ($regexes as $regex) {
         foreach ($statements as $statement) {
             // ...
         }
     }
-    
+
     $ast = [];
     foreach ($tokens as $token) {
         // lex...
     }
-    
+
     foreach ($ast as $node) {
         // parse...
     }
@@ -366,15 +439,15 @@ function tokenize($code)
     $regexes = [
         // ...
     ];
-    
-    $statements = split(' ', $code);
+
+    $statements = explode(' ', $code);
     $tokens = [];
     foreach ($regexes as $regex) {
         foreach ($statements as $statement) {
             $tokens[] = /* ... */;
         }
     }
-    
+
     return $tokens;
 }
 
@@ -384,7 +457,7 @@ function lexer($tokens)
     foreach ($tokens as $token) {
         $ast[] = /* ... */;
     }
-    
+
     return $ast;
 }
 
@@ -411,7 +484,7 @@ class Tokenizer
             // ...
         ];
 
-        $statements = split(' ', $code);
+        $statements = explode(' ', $code);
         $tokens = [];
         foreach ($regexes as $regex) {
             foreach ($statements as $statement) {
@@ -422,9 +495,7 @@ class Tokenizer
         return $tokens;
     }
 }
-```
 
-```php
 class Lexer
 {
     public function lexify($tokens)
@@ -437,9 +508,7 @@ class Lexer
         return $ast;
     }
 }
-```
 
-```php
 class BetterJSAlternative
 {
     private $tokenizer;
@@ -462,18 +531,19 @@ class BetterJSAlternative
 }
 ```
 
-Now we can mock the dependencies and test only the work of method `BetterJSAlternative::parse()`.
-
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use flags as function parameters
+
 Flags tell your user that this function does more than one thing. Functions should 
 do one thing. Split out your functions if they are following different code paths 
 based on a boolean.
 
 **Bad:**
+
 ```php
-function createFile($name, $temp = false) {
+function createFile($name, $temp = false)
+{
     if ($temp) {
         touch('./temp/'.$name);
     } else {
@@ -482,19 +552,24 @@ function createFile($name, $temp = false) {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function createFile($name) {
+function createFile($name)
+{
     touch($name);
 }
 
-function createTempFile($name) {
+function createTempFile($name)
+{
     touch('./temp/'.$name);
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Side Effects
+
 A function produces a side effect if it does anything other than take a value in and 
 return another value or values. A side effect could be writing to a file, modifying 
 some global variable, or accidentally wiring all your money to a stranger.
@@ -510,15 +585,17 @@ centralizing where your side effects occur. If you can do this, you will be happ
 than the vast majority of other programmers.
 
 **Bad:**
+
 ```php
 // Global variable referenced by following function.
 // If we had another function that used this name, now it'd be an array and it could break it.
 $name = 'Ryan McDermott';
 
-function splitIntoFirstAndLastName() {
+function splitIntoFirstAndLastName()
+{
     global $name;
 
-    $name = preg_split('/ /', $name);
+    $name = explode(' ', $name);
 }
 
 splitIntoFirstAndLastName();
@@ -526,10 +603,12 @@ splitIntoFirstAndLastName();
 var_dump($name); // ['Ryan', 'McDermott'];
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function splitIntoFirstAndLastName($name) {
-    return preg_split('/ /', $name);
+function splitIntoFirstAndLastName($name)
+{
+    return explode(' ', $name);
 }
 
 $name = 'Ryan McDermott';
@@ -538,9 +617,11 @@ $newName = splitIntoFirstAndLastName($name);
 var_dump($name); // 'Ryan McDermott';
 var_dump($newName); // ['Ryan', 'McDermott'];
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't write to global functions
+
 Polluting globals is a bad practice in many languages because you could clash with another 
 library and the user of your API would be none-the-wiser until they get an exception in 
 production. Let's think about an example: what if you wanted to have configuration array. 
@@ -560,15 +641,6 @@ function config()
 
 **Good:**
 
-Create PHP configuration file or something else
-
-```php
-// config.php
-return [
-    'foo' => 'bar',
-];
-```
-
 ```php
 class Configuration
 {
@@ -586,10 +658,12 @@ class Configuration
 }
 ```
 
-Load configuration from file and create instance of `Configuration` class 
+Load configuration and create instance of `Configuration` class 
 
 ```php
-$configuration = new Configuration($configuration);
+$configuration = new Configuration([
+    'foo' => 'bar',
+]);
 ```
 
 And now you must use instance of `Configuration` in your application.
@@ -597,7 +671,14 @@ And now you must use instance of `Configuration` in your application.
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use a Singleton pattern
-Singleton is a [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
+
+Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern). Paraphrased from Brian Button:
+ 1. They are generally used as a **global instance**, why is that so bad? Because **you hide the dependencies** of your application in your code, instead of exposing them through the interfaces. Making something global to avoid passing it around is a [code smell](https://en.wikipedia.org/wiki/Code_smell).
+ 2. They violate the [single responsibility principle](#single-responsibility-principle-srp): by virtue of the fact that **they control their own creation and lifecycle**.
+ 3. They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under **test rather difficult** in many cases.
+ 4. They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent from the other.
+
+There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
 
 **Bad:**
 
@@ -660,7 +741,7 @@ if ($article->state === 'published') {
 }
 ```
 
-**Good**:
+**Good:**
 
 ```php
 if ($article->isPublished()) {
@@ -673,19 +754,24 @@ if ($article->isPublished()) {
 ### Avoid negative conditionals
 
 **Bad:**
+
 ```php
-function isDOMNodeNotPresent($node) {
+function isDOMNodeNotPresent($node)
+{
     // ...
 }
 
-if (!isDOMNodeNotPresent($node)) {
+if (!isDOMNodeNotPresent($node))
+{
     // ...
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function isDOMNodePresent($node) {
+function isDOMNodePresent($node)
+{
     // ...
 }
 
@@ -693,9 +779,11 @@ if (isDOMNodePresent($node)) {
     // ...
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid conditionals
+
 This seems like an impossible task. Upon first hearing this, most people say,
 "how am I supposed to do anything without an `if` statement?" The answer is that
 you can use polymorphism to achieve the same task in many cases. The second
@@ -706,10 +794,14 @@ are telling your user that your function does more than one thing. Remember,
 just do one thing.
 
 **Bad:**
+
 ```php
-class Airplane {
+class Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         switch ($this->type) {
             case '777':
                 return $this->getMaxAltitude() - $this->getPassengerCount();
@@ -722,33 +814,47 @@ class Airplane {
 }
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class Airplane {
+interface Airplane
+{
     // ...
+
+    public function getCruisingAltitude();
 }
 
-class Boeing777 extends Airplane {
+class Boeing777 implements Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude() - $this->getPassengerCount();
     }
 }
 
-class AirForceOne extends Airplane {
+class AirForceOne implements Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude();
     }
 }
 
-class Cessna extends Airplane {
+class Cessna implements Airplane
+{
     // ...
-    public function getCruisingAltitude() {
+
+    public function getCruisingAltitude()
+    {
         return $this->getMaxAltitude() - $this->getFuelExpenditure();
     }
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 1)
@@ -771,7 +877,7 @@ function travelToTexas($vehicle)
 }
 ```
 
-**Good**:
+**Good:**
 
 ```php
 function travelToTexas(Traveler $vehicle)
@@ -789,7 +895,7 @@ and you use PHP 7+ and you can't use polymorphism but you still feel the need to
 type-check, you should consider
 [type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
 or strict mode. It provides you with static typing on top of standard PHP syntax.
-The problem with manually type-checking is that doing it well requires so much
+The problem with manually type-checking is that doing it will require so much
 extra verbiage that the faux "type-safety" you get doesn't make up for the lost
 readability. Keep your PHP clean, write good tests, and have good code reviews.
 Otherwise, do all of that but with PHP strict type declaration or strict mode.
@@ -807,7 +913,7 @@ function combine($val1, $val2)
 }
 ```
 
-**Good**:
+**Good:**
 
 ```php
 function combine(int $val1, int $val2)
@@ -819,39 +925,47 @@ function combine(int $val1, int $val2)
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove dead code
+
 Dead code is just as bad as duplicate code. There's no reason to keep it in
 your codebase. If it's not being called, get rid of it! It will still be safe
 in your version history if you still need it.
 
 **Bad:**
+
 ```php
-function oldRequestModule($url) {
+function oldRequestModule($url)
+{
     // ...
 }
 
-function newRequestModule($url) {
+function newRequestModule($url)
+{
     // ...
 }
 
 $request = newRequestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
-
 ```
 
-**Good**:
+**Good:**
+
 ```php
-function requestModule($url) {
+function requestModule($url)
+{
     // ...
 }
 
 $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 
-## **Objects and Data Structures**
+## Objects and Data Structures
+
 ### Use getters and setters
+
 In PHP you can set `public`, `protected` and `private` keywords for methods. 
 Using it, you can control properties modification on an object. 
 
@@ -868,8 +982,10 @@ Additionally, this is part of Open/Closed principle, from object-oriented
 design principles.
 
 **Bad:**
+
 ```php
-class BankAccount {
+class BankAccount
+{
     public $balance = 1000;
 }
 
@@ -879,27 +995,34 @@ $bankAccount = new BankAccount();
 $bankAccount->balance -= 100;
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class BankAccount {
+class BankAccount
+{
     private $balance;
-    
-    public function __construct($balance = 1000) {
+
+    public function __construct($balance = 1000)
+    {
       $this->balance = $balance;
     }
-    
-    public function withdrawBalance($amount) {
+
+    public function withdrawBalance($amount)
+    {
         if ($amount > $this->balance) {
             throw new \Exception('Amount greater than available balance.');
         }
+
         $this->balance -= $amount;
     }
-    
-    public function depositBalance($amount) {
+
+    public function depositBalance($amount)
+    {
         $this->balance += $amount;
     }
-    
-    public function getBalance() {
+
+    public function getBalance()
+    {
         return $this->balance;
     }
 }
@@ -911,19 +1034,21 @@ $bankAccount->withdrawBalance($shoesPrice);
 
 // Get balance
 $balance = $bankAccount->getBalance();
-
 ```
-**[⬆ back to top](#table-of-contents)**
 
+**[⬆ back to top](#table-of-contents)**
 
 ### Make objects have private/protected members
 
 **Bad:**
+
 ```php
-class Employee {
+class Employee
+{
     public $name;
-    
-    public function __construct($name) {
+
+    public function __construct($name)
+    {
         $this->name = $name;
     }
 }
@@ -932,16 +1057,20 @@ $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->name; // Employee name: John Doe
 ```
 
-**Good**:
+**Good:**
+
 ```php
-class Employee {
-    protected $name;
-    
-    public function __construct($name) {
+class Employee
+{
+    private $name;
+
+    public function __construct($name)
+    {
         $this->name = $name;
     }
-    
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 }
@@ -949,12 +1078,13 @@ class Employee {
 $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
-
-## **Classes**
+## Classes
 
 ### Single Responsibility Principle (SRP)
+
 As stated in Clean Code, "There should never be more than one reason for a class
 to change". It's tempting to jam-pack a class with a lot of functionality, like
 when you can only take one suitcase on your flight. The issue with this is
@@ -965,56 +1095,69 @@ it can be difficult to understand how that will affect other dependent modules i
 your codebase.
 
 **Bad:**
+
 ```php
-class UserSettings {
+class UserSettings
+{
     private $user;
 
-    public function __construct($user) {
+    public function __construct($user)
+    {
         $this->user = $user;
     }
-    
-    public function changeSettings($settings) {
+
+    public function changeSettings($settings)
+    {
         if ($this->verifyCredentials()) {
             // ...
         }
     }
-    
-    private function verifyCredentials() {
+
+    private function verifyCredentials()
+    {
         // ...
     }
 }
 ```
 
 **Good:**
+
 ```php
-class UserAuth {
+class UserAuth 
+{
     private $user;
 
-    public function __construct($user) {
+    public function __construct($user)
+    {
         $this->user = $user;
     }
     
-    public function verifyCredentials() {
+    public function verifyCredentials()
+    {
         // ...
     }
 }
 
-
-class UserSettings {
+class UserSettings 
+{
     private $user;
+    private $auth;
 
-    public function __construct($user) {
+    public function __construct($user) 
+    {
         $this->user = $user;
         $this->auth = new UserAuth($user);
     }
-    
-    public function changeSettings($settings) {
+
+    public function changeSettings($settings)
+    {
         if ($this->auth->verifyCredentials()) {
             // ...
         }
     }
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Open/Closed Principle (OCP)
@@ -1042,6 +1185,7 @@ class AjaxAdapter extends Adapter
     public function __construct()
     {
         parent::__construct();
+
         $this->name = 'ajaxAdapter';
     }
 }
@@ -1051,6 +1195,7 @@ class NodeAdapter extends Adapter
     public function __construct()
     {
         parent::__construct();
+
         $this->name = 'nodeAdapter';
     }
 }
@@ -1063,7 +1208,7 @@ class HttpRequester
     {
         $this->adapter = $adapter;
     }
-    
+
     public function fetch($url)
     {
         $adapterName = $this->adapter->getName();
@@ -1074,13 +1219,13 @@ class HttpRequester
             return $this->makeHttpCall($url);
         }
     }
-    
-    protected function makeAjaxCall($url)
+
+    private function makeAjaxCall($url)
     {
         // request and return promise
     }
-    
-    protected function makeHttpCall($url)
+
+    private function makeHttpCall($url)
     {
         // request and return promise
     }
@@ -1119,7 +1264,7 @@ class HttpRequester
     {
         $this->adapter = $adapter;
     }
-    
+
     public function fetch($url)
     {
         return $this->adapter->request($url);
@@ -1338,6 +1483,7 @@ foreach ($shapes as $shape) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Interface Segregation Principle (ISP)
+
 ISP states that "Clients should not be forced to depend upon interfaces that
 they do not use." 
 
@@ -1347,100 +1493,88 @@ huge amounts of options is beneficial, because most of the time they won't need
 all of the settings. Making them optional helps prevent having a "fat interface".
 
 **Bad:**
+
 ```php
-interface WorkerInterface {
+interface Employee
+{
     public function work();
+
     public function eat();
 }
 
-class Worker implements WorkerInterface {
-    public function work() {
+class Human implements Employee
+{
+    public function work()
+    {
         // ....working
     }
-    public function eat() {
-        // ...... eating in launch break
+
+    public function eat()
+    {
+        // ...... eating in lunch break
     }
 }
 
-class SuperWorker implements WorkerInterface {
-    public function work() {
+class Robot implements Employee
+{
+    public function work()
+    {
         //.... working much more
     }
 
-    public function eat() {
-        //.... eating in launch break
-    }
-}
-
-class Manager {
-  /** @var WorkerInterface $worker **/
-  private $worker;
-  
-  public function setWorker(WorkerInterface $worker) {
-        $this->worker = $worker;
-    }
-
-    public function manage() {
-        $this->worker->work();
+    public function eat()
+    {
+        //.... robot can't eat, but it must implement this method
     }
 }
 ```
 
 **Good:**
-```php
-interface WorkerInterface extends FeedableInterface, WorkableInterface {
-}
 
-interface WorkableInterface {
+Not every worker is an employee, but every employee is an worker.
+
+```php
+interface Workable
+{
     public function work();
 }
 
-interface FeedableInterface {
+interface Feedable
+{
     public function eat();
 }
 
-class Worker implements WorkableInterface, FeedableInterface {
-    public function work() {
+interface Employee extends Feedable, Workable
+{
+}
+
+class Human implements Employee
+{
+    public function work()
+    {
         // ....working
     }
 
-    public function eat() {
-        //.... eating in launch break
+    public function eat()
+    {
+        //.... eating in lunch break
     }
 }
 
-class Robot implements WorkableInterface {
-    public function work() {
+// robot can only work
+class Robot implements Workable
+{
+    public function work()
+    {
         // ....working
-    }
-}
-
-class SuperWorker implements WorkerInterface  {
-    public function work() {
-        //.... working much more
-    }
-
-    public function eat() {
-        //.... eating in launch break
-    }
-}
-
-class Manager {
-  /** @var $worker WorkableInterface **/
-    private $worker;
-
-    public function setWorker(WorkableInterface $w) {
-      $this->worker = $w;
-    }
-
-    public function manage() {
-        $this->worker->work();
     }
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Dependency Inversion Principle (DIP)
+
 This principle states two essential things:
 1. High-level modules should not depend on low-level modules. Both should
 depend on abstractions.
@@ -1455,98 +1589,116 @@ the coupling between modules. Coupling is a very bad development pattern because
 it makes your code hard to refactor.
 
 **Bad:**
+
 ```php
-class Worker {
-  public function work() {
-    // ....working
-  }
-}
-
-class Manager {
-    /** @var Worker $worker **/
-    private $worker;
-    
-    public function __construct(Worker $worker) {
-        $this->worker = $worker;
-    }
-    
-    public function manage() {
-        $this->worker->work();
+class Employee
+{
+    public function work()
+    {
+        // ....working
     }
 }
 
-class SuperWorker extends Worker {
-    public function work() {
+class Robot extends Employee
+{
+    public function work()
+    {
         //.... working much more
+    }
+}
+
+class Manager
+{
+    private $employee;
+
+    public function __construct(Employee $employee)
+    {
+        $this->employee = $employee;
+    }
+
+    public function manage()
+    {
+        $this->employee->work();
     }
 }
 ```
 
 **Good:**
+
 ```php
-interface WorkerInterface {
+interface Employee
+{
     public function work();
 }
 
-class Worker implements WorkerInterface {
-    public function work() {
+class Human implements Employee
+{
+    public function work()
+    {
         // ....working
     }
 }
 
-class SuperWorker implements WorkerInterface {
-    public function work() {
+class Robot implements Employee
+{
+    public function work()
+    {
         //.... working much more
     }
 }
 
-class Manager {
-    /** @var WorkerInterface $worker **/
-    private $worker;
-    
-    public function __construct(WorkerInterface $worker) {
-        $this->worker = $worker;
+class Manager
+{
+    private $employee;
+
+    public function __construct(Employee $employee)
+    {
+        $this->employee = $employee;
     }
-    
-    public function manage() {
-        $this->worker->work();
+
+    public function manage()
+    {
+        $this->employee->work();
     }
 }
-
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use method chaining
-This pattern is very useful and commonly used it many libraries such
+
+This pattern is very useful and commonly used in many libraries such
 as PHPUnit and Doctrine. It allows your code to be expressive, and less verbose.
-For that reason, I say, use method chaining and take a look at how clean your code
-will be. In your class functions, simply return `this` at the end of every function,
+For that reason, use method chaining and take a look at how clean your code
+will be. In your class functions, simply use `return $this` at the end of every `set` function,
 and you can chain further class methods onto it.
 
 **Bad:**
+
 ```php
-class Car {
-    private $make, $model, $color;
-    
-    public function __construct() {
-        $this->make = 'Honda';
-        $this->model = 'Accord';
-        $this->color = 'white';
-    }
-    
-    public function setMake($make) {
+class Car 
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
         $this->make = $make;
     }
-    
-    public function setModel($model) {
+
+    public function setModel($model)
+    {
         $this->model = $model;
     }
-    
-    public function setColor($color) {
+
+    public function setColor($color)
+    {
         $this->color = $color;
     }
-    
-    public function dump() {
+
+    public function dump()
+    {
         var_dump($this->make, $this->model, $this->color);
     }
 }
@@ -1559,38 +1711,40 @@ $car->dump();
 ```
 
 **Good:**
+
 ```php
-class Car {
-    private $make, $model, $color;
-    
-    public function __construct() {
-        $this->make = 'Honda';
-        $this->model = 'Accord';
-        $this->color = 'white';
-    }
-    
-    public function setMake($make) {
+class Car 
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
         $this->make = $make;
         
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function setModel($model) {
+
+    public function setModel($model)
+    {
         $this->model = $model;
-        
+
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function setColor($color) {
+
+    public function setColor($color)
+    {
         $this->color = $color;
-        
+
         // NOTE: Returning this for chaining
         return $this;
     }
-    
-    public function dump() {
+
+    public function dump()
+    {
         var_dump($this->make, $this->model, $this->color);
     }
 }
@@ -1601,9 +1755,11 @@ $car = (new Car())
   ->setModel('F-150')
   ->dump();
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Prefer composition over inheritance
+
 As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
 you should prefer composition over inheritance where you can. There are lots of
 good reasons to use inheritance and lots of good reasons to use composition.
@@ -1622,61 +1778,80 @@ relationship (Human->Animal vs. User->UserDetails).
 (Change the caloric expenditure of all animals when they move).
 
 **Bad:**
+
 ```php
-class Employee {
-    private $name, $email;
-    
-    public function __construct($name, $email) {
+class Employee 
+{
+    private $name;
+    private $email;
+
+    public function __construct($name, $email)
+    {
         $this->name = $name;
         $this->email = $email;
     }
-    
+
     // ...
 }
 
 // Bad because Employees "have" tax data. 
 // EmployeeTaxData is not a type of Employee
 
-class EmployeeTaxData extends Employee {
-    private $ssn, $salary;
+class EmployeeTaxData extends Employee 
+{
+    private $ssn;
+    private $salary;
     
-    public function __construct($name, $email, $ssn, $salary) {
+    public function __construct($name, $email, $ssn, $salary)
+    {
         parent::__construct($name, $email);
+
         $this->ssn = $ssn;
         $this->salary = $salary;
     }
-    
+
     // ...
 }
 ```
 
 **Good:**
+
 ```php
-class EmployeeTaxData {
-    private $ssn, $salary;
-    
-    public function __construct($ssn, $salary) {
+class EmployeeTaxData 
+{
+    private $ssn;
+    private $salary;
+
+    public function __construct($ssn, $salary)
+    {
         $this->ssn = $ssn;
         $this->salary = $salary;
     }
-    
+
     // ...
 }
 
-class Employee {
-    private $name, $email, $taxData;
-    
-    public function __construct($name, $email) {
+class Employee 
+{
+    private $name;
+    private $email;
+    private $taxData;
+
+    public function __construct($name, $email)
+    {
         $this->name = $name;
         $this->email = $email;
     }
-    
-    public function setTaxData($ssn, $salary) {
+
+    public function setTaxData($ssn, $salary)
+    {
         $this->taxData = new EmployeeTaxData($ssn, $salary);
     }
+
     // ...
 }
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Don’t repeat yourself (DRY)
@@ -1709,7 +1884,7 @@ updating multiple places anytime you want to change one thing.
 ```php
 function showDeveloperList($developers)
 {
-    foreach ($developers as $developer) {
+    foreach ($developers as $developer) {
         $expectedSalary = $developer->calculateExpectedSalary();
         $experience = $developer->getExperience();
         $githubLink = $developer->getGithubLink();
@@ -1718,14 +1893,14 @@ function showDeveloperList($developers)
             $experience,
             $githubLink
         ];
-        
+
         render($data);
     }
 }
 
 function showManagerList($managers)
 {
-    foreach ($managers as $manager) {
+    foreach ($managers as $manager) {
         $expectedSalary = $manager->calculateExpectedSalary();
         $experience = $manager->getExperience();
         $githubLink = $manager->getGithubLink();
@@ -1734,7 +1909,7 @@ function showManagerList($managers)
             $experience,
             $githubLink
         ];
-        
+
         render($data);
     }
 }
@@ -1745,16 +1920,16 @@ function showManagerList($managers)
 ```php
 function showList($employees)
 {
-    foreach ($employees as $employee) {
-        $expectedSalary = $employee->calculateExpectedSalary();
-        $experience = $employee->getExperience();
-        $githubLink = $employee->getGithubLink();
+    foreach ($employees as $employee) {
+        $expectedSalary = $employee->calculateExpectedSalary();
+        $experience = $employee->getExperience();
+        $githubLink = $employee->getGithubLink();
         $data = [
             $expectedSalary,
             $experience,
             $githubLink
         ];
-        
+
         render($data);
     }
 }
@@ -1767,7 +1942,7 @@ It is better to use a compact version of the code.
 ```php
 function showList($employees)
 {
-    foreach ($employees as $employee) {
+    foreach ($employees as $employee) {
         render([
             $employee->calculateExpectedSalary(),
             $employee->getExperience(),
@@ -1776,5 +1951,15 @@ function showList($employees)
     }
 }
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+## Translations
+
+This is also available in other languages:
+
+ * ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese:**
+   * [yangweijie/clean-code-php](https://github.com/yangweijie/clean-code-php)
+   * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
