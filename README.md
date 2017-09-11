@@ -31,15 +31,16 @@
      * [Use getters and setters](#use-getters-and-setters)
      * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
   5. [Classes](#classes)
-     * [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
-     * [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
-     * [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
-     * [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
-     * [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
      * [Use method chaining](#use-method-chaining)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
-  6. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  7. [Translations](#translations)
+  6. [SOLID](#solid)
+     * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
+     * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
+     * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
+     * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
+     * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+  7. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  8. [Translations](#translations)
 
 ## Introduction
 
@@ -1109,6 +1110,205 @@ echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
 
 ## Classes
 
+### Use method chaining
+
+This pattern is very useful and commonly used in many libraries such
+as PHPUnit and Doctrine. It allows your code to be expressive, and less verbose.
+For that reason, use method chaining and take a look at how clean your code
+will be. In your class functions, simply use `return $this` at the end of every `set` function,
+and you can chain further class methods onto it.
+
+**Bad:**
+
+```php
+class Car 
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
+        $this->make = $make;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
+    public function dump()
+    {
+        var_dump($this->make, $this->model, $this->color);
+    }
+}
+
+$car = new Car();
+$car->setColor('pink');
+$car->setMake('Ford');
+$car->setModel('F-150');
+$car->dump();
+```
+
+**Good:**
+
+```php
+class Car 
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
+        $this->make = $make;
+        
+        // NOTE: Returning this for chaining
+        return $this;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+
+        // NOTE: Returning this for chaining
+        return $this;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        // NOTE: Returning this for chaining
+        return $this;
+    }
+
+    public function dump()
+    {
+        var_dump($this->make, $this->model, $this->color);
+    }
+}
+
+$car = (new Car())
+  ->setColor('pink')
+  ->setMake('Ford')
+  ->setModel('F-150')
+  ->dump();
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Prefer composition over inheritance
+
+As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
+you should prefer composition over inheritance where you can. There are lots of
+good reasons to use inheritance and lots of good reasons to use composition.
+The main point for this maxim is that if your mind instinctively goes for
+inheritance, try to think if composition could model your problem better. In some
+cases it can.
+
+You might be wondering then, "when should I use inheritance?" It
+depends on your problem at hand, but this is a decent list of when inheritance
+makes more sense than composition:
+
+1. Your inheritance represents an "is-a" relationship and not a "has-a"
+relationship (Human->Animal vs. User->UserDetails).
+2. You can reuse code from the base classes (Humans can move like all animals).
+3. You want to make global changes to derived classes by changing a base class.
+(Change the caloric expenditure of all animals when they move).
+
+**Bad:**
+
+```php
+class Employee 
+{
+    private $name;
+    private $email;
+
+    public function __construct($name, $email)
+    {
+        $this->name = $name;
+        $this->email = $email;
+    }
+
+    // ...
+}
+
+// Bad because Employees "have" tax data. 
+// EmployeeTaxData is not a type of Employee
+
+class EmployeeTaxData extends Employee 
+{
+    private $ssn;
+    private $salary;
+    
+    public function __construct($name, $email, $ssn, $salary)
+    {
+        parent::__construct($name, $email);
+
+        $this->ssn = $ssn;
+        $this->salary = $salary;
+    }
+
+    // ...
+}
+```
+
+**Good:**
+
+```php
+class EmployeeTaxData 
+{
+    private $ssn;
+    private $salary;
+
+    public function __construct($ssn, $salary)
+    {
+        $this->ssn = $ssn;
+        $this->salary = $salary;
+    }
+
+    // ...
+}
+
+class Employee 
+{
+    private $name;
+    private $email;
+    private $taxData;
+
+    public function __construct($name, $email)
+    {
+        $this->name = $name;
+        $this->email = $email;
+    }
+
+    public function setTaxData($ssn, $salary)
+    {
+        $this->taxData = new EmployeeTaxData($ssn, $salary);
+    }
+
+    // ...
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+## SOLID
+
+**SOLID** is the mnemonic acronym introduced by Michael Feathers for the first five principles named by Robert Martin, which meant five basic principles of object-oriented programming and design.
+
+ * [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
+ * [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
+ * [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
+ * [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
+ * [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+
 ### Single Responsibility Principle (SRP)
 
 As stated in Clean Code, "There should never be more than one reason for a class
@@ -1619,195 +1819,6 @@ class Manager
     {
         $this->employee->work();
     }
-}
-```
-
-**[⬆ back to top](#table-of-contents)**
-
-### Use method chaining
-
-This pattern is very useful and commonly used in many libraries such
-as PHPUnit and Doctrine. It allows your code to be expressive, and less verbose.
-For that reason, use method chaining and take a look at how clean your code
-will be. In your class functions, simply use `return $this` at the end of every `set` function,
-and you can chain further class methods onto it.
-
-**Bad:**
-
-```php
-class Car 
-{
-    private $make = 'Honda';
-    private $model = 'Accord';
-    private $color = 'white';
-
-    public function setMake($make)
-    {
-        $this->make = $make;
-    }
-
-    public function setModel($model)
-    {
-        $this->model = $model;
-    }
-
-    public function setColor($color)
-    {
-        $this->color = $color;
-    }
-
-    public function dump()
-    {
-        var_dump($this->make, $this->model, $this->color);
-    }
-}
-
-$car = new Car();
-$car->setColor('pink');
-$car->setMake('Ford');
-$car->setModel('F-150');
-$car->dump();
-```
-
-**Good:**
-
-```php
-class Car 
-{
-    private $make = 'Honda';
-    private $model = 'Accord';
-    private $color = 'white';
-
-    public function setMake($make)
-    {
-        $this->make = $make;
-        
-        // NOTE: Returning this for chaining
-        return $this;
-    }
-
-    public function setModel($model)
-    {
-        $this->model = $model;
-
-        // NOTE: Returning this for chaining
-        return $this;
-    }
-
-    public function setColor($color)
-    {
-        $this->color = $color;
-
-        // NOTE: Returning this for chaining
-        return $this;
-    }
-
-    public function dump()
-    {
-        var_dump($this->make, $this->model, $this->color);
-    }
-}
-
-$car = (new Car())
-  ->setColor('pink')
-  ->setMake('Ford')
-  ->setModel('F-150')
-  ->dump();
-```
-
-**[⬆ back to top](#table-of-contents)**
-
-### Prefer composition over inheritance
-
-As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
-you should prefer composition over inheritance where you can. There are lots of
-good reasons to use inheritance and lots of good reasons to use composition.
-The main point for this maxim is that if your mind instinctively goes for
-inheritance, try to think if composition could model your problem better. In some
-cases it can.
-
-You might be wondering then, "when should I use inheritance?" It
-depends on your problem at hand, but this is a decent list of when inheritance
-makes more sense than composition:
-
-1. Your inheritance represents an "is-a" relationship and not a "has-a"
-relationship (Human->Animal vs. User->UserDetails).
-2. You can reuse code from the base classes (Humans can move like all animals).
-3. You want to make global changes to derived classes by changing a base class.
-(Change the caloric expenditure of all animals when they move).
-
-**Bad:**
-
-```php
-class Employee 
-{
-    private $name;
-    private $email;
-
-    public function __construct($name, $email)
-    {
-        $this->name = $name;
-        $this->email = $email;
-    }
-
-    // ...
-}
-
-// Bad because Employees "have" tax data. 
-// EmployeeTaxData is not a type of Employee
-
-class EmployeeTaxData extends Employee 
-{
-    private $ssn;
-    private $salary;
-    
-    public function __construct($name, $email, $ssn, $salary)
-    {
-        parent::__construct($name, $email);
-
-        $this->ssn = $ssn;
-        $this->salary = $salary;
-    }
-
-    // ...
-}
-```
-
-**Good:**
-
-```php
-class EmployeeTaxData 
-{
-    private $ssn;
-    private $salary;
-
-    public function __construct($ssn, $salary)
-    {
-        $this->ssn = $ssn;
-        $this->salary = $salary;
-    }
-
-    // ...
-}
-
-class Employee 
-{
-    private $name;
-    private $email;
-    private $taxData;
-
-    public function __construct($name, $email)
-    {
-        $this->name = $name;
-        $this->email = $email;
-    }
-
-    public function setTaxData($ssn, $salary)
-    {
-        $this->taxData = new EmployeeTaxData($ssn, $salary);
-    }
-
-    // ...
 }
 ```
 
