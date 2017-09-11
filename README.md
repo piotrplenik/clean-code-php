@@ -11,7 +11,7 @@
      * [Use explanatory variables](#use-explanatory-variables)
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
-     * [Use default arguments instead of short circuiting or conditionals](use-default-arguments-instead-of-short-circuiting-or-conditionals)
+     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
   3. [Functions](#functions)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
      * [Functions should do one thing](#functions-should-do-one-thing)
