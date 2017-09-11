@@ -155,58 +155,91 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 ### Avoid nesting too deeply and return early
 
-Nesting if else too deeply makes reader difficult to follow. Explicit is better
+Too many if else statemetns can make your code hard to follow. Explicit is better
 than implicit.
 
 **Bad:**
 
 ```php
-function checkEmailExist()
+function isShopOpen($day)
 {
-    if (isset($_POST['action'])) {
-        if (isset($_POST['email'])) {
-            if (isset($_POST['user_id'])) {
-                $user = User::find($_POST['user_id']);
-                if ($user) {
-                    $emails = $user->getEmails();
-                    if (count($emails) > 0) {
-                        foreach ($emails as $email) {
-                            if ($email === $_POST['email']) {
-                                return true;
-                            }
-                        }
-                    }
-                }
+    if ($day) {
+        if (is_string($day)) {
+            $day = strtolower($day);
+            if ($day === 'friday') {
+                return true;
+            } elseif ($day === 'saturday') {
+                return true;
+            } elseif ($day === 'sunday') {
+                return true;
+            } else {
+                return false;
             }
+        } else {
+            return false;
         }
+    } else {
+        return false;
     }
-
-    return false;
 }
 ```
 
 **Good:**
 
 ```php
-function checkEmailExist()
+function isShopOpen($day)
 {
-    if (! isset($_POST['action'], $_POST['email'], $_POST['user_id'])) {
+    if (empty($day) && ! is_string($day)) {
         return false;
     }
 
-    $user = User::find($_POST['user_id']);
+    $openingDays = [
+        'friday', 'saturday', 'sunday'
+    ];
 
-    if (! $user) {
-        return false; // Or throw exception.
+    return in_array(strtolower($day), $openingDays);
+}
+```
+
+**Bad:**
+
+```php
+function fibonacci($n)
+{
+    if ($n < 50) {
+        if ($n !== 0) {
+            if ($n !== 1) {
+                return fibonacci($n - 1) + fibonacci($n - 2);
+            } else {
+                return 1;
+            }
+        } else {
+            return 0;
+        }
+    } else {
+        return 'Not supported';
+    }
+}
+```
+
+**Good:**
+
+```php
+function fibonacci($n)
+{
+    if ($n === 0) {
+        return 0;
     }
 
-    $emails = $user->getEmails();
-
-    if (empty($emails)) {
-        return false;
+    if ($n === 1) {
+        return 1;
     }
 
-    return in_array($_POST['email'], $emails);
+    if ($n > 50) {
+        return 'Not supported';
+    }
+
+    return fibonacci($n - 1) + fibonacci($n - 2);
 }
 ```
 
