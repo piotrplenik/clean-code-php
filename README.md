@@ -1252,7 +1252,7 @@ foreach ($rectangles as $rectangle) {
 This solution no longer violates the LSP principle because we can use a subtype.
 
 ```php
-function printSquareArea(Square $rectangle)
+function printSquareArea(Square $square)
 {
     // ...
 }
@@ -1264,7 +1264,7 @@ But this is not a best solution, because the square specifies the invariants of 
 
 **Good:**
 
-The best way is separate the quadrangles and the allocation of a more general subtype for both shape.
+The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
 
 Despite the apparent similarity of the square and the rectangle, they are different.
 A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
