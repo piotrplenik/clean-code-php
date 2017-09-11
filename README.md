@@ -1181,28 +1181,25 @@ class Square extends Rectangle
     }
 }
 
-function areaVerifier(Rectangle $rectangle)
+function printArea(Rectangle $rectangle)
 {
     $rectangle->setWidth(4);
     $rectangle->setHeight(5);
  
     // BAD: Will return 25 for Square. Should be 20.
-    return $rectangle->area() == 20;
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->area()).PHP_EOL;
 }
 
 $rectangles = [new Rectangle(), new Square()];
 
 foreach ($rectangles as $rectangle) {
-    if (!areaVerifier($rectangle)) {
-        throw new Exception('Bad area!');
-    }
+    printArea($rectangle);
 }
 ```
 
 **Not bad:**
 
 You can solve the problem by making objects immutable.
-But this is not the best solution, because the square specifies the invariants of the rectangle.
 
 ```php
 class Rectangle
@@ -1240,41 +1237,64 @@ class Square extends Rectangle
     }
 }
 
-function areaVerifier(Rectangle $rectangle)
+function printArea(Rectangle $rectangle)
 {
-    return $rectangle->area() == $rectangle->width() * $rectangle->height();
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->area()).PHP_EOL;
 }
 
 $rectangles = [new Rectangle(4, 5), new Square(5)];
 
 foreach ($rectangles as $rectangle) {
-    if (!areaVerifier($rectangle)) {
-        throw new Exception('Bad area!');
-    }
+    printArea($rectangle);
 }
 ```
 
+This solution no longer violates the LSP principle because we can use a subtype.
+
+```php
+function printSquareArea(Square $rectangle)
+{
+    // ...
+}
+
+printSquareArea(new Rectangle(4, 5));
+```
+
+But this is not a best solution, because the square specifies the invariants of the rectangle.
+
 **Good:**
 
-The best way is separate the quadrangles.
+The best way is separate the quadrangles and the allocation of a more general subtype for both shape.
+
 Despite the apparent similarity of the square and the rectangle, they are different.
 A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
 A square, a rectangle, a rhombus and a parallelogram are separate figures with their own properties, albeit similar.
 
 ```php
-class Rectangle
+interface Shape
+{
+    public function area();
+}
+
+class Rectangle implements Shape
 {
     private $width = 0;
     private $height = 0;
 
-    public function setWidth($width)
+    public function __construct($width, $height)
     {
         $this->width = $width;
+        $this->height = $height;
     }
 
-    public function setHeight($height)
+    public function width()
     {
-        $this->height = $height;
+        return $this->width;
+    }
+
+    public function height()
+    {
+        return $this->height;
     }
 
     public function area()
@@ -1283,13 +1303,18 @@ class Rectangle
     }
 }
 
-class Square
+class Square implements Shape
 {
     private $length = 0;
 
-    public function setLength($length)
+    public function __construct($length)
     {
         $this->length = $length;
+    }
+
+    public function length()
+    {
+        return $this->length;
     }
 
     public function area()
@@ -1298,31 +1323,15 @@ class Square
     }
 }
 
-function rectangleAreaVerifier(Rectangle $rectangle)
+function printArea(Shape $shape)
 {
-    $rectangle->setWidth(4);
-    $rectangle->setHeight(5);
- 
-    return $rectangle->area() == 20;
+    echo sprintf('%s has area %d.', get_class($shape), $shape->area()).PHP_EOL;
 }
 
-function squareAreaVerifier(Square $square)
-{
-    $square->setLength(5);
- 
-    return $square->area() == 25;
-}
+$shapes = [new Rectangle(4, 5), new Square(5)];
 
-$rectangle = new Rectangle();
-
-if (!rectangleAreaVerifier($rectangle)) {
-    throw new Exception('Bad area!');
-}
-
-$square = new Square();
-
-if (!squareAreaVerifier($square)) {
-    throw new Exception('Bad area!');
+foreach ($shapes as $shape) {
+    printArea($shape);
 }
 ```
 
