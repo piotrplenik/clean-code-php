@@ -1395,16 +1395,6 @@ foreach ($rectangles as $rectangle) {
 ```
 
 This solution no longer violates the LSP principle because we can use a subtype.
-
-```php
-function printSquareArea(Square $square)
-{
-    // ...
-}
-
-printSquareArea(new Rectangle(4, 5));
-```
-
 But this is not a best solution, because the square specifies the invariants of the rectangle.
 
 **Good:**
