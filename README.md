@@ -1221,8 +1221,8 @@ abstract class Shape
 
 class Rectangle extends Shape
 {
-    protected $width;
-    protected $height;
+    private $width;
+    private $height;
 
     public function __construct($width, $height)
     {
@@ -1239,6 +1239,8 @@ class Rectangle extends Shape
 
 class Square extends Shape
 {
+    private $length;
+
     public function __construct($length)
     {
         parent::__construct();
