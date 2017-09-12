@@ -1454,8 +1454,8 @@ class Square implements Shape
 
     public function area()
     {
-        return pow($this->length, 2);
-    }
+        return $this->length ** 2;
+    }
 }
 
 function printArea(Shape $shape)
