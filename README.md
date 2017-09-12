@@ -1403,7 +1403,7 @@ The best way is separate the quadrangles and allocation of a more general subtyp
 
 Despite the apparent similarity of the square and the rectangle, they are different.
 A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
-A square, a rectangle, a rhombus and a parallelogram are separate figures with their own properties, albeit similar.
+A square, a rectangle, a rhombus and a parallelogram are separate shapes with their own properties, albeit similar.
 
 ```php
 interface Shape
