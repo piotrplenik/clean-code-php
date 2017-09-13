@@ -31,8 +31,8 @@
      * [Use getters and setters](#use-getters-and-setters)
      * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
   5. [Classes](#classes)
-     * [Use method chaining](#use-method-chaining)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
+     * [Avoid fluent interfaces](#avoid-fluent-interfaces)
   6. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
@@ -1202,99 +1202,6 @@ echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
 
 ## Classes
 
-### Use method chaining
-
-This pattern is very useful and commonly used in many libraries such
-as PHPUnit and Doctrine. It allows your code to be expressive, and less verbose.
-For that reason, use method chaining and take a look at how clean your code
-will be. In your class functions, simply use `return $this` at the end of every `set` function,
-and you can chain further class methods onto it.
-
-**Bad:**
-
-```php
-class Car 
-{
-    private $make = 'Honda';
-    private $model = 'Accord';
-    private $color = 'white';
-
-    public function setMake($make)
-    {
-        $this->make = $make;
-    }
-
-    public function setModel($model)
-    {
-        $this->model = $model;
-    }
-
-    public function setColor($color)
-    {
-        $this->color = $color;
-    }
-
-    public function dump()
-    {
-        var_dump($this->make, $this->model, $this->color);
-    }
-}
-
-$car = new Car();
-$car->setColor('pink');
-$car->setMake('Ford');
-$car->setModel('F-150');
-$car->dump();
-```
-
-**Good:**
-
-```php
-class Car 
-{
-    private $make = 'Honda';
-    private $model = 'Accord';
-    private $color = 'white';
-
-    public function setMake($make)
-    {
-        $this->make = $make;
-        
-        // NOTE: Returning this for chaining
-        return $this;
-    }
-
-    public function setModel($model)
-    {
-        $this->model = $model;
-
-        // NOTE: Returning this for chaining
-        return $this;
-    }
-
-    public function setColor($color)
-    {
-        $this->color = $color;
-
-        // NOTE: Returning this for chaining
-        return $this;
-    }
-
-    public function dump()
-    {
-        var_dump($this->make, $this->model, $this->color);
-    }
-}
-
-$car = (new Car())
-  ->setColor('pink')
-  ->setMake('Ford')
-  ->setModel('F-150')
-  ->dump();
-```
-
-**[⬆ back to top](#table-of-contents)**
-
 ### Prefer composition over inheritance
 
 As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
@@ -1387,6 +1294,107 @@ class Employee
 
     // ...
 }
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Avoid fluent interfaces
+A [Fluent interface](https://en.wikipedia.org/wiki/Fluent_interface) is an object
+oriented API that aims to improve the readability of the source code by using
+[Method chaining](https://en.wikipedia.org/wiki/Method_chaining).
+
+While there can be some contexts, frequently builder objects, where this
+pattern reduces the verbosity of the code (for example the [PHPUnit Mock Builder](https://phpunit.de/manual/current/en/test-doubles.html)
+or the [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)),
+more often it comes at some costs:
+
+1. Breaks [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29)
+2. Breaks [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern)
+3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite
+4. Makes diffs of commits harder to read
+
+For more informations you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
+on this topic written by [Marco Pivetta](https://github.com/Ocramius).
+
+**Bad:**
+```php
+class Car
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
+        $this->make = $make;
+
+        // NOTE: Returning this for chaining
+        return $this;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+
+        // NOTE: Returning this for chaining
+        return $this;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        // NOTE: Returning this for chaining
+        return $this;
+    }
+
+    public function dump()
+    {
+        var_dump($this->make, $this->model, $this->color);
+    }
+}
+
+$car = (new Car())
+  ->setColor('pink')
+  ->setMake('Ford')
+  ->setModel('F-150')
+  ->dump();
+```
+
+**Good:**
+```php
+class Car
+{
+    private $make = 'Honda';
+    private $model = 'Accord';
+    private $color = 'white';
+
+    public function setMake($make)
+    {
+        $this->make = $make;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
+    public function dump()
+    {
+        var_dump($this->make, $this->model, $this->color);
+    }
+}
+
+$car = new Car();
+$car->setColor('pink');
+$car->setMake('Ford');
+$car->setModel('F-150');
+$car->dump();
 ```
 
 **[⬆ back to top](#table-of-contents)**
