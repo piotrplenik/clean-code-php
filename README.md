@@ -28,7 +28,7 @@
      * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
      * [Remove dead code](#remove-dead-code)
   4. [Objects and Data Structures](#objects-and-data-structures)
-     * [Use getters and setters](#use-getters-and-setters)
+     * [Use object encapsulation](#use-object-encapsulation)
      * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
   5. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
@@ -1083,7 +1083,7 @@ inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 
 ## Objects and Data Structures
 
-### Use getters and setters
+### Use object encapsulation
 
 In PHP you can set `public`, `protected` and `private` keywords for methods. 
 Using it, you can control properties modification on an object. 
@@ -1097,8 +1097,7 @@ to look up and change every accessor in your codebase.
 * You can lazy load your object's properties, let's say getting it from a
 server.
 
-Additionally, this is part of Open/Closed principle, from object-oriented 
-design principles.
+Additionally, this is part of [Open/Closed](#openclosed-principle-ocp) principle.
 
 **Bad:**
 
