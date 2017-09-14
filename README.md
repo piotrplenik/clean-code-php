@@ -1299,6 +1299,7 @@ class Employee
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid fluent interfaces
+
 A [Fluent interface](https://en.wikipedia.org/wiki/Fluent_interface) is an object
 oriented API that aims to improve the readability of the source code by using
 [Method chaining](https://en.wikipedia.org/wiki/Method_chaining).
@@ -1317,6 +1318,7 @@ For more informations you can read the full [blog post](https://ocramius.github.
 on this topic written by [Marco Pivetta](https://github.com/Ocramius).
 
 **Bad:**
+
 ```php
 class Car
 {
@@ -1324,7 +1326,7 @@ class Car
     private $model = 'Accord';
     private $color = 'white';
 
-    public function setMake(string $make): Car
+    public function setMake(string $make): self
     {
         $this->make = $make;
 
@@ -1332,7 +1334,7 @@ class Car
         return $this;
     }
 
-    public function setModel(string $model): Car
+    public function setModel(string $model): self
     {
         $this->model = $model;
 
@@ -1340,7 +1342,7 @@ class Car
         return $this;
     }
 
-    public function setColor(string $color): Car
+    public function setColor(string $color): self
     {
         $this->color = $color;
 
@@ -1362,6 +1364,7 @@ $car = (new Car())
 ```
 
 **Good:**
+
 ```php
 class Car
 {
