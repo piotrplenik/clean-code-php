@@ -2033,5 +2033,7 @@ This is also available in other languages:
  * ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese:**
    * [yangweijie/clean-code-php](https://github.com/yangweijie/clean-code-php)
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
+ * ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russian:**
+   * [peter-gribanov/clean-code-php](https://github.com/peter-gribanov/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
