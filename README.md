@@ -2035,6 +2035,8 @@ This is also available in other languages:
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
  * ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russian:**
    * [peter-gribanov/clean-code-php](https://github.com/peter-gribanov/clean-code-php)
+ * ![pt](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Portuguese:**
+   * [fabioars/clean-code-php](https://github.com/fabioars/clean-code-php)
  * ![th](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Thailand.png) **Thai:**
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 
