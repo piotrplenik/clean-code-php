@@ -989,7 +989,7 @@ The first thing to consider is consistent APIs.
 function travelToTexas($vehicle): void
 {
     if ($vehicle instanceof Bicycle) {
-        $vehicle->peddleTo(new Location('texas'));
+        $vehicle->pedalTo(new Location('texas'));
     } elseif ($vehicle instanceof Car) {
         $vehicle->driveTo(new Location('texas'));
     }
@@ -1792,7 +1792,7 @@ class Robot implements Employee
 
 **Good:**
 
-Not every worker is an employee, but every employee is an worker.
+Not every worker is an employee, but every employee is a worker.
 
 ```php
 interface Workable
