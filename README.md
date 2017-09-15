@@ -9,6 +9,8 @@
      * [Use searchable names (part 1)](#use-searchable-names-part-1)
      * [Use searchable names (part 2)](#use-searchable-names-part-2)
      * [Use explanatory variables](#use-explanatory-variables)
+     * [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
+     * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
      * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
@@ -180,7 +182,7 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 **[⬆ back to top](#table-of-contents)**
 
-### Avoid nesting too deeply and return early
+### Avoid nesting too deeply and return early (part 1)
 
 Too many if else statemetns can make your code hard to follow. Explicit is better
 than implicit.
@@ -227,6 +229,10 @@ function isShopOpen(string $day): bool
     return in_array(strtolower($day), $openingDays);
 }
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Avoid nesting too deeply and return early (part 2)
 
 **Bad:**
 
