@@ -2030,8 +2030,16 @@ function showList(array $employees): void
 
 This is also available in other languages:
 
- * ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese:**
+*  :cn: **Chinese:**
    * [yangweijie/clean-code-php](https://github.com/yangweijie/clean-code-php)
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
+   * [gbcr/clean-code-php](https://github.com/gbcr/clean-code-php)
+* :ru: **Russian:**
+   * [peter-gribanov/clean-code-php](https://github.com/peter-gribanov/clean-code-php)
+* :brazil: **Portuguese:**
+   * [fabioars/clean-code-php](https://github.com/fabioars/clean-code-php)
+   * [jeanjar/clean-code-php](https://github.com/jeanjar/clean-code-php/tree/pt-br)
+* :thailand: **Thai:**
+   * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
