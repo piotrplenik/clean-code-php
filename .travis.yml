@@ -1,0 +1,11 @@
+language: php
+
+sudo: false
+
+php:
+  - nightly
+
+script: php .travis-build.php
+
+notifications:
+  email: false
