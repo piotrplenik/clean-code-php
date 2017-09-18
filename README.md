@@ -214,25 +214,22 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.')
 ```
 
 **[⬆ back to top](#table-of-contents)**
-## **Functions**
-### Function arguments (2 or fewer ideally)
-Limiting the amount of function parameters is incredibly important because it makes 
-testing your function easier. Having more than three leads to a combinatorial explosion 
-where you have to test tons of different cases with each separate argument.
+## **ฟังก์ชัน**
+### อาร์กิวเมนท์ในฟังก์ชัน (2 ตัวหรือน้อยกว่าจะดีมาก)
+การจำกัดจำนวนพารามิเตอ์ในฟังก์ชันเป็นสิ่งที่สำคัญมาก เพราะจะทำให้ทดสอบฟังก์ชันนั้นได้ง่ายขึ้น 
+หากมีมากกว่า 3 มักจะเพิ่มความยุ่งยากเพราะต้องทดสอบหลายเคสกับอาร์กิวเมนท์แต่ละตัว
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided. 
-Anything more than that should be consolidated. Usually, if you have more than two 
-arguments then your function is trying to do too much. In cases where it's not, most 
-of the time a higher-level object will suffice as an argument.
+ไม่มีอาร์กิวเมนท์เลยถือเป็นเคสอุดมคติ มีหนึ่งหรือสองตัวยังพอใช้ได้ และควรหลีกเลี่ยงการมีสามตัวหรือมากกว่า
+โดยทั่วไปแล้วถ้ามีมากกว่า 2 ตัวแสดงว่าฟังก์ชันของคุณทำงานมากเกินไป ถ้าไม่ใช่นั้นส่วนใหญ่แล้วการใช้อ๊อบเจคมาเป็นอาร์กิวเมนท์เป็นสิ่งที่ดีกว่า
 
-**Bad:**
+**ไม่ดี:**
 ```php
 function createMenu($title, $body, $buttonText, $cancellable) {
     // ...
 }
 ```
 
-**Good**:
+**ดี**:
 ```php
 class MenuConfig
 {
@@ -256,14 +253,12 @@ function createMenu(MenuConfig $config) {
 **[⬆ back to top](#table-of-contents)**
 
 
-### Functions should do one thing
-This is by far the most important rule in software engineering. When functions do more 
-than one thing, they are harder to compose, test, and reason about. When you can isolate 
-a function to just one action, they can be refactored easily and your code will read much 
-cleaner. If you take nothing else away from this guide other than this, you'll be ahead 
-of many developers.
+### ฟังก์ชันควรจะทำงานเพียงอย่างเดียว
+นี่เป็นกฏที่สำคัญมากกฏหนึ่งในวิศวกรรมซอฟแวร์เลยทีเดียว ถ้าฟังก์ชันทำงานมากกว่าหนึ่งอย่าง 
+มันจะเขียนยาก ทดสอบยาก และเข้าใจความหมายได้ยาก เมื่อคุณแยกให้มันทำงานอย่างเดียว มันจะปรับปรุงได้ง่ายและโค้ดของคุณจะสะอาดขึ้น
+ถ้าคุณยึดถือคำแนะนำนี้เป็นสำคัญ คุณจะนำหน้าเดเวลลอปเปอร์หลายคนทีเดียว
 
-**Bad:**
+**ไม่ดี:**
 ```php
 function emailClients($clients) {
     foreach ($clients as $client) {
@@ -275,7 +270,7 @@ function emailClients($clients) {
 }
 ```
 
-**Good**:
+**ดี**:
 ```php
 function emailClients($clients) {
     $activeClients = activeClients($clients);
@@ -293,9 +288,9 @@ function isClientActive($client) {
 ```
 **[⬆ back to top](#table-of-contents)**
 
-### Function names should say what they do
+### ชื่อฟังก์ชันควรจะสื่อว่ามันทำอะไร
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 class Email
@@ -309,11 +304,11 @@ class Email
 }
 
 $message = new Email(...);
-// What is this? A handle for the message? Are we writing to a file now?
+// อะไรเนี่ย? จัดการข้อความ? นี่เรากำลังจะเขียนลงไฟล์เหรอ?
 $message->handle();
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 class Email 
@@ -327,19 +322,17 @@ class Email
 }
 
 $message = new Email(...);
-// Clear and obvious
+// เคลียร์และชัดเจน
 $message->send();
 ```
 
 **[⬆ back to top](#table-of-contents)**
 
-### Functions should only be one level of abstraction
+### ฟังก์ชันควรจะมีสาระสำคัญแค่ระดับเดียว
 
-When you have more than one level of abstraction your function is usually
-doing too much. Splitting up functions leads to reusability and easier
-testing.
+ถ้าคุณมีสาระสำคัญมากกว่าหนึ่งระดับ ฟังก์ชันของคุณมักจะทำงานมากเกินไป การแยกฟังก์ชันออกทำให้นำกลับมาใช้ใหม่ได้และทำให้ทดสอบง่ายขึ้น
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 function parseBetterJSAlternative($code)
@@ -367,9 +360,9 @@ function parseBetterJSAlternative($code)
 }
 ```
 
-**Bad too:**
+**นี่ก็ยังไม่ดี:**
 
-We have carried out some of the functionality, but the `parseBetterJSAlternative()` function is still very complex and not testable.
+เราแยกฟังก์ชันออกมา แต่ฟังก์ชัน `parseBetterJSAlternative()` ก็ยังซับซ้อนและยังทดสอบไม่ได้อยู่ดี
 
 ```php
 function tokenize($code)
@@ -409,9 +402,9 @@ function parseBetterJSAlternative($code)
 }
 ```
 
-**Good:**
+**ดี:**
 
-The best solution is move out the dependencies of `parseBetterJSAlternative()` function.
+ทางออกที่ดีที่สุดคือย้ายดีเพนเดนซี่ (dependencies) ของ `parseBetterJSAlternative()` ออกมาเพื่อให้ทดสอบได้
 
 ```php
 class Tokenizer
@@ -475,13 +468,15 @@ class BetterJSAlternative
 
 **[⬆ back to top](#table-of-contents)**
 
-### Don't use flags as function parameters
+### อย่าใช้แฟล็ก (Flag) เป็นพารามิเตอร์ของฟังก์ชัน
 
 Flags tell your user that this function does more than one thing. Functions should 
 do one thing. Split out your functions if they are following different code paths 
 based on a boolean.
+แฟล็กเป็นตัวบอกผู้ใช้ของคุณว่าฟังก์ชันนี้ทำงานมากกว่าหนึ่งอย่าง ฟังก์ชันควรทำงานอย่างเดียว ให้แยกฟังก์ชันออกไป
+ถ้ามันต้องทำงานแยกเส้นทางไปตามค่าของบูลีน (boolean: True - False)
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 function createFile($name, $temp = false)
@@ -494,7 +489,7 @@ function createFile($name, $temp = false)
 }
 ```
 
-**Good**:
+**ดี**:
 
 ```php
 function createFile($name)
@@ -510,16 +505,17 @@ function createTempFile($name)
 
 **[⬆ back to top](#table-of-contents)**
 
-### Avoid Side Effects
+### ระวังผลข้างเคียง (size effects)
 
-A function produces a side effect if it does anything other than take a value in and 
-return another value or values. A side effect could be writing to a file, modifying 
-some global variable, or accidentally wiring all your money to a stranger.
+ฟังก์ชันจะทำให้เกิดผลข้างเคียงหากมันทำอะไรมากกว่าการรับค่าเข้ามาและคืนค่าออกไป ผลข้างเคียงอย่างเช่นเขียนลงไฟล์
+แก้ไขตัวแปรระดับโกลบอล หรือโอนเงินของคุณไปให้คนแปลกหน้าโดยไม่ได้ตั้งใจ
 
 Now, you do need to have side effects in a program on occasion. Like the previous 
 example, you might need to write to a file. What you want to do is to centralize where 
 you are doing this. Don't have several functions and classes that write to a particular 
 file. Have one service that does it. One and only one.
+เอาหละ บางทีคุณอาจจะต้องการผลข้างเคียงนั่นจริง ๆ อย่างในตัวอย่างข้างต้น คุณอาจต้องการที่จะเขียนลงไฟล์ สิ่งที่คุณต้องทำคือ
+
 
 The main point is to avoid common pitfalls like sharing state between objects without
 any structure, using mutable data types that can be written to by anything, and not 
