@@ -1,9 +1,9 @@
-# คลีน โค้ด PHP
+# คลีนโค้ด PHP
 
-## สารบัญ
+## สารบัญ  
   1. [คำนำ](#introduction)
   2. [ตัวแปร](#variables)
-     * [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
+     * [ใช้ชื่อตัวแปรที่มีความหมายและอ่านออกเสียงได้](#ใช้ชื่อตัวแปรที่มีความหมายและอ่านออกเสียงได้)
      * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
      * [Use searchable names (part 1)](#use-searchable-names-part-1)
      * [Use searchable names (part 2)](#use-searchable-names-part-2)
@@ -69,7 +69,7 @@ $ymdstr = $moment->format('y-m-d');
 $currentDate = $moment->format('y-m-d');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### ใช้ศัพท์เดียวกันสำหรับตัวแปรชนิดเดียวกัน
 
@@ -88,7 +88,7 @@ getUserProfile();
 getUser();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### ใช้ชื่อที่ค้นหาเจอได้ (ภาค 1)
 
@@ -134,7 +134,7 @@ if ($user->access & User::ACCESS_UPDATE) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 
 ### ใช้ตัวแปรที่อธิบายตัวเองได้
@@ -174,7 +174,7 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Avoid nesting too deeply and return early (part 1)
 
@@ -224,7 +224,7 @@ function isShopOpen(string $day): bool
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Avoid nesting too deeply and return early (part 2)
 
@@ -266,7 +266,7 @@ function fibonacci(int $n): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### หลีกเลี่ยงการต้องไล่ลำดับเอง
 อย่าบังคับให้คนที่อ่านโค้ดคุณต้องไล่เรียงว่าตัวแปรนั้นหมายถึงอะไร ประกาศแบบเฉพาะเจาะจงดีกว่า
@@ -303,7 +303,7 @@ foreach ($locations as $location) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### อย่าเพิ่มสิ่งที่ไม่จำเป็น
 
@@ -335,7 +335,7 @@ class Car
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### ใช้ค่าเริ่มต้นของอาร์กิวเมนต์ แทนที่การใช้ทางลัดหรือใช้การเช็คเงื่อนไข
 
@@ -373,7 +373,7 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ## **ฟังก์ชัน**
 
@@ -415,7 +415,7 @@ function createMenu(MenuConfig $config): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### ฟังก์ชันควรจะทำงานเพียงอย่างเดียว
 
@@ -457,7 +457,7 @@ function isClientActive(int $client): bool
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### ชื่อฟังก์ชันควรจะสื่อว่ามันทำอะไร
 
@@ -497,7 +497,7 @@ $message = new Email(...);
 $message->send();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### ฟังก์ชันควรจะมีสาระสำคัญแค่ระดับเดียว
 
@@ -633,7 +633,7 @@ class BetterJSAlternative
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### อย่าใช้แฟล็ก (Flag) เป็นพารามิเตอร์ของฟังก์ชัน
 
@@ -670,7 +670,7 @@ function createTempFile(string $name): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### ระวังผลข้างเคียง (size effects)
 
@@ -723,7 +723,7 @@ var_dump($name); // 'Ryan McDermott';
 var_dump($newName); // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Don't write to global functions
 
@@ -773,7 +773,7 @@ $configuration = new Configuration([
 
 And now you must use instance of `Configuration` in your application.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Don't use a Singleton pattern
 
@@ -834,7 +834,7 @@ $connection = new DBConnection($dsn);
 
 And now you must use instance of `DBConnection` in your application.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Encapsulate conditionals
 
@@ -854,7 +854,7 @@ if ($article->isPublished()) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Avoid negative conditionals
 
@@ -885,7 +885,7 @@ if (isDOMNodePresent($node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Avoid conditionals
 
@@ -960,7 +960,7 @@ class Cessna implements Airplane
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Avoid type-checking (part 1)
 
@@ -991,7 +991,7 @@ function travelToTexas(Traveler $vehicle): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Avoid type-checking (part 2)
 
@@ -1027,7 +1027,7 @@ function combine(int $val1, int $val2): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Remove dead code
 
@@ -1064,7 +1064,7 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 
 ## Objects and Data Structures
@@ -1140,7 +1140,7 @@ $bankAccount->withdrawBalance($shoesPrice);
 $balance = $bankAccount->getBalance();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Make objects have private/protected members
 
@@ -1191,7 +1191,7 @@ $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ## Classes
 
@@ -1289,7 +1289,7 @@ class Employee
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Avoid fluent interfaces
 
@@ -1393,7 +1393,7 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ## SOLID
 
@@ -1480,7 +1480,7 @@ class UserSettings
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Open/Closed Principle (OCP)
 
@@ -1594,7 +1594,7 @@ class HttpRequester
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Liskov Substitution Principle (LSP)
 
@@ -1735,7 +1735,7 @@ $shapes = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles($shapes);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Interface Segregation Principle (ISP)
 
@@ -1826,7 +1826,7 @@ class Robot implements Workable
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Dependency Inversion Principle (DIP)
 
@@ -1918,7 +1918,7 @@ class Manager
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Use method chaining
 This pattern is very useful and commonly used in many libraries such
@@ -2005,7 +2005,7 @@ $car = (new Car())
   ->setModel('F-150')
   ->dump();
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ### Prefer composition over inheritance
 As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
@@ -2081,7 +2081,7 @@ class Employee {
     // ...
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 ## Don’t repeat yourself (DRY)
 
@@ -2181,7 +2181,7 @@ function showList(array $employees): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
 
 
 
@@ -2201,4 +2201,4 @@ This is also available in other languages:
 * :thailand: **Thai:**
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#สารบัญ)**
