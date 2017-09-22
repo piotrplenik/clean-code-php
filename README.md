@@ -4,30 +4,30 @@
   1. [คำนำ](#introduction)
   2. [ตัวแปร](#variables)
      * [ใช้ชื่อตัวแปรที่มีความหมายและอ่านออกเสียงได้](#ใช้ชื่อตัวแปรที่มีความหมายและอ่านออกเสียงได้)
-     * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
-     * [Use searchable names (part 1)](#use-searchable-names-part-1)
-     * [Use searchable names (part 2)](#use-searchable-names-part-2)
-     * [Use explanatory variables](#use-explanatory-variables)
-     * [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
-     * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
-     * [Avoid Mental Mapping](#avoid-mental-mapping)
-     * [Don't add unneeded context](#dont-add-unneeded-context)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-  3. [ฟังก์ชัน](#functions)
-     * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
-     * [Functions should do one thing](#functions-should-do-one-thing)
-     * [Function names should say what they do](#function-names-should-say-what-they-do)
-     * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
-     * [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
-     * [Avoid Side Effects](#avoid-side-effects)
-     * [Don't write to global functions](#dont-write-to-global-functions)
-     * [Don't use a Singleton pattern](#dont-use-a-singleton-pattern)
-     * [Encapsulate conditionals](#encapsulate-conditionals)
-     * [Avoid negative conditionals](#avoid-negative-conditionals)
-     * [Avoid conditionals](#avoid-conditionals)
-     * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
-     * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
-     * [Remove dead code](#remove-dead-code)
+     * [ใช้ศัพท์เดียวกันสำหรับตัวแปรชนิดเดียวกัน](#ใช้ศัพท์เดียวกันสำหรับตัวแปรชนิดเดียวกัน)
+     * [ใช้ชื่อที่ค้นหาเจอได้ (ภาค 1)](#ใช้ชื่อที่ค้นหาเจอได้ (ภาค 1))
+     * [ใช้ชื่อที่ค้นหาเจอได้ (ภาค 2)](#ใช้ชื่อที่ค้นหาเจอได้ (ภาค 2))
+     * [ใช้ตัวแปรที่อธิบายตัวเองได้](#ใช้ตัวแปรที่อธิบายตัวเองได้)
+     * [หลีกเลี่ยงโค้ดที่ซ้อนลงไปลึกเกินไปและคืนค่าตั้งแต่ต้น (ภาค 1)](#หลีกเลี่ยงโค้ดที่ซ้อนลงไปลึกเกินไปและคืนค่าตั้งแต่ต้น (ภาค 1))
+     * [หลีกเลี่ยงโค้ดที่ซ้อนลงไปลึกเกินไปและคืนค่าตั้งแต่ต้น (ภาค 2)](#หลีกเลี่ยงโค้ดที่ซ้อนลงไปลึกเกินไปและคืนค่าตั้งแต่ต้น (ภาค 2))
+     * [หลีกเลี่ยงการต้องไล่ลำดับเอง](#หลีกเลี่ยงการต้องไล่ลำดับเอง)
+     * [อย่าเพิ่มสิ่งที่ไม่จำเป็น](#อย่าเพิ่มสิ่งที่ไม่จำเป็น)
+     * [ให้อาร์กิวเมนต์มีค่าเริ่มต้น แทนที่การใช้ทางลัดหรือใช้การเช็คเงื่อนไข](#ให้อาร์กิวเมนต์มีค่าเริ่มต้น แทนที่การใช้ทางลัดหรือใช้การเช็คเงื่อนไข)
+  3. [ฟังก์ชัน](#ฟังก์ชัน)
+     * [อาร์กิวเมนท์ในฟังก์ชัน (2 ตัวหรือน้อยกว่าจะดีมาก)](#อาร์กิวเมนท์ในฟังก์ชัน (2 ตัวหรือน้อยกว่าจะดีมาก))
+     * [ฟังก์ชันควรจะทำงานเพียงอย่างเดียว](#ฟังก์ชันควรจะทำงานเพียงอย่างเดียว)
+     * [ชื่อฟังก์ชันควรจะสื่อว่ามันทำอะไร](#ชื่อฟังก์ชันควรจะสื่อว่ามันทำอะไร)
+     * [ฟังก์ชันควรจะมีสาระสำคัญแค่ระดับเดียว](#ฟังก์ชันควรจะมีสาระสำคัญแค่ระดับเดียว)
+     * [อย่าใช้แฟล็ก (Flag) เป็นพารามิเตอร์ของฟังก์ชัน](#อย่าใช้แฟล็ก (Flag) เป็นพารามิเตอร์ของฟังก์ชัน)
+     * [ระวังผลข้างเคียง (size effects)](#ระวังผลข้างเคียง (size effects))
+     * [อย่าเขียนฟังก์ชันแบบโกลบอล](#อย่าเขียนฟังก์ชันแบบโกลบอล)
+     * [อย่าใช้แพทเทิน ซิงเกิลตัน (Singleton)](#อย่าใช้แพทเทิน ซิงเกิลตัน (Singleton))
+     * [ซ่อนการทำงานของเงื่อนไข](#ซ่อนการทำงานของเงื่อนไข)
+     * [อย่าใช้เงื่อนไขที่เป็นเชิงลบ](#อย่าใช้เงื่อนไขที่เป็นเชิงลบ)
+     * [เลิกใช้เงื่อนไขไปเลย](#เลิกใช้เงื่อนไขไปเลย)
+     * [หลีกเลี่ยงการตรวจสอบชนิดข้อมูล (ภาค 1) ](#หลีกเลี่ยงการตรวจสอบชนิดข้อมูล (ภาค 1))
+     * [หลีกเลี่ยงการตรวจสอบชนิดข้อมูล (ภาค 2) ](#หลีกเลี่ยงการตรวจสอบชนิดข้อมูล (ภาค 2))
+     * [เอาโค้ดที่ตายแล้วออกไป](#เอาโค้ดที่ตายแล้วออกไป)
   4. [ออบเจคและโครงสร้างข้อมูล](#objects-and-data-structures)
      * [Use object encapsulation](#use-object-encapsulation)
      * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
@@ -69,7 +69,7 @@ $ymdstr = $moment->format('y-m-d');
 $currentDate = $moment->format('y-m-d');
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### ใช้ศัพท์เดียวกันสำหรับตัวแปรชนิดเดียวกัน
 
@@ -88,7 +88,7 @@ getUserProfile();
 getUser();
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### ใช้ชื่อที่ค้นหาเจอได้ (ภาค 1)
 
@@ -134,7 +134,7 @@ if ($user->access & User::ACCESS_UPDATE) {
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 
 ### ใช้ตัวแปรที่อธิบายตัวเองได้
@@ -149,7 +149,7 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
-**ไม่เลว**:
+**ไม่เลว:**:
 
 ดีขึ้น แต่เรายังต้องพึ่งพา regex มากไป
 
@@ -162,7 +162,7 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($city, $zipCode);
 ```
 
-**ดี**:
+**ดี:**:
 
 ลดการพึ่งพา regex ด้วยการตั้งชื่อให้แพทเทินย่อย
 
@@ -174,14 +174,13 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Avoid nesting too deeply and return early (part 1)
+### หลีกเลี่ยงโค้ดที่ซ้อนลงไปลึกเกินไปและคืนค่าตั้งแต่ต้น (ภาค 1)
 
-Too many if else statemetns can make your code hard to follow. Explicit is better
-than implicit.
+คำสั่ง if else มากเกินไปทำให้ไล่โค้ดได้ยาก
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 function isShopOpen($day): bool
@@ -207,7 +206,7 @@ function isShopOpen($day): bool
 }
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 function isShopOpen(string $day): bool
@@ -224,11 +223,11 @@ function isShopOpen(string $day): bool
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Avoid nesting too deeply and return early (part 2)
+### หลีกเลี่ยงโค้ดที่ซ้อนลงไปลึกเกินไปและคืนค่าตั้งแต่ต้น (ภาค 2)
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 function fibonacci(int $n)
@@ -249,7 +248,7 @@ function fibonacci(int $n)
 }
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 function fibonacci(int $n): int
@@ -266,7 +265,7 @@ function fibonacci(int $n): int
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### หลีกเลี่ยงการต้องไล่ลำดับเอง
 อย่าบังคับให้คนที่อ่านโค้ดคุณต้องไล่เรียงว่าตัวแปรนั้นหมายถึงอะไร ประกาศแบบเฉพาะเจาะจงดีกว่า
@@ -303,7 +302,7 @@ foreach ($locations as $location) {
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### อย่าเพิ่มสิ่งที่ไม่จำเป็น
 
@@ -335,9 +334,9 @@ class Car
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### ใช้ค่าเริ่มต้นของอาร์กิวเมนต์ แทนที่การใช้ทางลัดหรือใช้การเช็คเงื่อนไข
+### ให้อาร์กิวเมนต์มีค่าเริ่มต้น แทนที่การใช้ทางลัดหรือใช้การเช็คเงื่อนไข
 
 **ไม่ดี:**
 
@@ -373,7 +372,7 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ## **ฟังก์ชัน**
 
@@ -415,7 +414,7 @@ function createMenu(MenuConfig $config): void
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### ฟังก์ชันควรจะทำงานเพียงอย่างเดียว
 
@@ -457,7 +456,7 @@ function isClientActive(int $client): bool
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### ชื่อฟังก์ชันควรจะสื่อว่ามันทำอะไร
 
@@ -497,7 +496,7 @@ $message = new Email(...);
 $message->send();
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### ฟังก์ชันควรจะมีสาระสำคัญแค่ระดับเดียว
 
@@ -633,13 +632,10 @@ class BetterJSAlternative
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### อย่าใช้แฟล็ก (Flag) เป็นพารามิเตอร์ของฟังก์ชัน
 
-Flags tell your user that this function does more than one thing. Functions should 
-do one thing. Split out your functions if they are following different code paths 
-based on a boolean.
 แฟล็กเป็นตัวบอกผู้ใช้ของคุณว่าฟังก์ชันนี้ทำงานมากกว่าหนึ่งอย่าง ฟังก์ชันควรทำงานอย่างเดียว ให้แยกฟังก์ชันออกไป
 ถ้ามันต้องทำงานแยกเส้นทางไปตามค่าของบูลีน (boolean: True - False)
 
@@ -670,30 +666,23 @@ function createTempFile(string $name): void
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### ระวังผลข้างเคียง (size effects)
 
 ฟังก์ชันจะทำให้เกิดผลข้างเคียงหากมันทำอะไรมากกว่าการรับค่าเข้ามาและคืนค่าออกไป ผลข้างเคียงอย่างเช่นเขียนลงไฟล์
 แก้ไขตัวแปรระดับโกลบอล หรือโอนเงินของคุณไปให้คนแปลกหน้าโดยไม่ได้ตั้งใจ
 
-Now, you do need to have side effects in a program on occasion. Like the previous 
-example, you might need to write to a file. What you want to do is to centralize where 
-you are doing this. Don't have several functions and classes that write to a particular 
-file. Have one service that does it. One and only one.
-เอาหละ บางทีคุณอาจจะต้องการผลข้างเคียงนั่นจริง ๆ อย่างในตัวอย่างข้างต้น คุณอาจต้องการที่จะเขียนลงไฟล์ สิ่งที่คุณต้องทำคือ
+เอาหละ บางทีคุณอาจจะต้องการผลข้างเคียงนั่นจริง ๆ อย่างในตัวอย่างข้างต้น คุณอาจต้องการที่จะเขียนลงไฟล์ สิ่งที่คุณต้องทำคือจับมันไปรวมไว้ส่วนกลาง อย่ามีฟังก์ชันหรือคลาสหลายตัวที่เขียนไฟล์ ให้มีเซอร์วิสเดียวที่ทำ ตัวเดียวเลย
 
+เหตุผลหลักคือการหลีกเลี่ยงข้อผิดพลาดที่เจอบ่อย เช่น การแชร์สถานะ (state) ระหว่างอ๊อบเจคโดยที่ไม่มีโครงสร้างอะไรรองรับ การใช้ชนิตข้อมูลที่เปลี่ยนแปลงได้ (mutable data types) ที่มักจะถูกทำให้เปลี่ยนแปลงไปโดยโค้ดส่วนไหนก็ได้ และการไม่มีส่วนกลางมาควบคุมผลข้างเคียง ถ้าคุณจัดการเรื่องเหล่านี้ได้ คุณจะมีความสุขมากกว่าโปรแกรมเมอร์ส่วนใหญ่ทั่วโลกเลยทีเดียว
 
-The main point is to avoid common pitfalls like sharing state between objects without
-any structure, using mutable data types that can be written to by anything, and not 
-centralizing where your side effects occur. If you can do this, you will be happier 
-than the vast majority of other programmers.
-
-**Bad:**
+**ไม่ดี:**
 
 ```php
-// Global variable referenced by following function.
-// If we had another function that used this name, now it'd be an array and it could break it.
+// ตัวแปรระดับโกลบอล เรียกใช้แบบ reference ด้วยฟังก์ชันนี้
+// ถ้าเรามีฟังก์ชันที่ใช้ตัวแปรชื่อนี้เหมือนกัน ที่นีกลายเป็น array ไปแล้ว และจะเกิดข้อผิดพลาดได้
+
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName(): void
@@ -708,7 +697,7 @@ splitIntoFirstAndLastName();
 var_dump($name); // ['Ryan', 'McDermott'];
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 function splitIntoFirstAndLastName(string $name): array
@@ -723,17 +712,14 @@ var_dump($name); // 'Ryan McDermott';
 var_dump($newName); // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Don't write to global functions
+### อย่าเขียนฟังก์ชันแบบโกลบอล
 
-Polluting globals is a bad practice in many languages because you could clash with another 
-library and the user of your API would be none-the-wiser until they get an exception in 
-production. Let's think about an example: what if you wanted to have configuration array. 
-You could write global function like `config()`, but it could clash with another library 
-that tried to do the same thing.
+การทำให้ระดับโกลบอลมีมลพิษถือเป็นสิ่งที่ต้องหลีกเลี่ยงในหลาย ๆ ภาษา เพราะคุณอาจจะไปชนกับไลบรารี่อื่นและผู้ใช้งาน API ของคุณอาจจะไม่รู้มาก่อนจนกระทั้งไปเจอข้อผิดพลาดในระยะโปรดักชัน ลองคิดตามตัวอย่างนี้ จะเป็นอย่างไรถ้าคุณต้องการค่าคอนฟิกกุเรชันที่เป็นอาร์เรย์ คุณอาจจะเขียนฟังก์ชันแบบโกลบอลเช่น `config()` แต่มันไปชนกับฟังก์ชันที่อยู่ในไลบรารี่อื่นที่พยายามจะทำสิ่งเดียวกัน
 
-**Bad:**
+
+**ไม่ดี:**
 
 ```php
 function config(): array
@@ -744,7 +730,7 @@ function config(): array
 }
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 class Configuration
@@ -763,7 +749,7 @@ class Configuration
 }
 ```
 
-Load configuration and create instance of `Configuration` class 
+โหลดคอนฟิกกุเรชันและสร้างอินสแตนส์ของคลาส `Configuration`
 
 ```php
 $configuration = new Configuration([
@@ -771,21 +757,21 @@ $configuration = new Configuration([
 ]);
 ```
 
-And now you must use instance of `Configuration` in your application.
+และต่อจากนี้คุณต้องใช้อินสแตนส์ของ `Configuration` นี้ในโปรแกรมของคุณทั้งหมด
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Don't use a Singleton pattern
+### อย่าใช้แพทเทิน ซิงเกิลตัน (Singleton)
 
-Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern). Paraphrased from Brian Button:
- 1. They are generally used as a **global instance**, why is that so bad? Because **you hide the dependencies** of your application in your code, instead of exposing them through the interfaces. Making something global to avoid passing it around is a [code smell](https://en.wikipedia.org/wiki/Code_smell).
- 2. They violate the [single responsibility principle](#single-responsibility-principle-srp): by virtue of the fact that **they control their own creation and lifecycle**.
- 3. They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under **test rather difficult** in many cases.
- 4. They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent from the other.
+ซิงเกิลตันเป็น [แอนติ-แพทเทิน](https://en.wikipedia.org/wiki/Singleton_pattern). ถอดความจาก Brian Button:
+ 1. มันมักจะถูกใช้เป็น **อินแสตนส์แบบโกลบอล** ทำไมมันถึงได้แย่นัก เพราะคุณ **ซ่อนดีเพนเดนซี่ (Dependencies)** ของโปรแกรมคุณแทนที่จะเปิดเผยมันผ่านอินเตอร์เฟส การจัดบางสิ่งให้อยู่ระดับโกลบอลเพื่อเลี่ยงการส่งผ่านมันไปมาถือว่าเป็น [code smell](https://en.wikipedia.org/wiki/Code_smell).
+ 2. มันเป็นการละเมิด [หลักการความรับผิดชอบเดียว (single responsibility principle)](#single-responsibility-principle-srp): จากข้อเท็จจริงที่ว่า **มันควบคุมการสร้างตัวเองและวงจรชีวิต (they control their own creation and lifecycle)**.
+ 3. มันทำให้เกิดโค้ดที่ยึดโยงกัน [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). ทำการการทดสอบด้วยการเฟคทำได้ยากในหลายกรณี
+ 4. มันแบกสถานะไปด้วยตลอดอายุการทำงานของแอพลิเคชัน เป็นการขัดขวางการทดสอบอีกอย่าง ทำให้ต้องทดสอบแบบเป็นลำดับขั้น ซึ่งไม่ดีเลยกับการทำยูนิตเทส ทำไมเหรอ เพราะยูนิตเทสควรจะเป็นอิสระต่อกันไง
 
-There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
+อันนี้เป็นความคิดเห็นที่ดีโดย [Misko Hevery](http://misko.hevery.com/about/) เกี่ยวกับ [ต้นตอของปัญหา (root of problem)](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 class DBConnection
@@ -812,7 +798,7 @@ class DBConnection
 $singleton = DBConnection::getInstance();
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 class DBConnection
@@ -826,19 +812,20 @@ class DBConnection
 }
 ```
 
-Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+สร้างอินสแตนส์ของคลาส `DBConnection` และคอนฟิกมันด้วย [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
 
 ```php
 $connection = new DBConnection($dsn);
 ```
 
 And now you must use instance of `DBConnection` in your application.
+และคุณควรใช้อินสแตนส์ของ `DBConnection` ตลอดทั้งแอพลิเคชัน
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Encapsulate conditionals
+### ซ่อนการทำงานของเงื่อนไข
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 if ($article->state === 'published') {
@@ -846,7 +833,7 @@ if ($article->state === 'published') {
 }
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 if ($article->isPublished()) {
@@ -854,11 +841,11 @@ if ($article->isPublished()) {
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Avoid negative conditionals
+### อย่าใช้เงื่อนไขที่เป็นเชิงลบ
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 function isDOMNodeNotPresent(\DOMNode $node): bool
@@ -872,7 +859,7 @@ if (!isDOMNodeNotPresent($node))
 }
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 function isDOMNodePresent(\DOMNode $node): bool
@@ -885,20 +872,15 @@ if (isDOMNodePresent($node)) {
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Avoid conditionals
+### เลิกใช้เงื่อนไขไปเลย
 
-This seems like an impossible task. Upon first hearing this, most people say,
-"how am I supposed to do anything without an `if` statement?" The answer is that
-you can use polymorphism to achieve the same task in many cases. The second
-question is usually, "well that's great but why would I want to do that?" The
-answer is a previous clean code concept we learned: a function should only do
-one thing. When you have classes and functions that have `if` statements, you
-are telling your user that your function does more than one thing. Remember,
-just do one thing.
+มันดูเป็นเรื่องเหนือจริงไปหน่อย ถ้าได้ยินครั้งแรกส่วนใหญ่จะพูดขึ้นว่า "จะทำงานอะไรได้ยังไงถ้าไม่มี `if`?" 
+คำตอบคือคุณสามารถใช้หลักการโพลีมอฟิสมาแทนได้ในหลาย ๆ กรณี คำถามต่อมาคือ "อืม ก็ฟังดูดีนะ แต่ทำไมฉันต้องทำงั้นด้วยล่ะ?"
+คำตอบก็คือแนวคิดคลีนโค้ดที่เราเรียนผ่านมาแล้ว นั่นคือ ฟังก์ชันควรทำงานอย่างเดียว เมื่อคุณมีคลาสและฟังก์ชันที่มี `if` แสดงว่าคุณกำลังบอกผู้ใช้ว่าฟังก์ชันของคุณกำลังทำงานมากกว่าอย่างเดียว จำได้มั๊ย? เพราะงั้นทำอย่างเดียวพอ
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 class Airplane
@@ -919,7 +901,7 @@ class Airplane
 }
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 interface Airplane
@@ -960,16 +942,18 @@ class Cessna implements Airplane
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Avoid type-checking (part 1)
+### หลีกเลี่ยงการตรวจสอบชนิดข้อมูล (ภาค 1) 
 
 PHP is untyped, which means your functions can take any type of argument.
 Sometimes you are bitten by this freedom and it becomes tempting to do
 type-checking in your functions. There are many ways to avoid having to do this.
 The first thing to consider is consistent APIs.
+PHP เป็นภาษาที่ไม่จำเป็นต้องประกาศชนิตของตัวแปร ซึ่งหมายความว่าฟังก์ชันของคุณสามารถรับอาร์กิวเมนท์เป็นอะไรก็ได้ บางทีก็โดนความเสรีนี้แว้งกัดบ่อย ๆ และมันก็ยั่วใจเหลือเกินที่จะทำการตรวจสอบชนิดข้อมูลก่อนทำงานในฟังก์ชัน มีหลายวิธีที่จะหลีกเลี่ยงได้ 
+อย่างแรกที่ควรพิจารณาคือความสอดคล้องของ API*
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 function travelToTexas($vehicle): void
@@ -982,7 +966,7 @@ function travelToTexas($vehicle): void
 }
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 function travelToTexas(Traveler $vehicle): void
@@ -991,21 +975,17 @@ function travelToTexas(Traveler $vehicle): void
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+*ผู้แปล: กรณีนี้คือการใช้ Type Hinting ใน PHP 5 หรือ Type Declaration ใน PHP 7 ถ้าตัวแปรที่ส่งเข้าฟังก์ชันไม่ใช่ชนิดข้อมูลที่ระบุก็จะฟ้องข้อผิดพลาดออกมา
 
-### Avoid type-checking (part 2)
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-If you are working with basic primitive values like strings, integers, and arrays,
-and you use PHP 7+ and you can't use polymorphism but you still feel the need to
-type-check, you should consider
-[type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
-or strict mode. It provides you with static typing on top of standard PHP syntax.
-The problem with manually type-checking is that doing it will require so much
-extra verbiage that the faux "type-safety" you get doesn't make up for the lost
-readability. Keep your PHP clean, write good tests, and have good code reviews.
-Otherwise, do all of that but with PHP strict type declaration or strict mode.
+### หลีกเลี่ยงการตรวจสอบชนิดข้อมูล (ภาค 2) 
 
-**Bad:**
+ถ้าคุณทำงานกับชนิดตัวแปรพื้นฐานอย่าง สตริง อินทิเจอ (integer) หรืออาร์เรย์
+และคุณใช้ PHP 7+ และคุณไม่สามารถใช้โพลีมอฟิสได้ แต่คุณยังรู้สึกว่าต้องทำการตรวจสอบชนิดข้อมูลอยู่ดี คุณควรพิจารณาเรื่อง [type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) หรือ โหมดเข้มงวด (strict mode) มันจะกำหนดให้คุณต้องประกาศตัวแปรพร้อมระบุชนิดข้อมูลด้วย
+ปัญหาของการตรวจสอบชนิดข้อมูลด้วยตนเองคือมันต้องเพิ่มโค้ดจำนวนมากเข้าไปเพื่อให้แน่ใจว่าได้ชนิดข้อมูลที่ถูกต้อง ซึ่งไม่คุ้มกับที่ต้องเสียโค้ดที่อ่านง่ายไป พยายามให้โค้ดสะอาด เขียนเทสดี ๆ และมีการรีวิวโค้ดอย่างมีประสิทธิภาพ หรือไม่อย่างนั้นก็ทำทุกอย่างและใช้การกำหนดชนิดข้อมูลหรือใช้โหมดเข้มงวด
+
+**ไม่ดี:**
 
 ```php
 function combine($val1, $val2): int
@@ -1018,7 +998,7 @@ function combine($val1, $val2): int
 }
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 function combine(int $val1, int $val2): int
@@ -1027,15 +1007,13 @@ function combine(int $val1, int $val2): int
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
-### Remove dead code
+### เอาโค้ดที่ตายแล้วออกไป
 
-Dead code is just as bad as duplicate code. There's no reason to keep it in
-your codebase. If it's not being called, get rid of it! It will still be safe
-in your version history if you still need it.
+โค้ดที่ไม่ได้ใช้แล้วก็ไม่ดีพอ ๆ กับโค้ดที่ซ้ำ ไม่มีเหตุผลอะไรจะเก็บไว้ในงาน ถ้ามันไม่ได้ถูกใช้ก็เอาออกไปเลย ยังไงมันก็ยังอยู่ในระบบเก็บเวอร์ชัน (version control system) อยู่ดีเมื่อคุณต้องการ
 
-**Bad:**
+**ไม่ดี:**
 
 ```php
 function oldRequestModule(string $url): void
@@ -1052,7 +1030,7 @@ $request = newRequestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**Good:**
+**ดี:**
 
 ```php
 function requestModule(string $url): void
@@ -1064,7 +1042,7 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 
 ## Objects and Data Structures
@@ -1140,7 +1118,7 @@ $bankAccount->withdrawBalance($shoesPrice);
 $balance = $bankAccount->getBalance();
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### Make objects have private/protected members
 
@@ -1191,7 +1169,7 @@ $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ## Classes
 
@@ -1289,7 +1267,7 @@ class Employee
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### Avoid fluent interfaces
 
@@ -1393,7 +1371,7 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ## SOLID
 
@@ -1480,7 +1458,7 @@ class UserSettings
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### Open/Closed Principle (OCP)
 
@@ -1594,7 +1572,7 @@ class HttpRequester
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### Liskov Substitution Principle (LSP)
 
@@ -1735,7 +1713,7 @@ $shapes = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles($shapes);
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### Interface Segregation Principle (ISP)
 
@@ -1826,7 +1804,7 @@ class Robot implements Workable
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### Dependency Inversion Principle (DIP)
 
@@ -1918,7 +1896,7 @@ class Manager
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### Use method chaining
 This pattern is very useful and commonly used in many libraries such
@@ -2005,7 +1983,7 @@ $car = (new Car())
   ->setModel('F-150')
   ->dump();
 ```
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ### Prefer composition over inheritance
 As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
@@ -2081,7 +2059,7 @@ class Employee {
     // ...
 }
 ```
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 ## Don’t repeat yourself (DRY)
 
@@ -2181,7 +2159,7 @@ function showList(array $employees): void
 }
 ```
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
 
 
 
@@ -2201,4 +2179,4 @@ This is also available in other languages:
 * :thailand: **Thai:**
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 
-**[⬆ back to top](#สารบัญ)**
+**[⬆ กลับไปด้านบน](#สารบัญ)**
