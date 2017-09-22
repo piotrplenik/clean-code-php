@@ -9,6 +9,8 @@
      * [Use searchable names (part 1)](#use-searchable-names-part-1)
      * [Use searchable names (part 2)](#use-searchable-names-part-2)
      * [Use explanatory variables](#use-explanatory-variables)
+     * [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
+     * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
      * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
@@ -180,7 +182,7 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 **[⬆ back to top](#table-of-contents)**
 
-### Avoid nesting too deeply and return early
+### Avoid nesting too deeply and return early (part 1)
 
 Too many if else statemetns can make your code hard to follow. Explicit is better
 than implicit.
@@ -228,6 +230,10 @@ function isShopOpen(string $day): bool
 }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
+### Avoid nesting too deeply and return early (part 2)
+
 **Bad:**
 
 ```php
@@ -254,12 +260,8 @@ function fibonacci(int $n)
 ```php
 function fibonacci(int $n): int
 {
-    if ($n === 0) {
-        return 0;
-    }
-
-    if ($n === 1) {
-        return 1;
+    if ($n === 0 || $n === 1) {
+        return $n;
     }
 
     if ($n > 50) {
@@ -989,7 +991,7 @@ The first thing to consider is consistent APIs.
 function travelToTexas($vehicle): void
 {
     if ($vehicle instanceof Bicycle) {
-        $vehicle->peddleTo(new Location('texas'));
+        $vehicle->pedalTo(new Location('texas'));
     } elseif ($vehicle instanceof Car) {
         $vehicle->driveTo(new Location('texas'));
     }
@@ -1157,6 +1159,14 @@ $balance = $bankAccount->getBalance();
 **[⬆ back to top](#table-of-contents)**
 
 ### Make objects have private/protected members
+
+* `public` methods and properties are most dangerous for changes, because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of class.**
+* `protected` modifier are as dangerous as public, because they are available in scope of any child class. This effectively means that difference between public and protected is only in access mechanism, but encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
+* `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
+
+Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
+
+For more informations you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
 
 **Bad:**
 
@@ -1792,7 +1802,7 @@ class Robot implements Employee
 
 **Good:**
 
-Not every worker is an employee, but every employee is an worker.
+Not every worker is an employee, but every employee is a worker.
 
 ```php
 interface Workable
@@ -2030,8 +2040,16 @@ function showList(array $employees): void
 
 This is also available in other languages:
 
- * ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese:**
-   * [yangweijie/clean-code-php](https://github.com/yangweijie/clean-code-php)
+*  :cn: **Chinese:**
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
+* :ru: **Russian:**
+   * [peter-gribanov/clean-code-php](https://github.com/peter-gribanov/clean-code-php)
+* :es: **Spanish:**
+   * [fikoborquez/clean-code-php](https://github.com/fikoborquez/clean-code-php)
+* :brazil: **Portuguese:**
+   * [fabioars/clean-code-php](https://github.com/fabioars/clean-code-php)
+   * [jeanjar/clean-code-php](https://github.com/jeanjar/clean-code-php/tree/pt-br)
+* :thailand: **Thai:**
+   * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
