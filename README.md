@@ -57,7 +57,7 @@ years of collective experience by the authors of *Clean Code*.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
-Although many developers still use PHP 5, most of examples in this article work with PHP 7.1+.
+Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
 
 ## Variables
 
