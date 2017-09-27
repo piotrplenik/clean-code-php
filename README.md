@@ -186,7 +186,7 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 ### Avoid nesting too deeply and return early (part 1)
 
-Too many if else statemetns can make your code hard to follow. Explicit is better
+Too many if else statements can make your code hard to follow. Explicit is better
 than implicit.
 
 **Bad:**
