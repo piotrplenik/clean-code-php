@@ -1673,6 +1673,9 @@ class Square extends Rectangle
     }
 }
 
+/**
+ * @param Rectangle[] $rectangles
+ */
 function renderLargeRectangles(array $rectangles): void
 {
     foreach ($rectangles as $rectangle) {
@@ -1736,6 +1739,9 @@ class Square extends Shape
     }
 }
 
+/**
+ * @param Rectangle[] $rectangles
+ */
 function renderLargeRectangles(array $rectangles): void
 {
     foreach ($rectangles as $rectangle) {
