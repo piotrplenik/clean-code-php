@@ -57,6 +57,8 @@ years of collective experience by the authors of *Clean Code*.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
+Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
+
 ## Variables
 
 ### Use meaningful and pronounceable variable names
@@ -184,7 +186,7 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 ### Avoid nesting too deeply and return early (part 1)
 
-Too many if else statemetns can make your code hard to follow. Explicit is better
+Too many if else statements can make your code hard to follow. Explicit is better
 than implicit.
 
 **Bad:**
@@ -226,7 +228,7 @@ function isShopOpen(string $day): bool
         'friday', 'saturday', 'sunday'
     ];
 
-    return in_array(strtolower($day), $openingDays);
+    return in_array(strtolower($day), $openingDays, true);
 }
 ```
 
@@ -1669,7 +1671,10 @@ class Square extends Rectangle
     }
 }
 
-function renderLargeRectangles(Rectangle $rectangles): void
+/**
+ * @param Rectangle[] $rectangles
+ */
+function renderLargeRectangles(array $rectangles): void
 {
     foreach ($rectangles as $rectangle) {
         $rectangle->setWidth(4);
@@ -1732,7 +1737,10 @@ class Square extends Shape
     }
 }
 
-function renderLargeRectangles(Shape $rectangles): void
+/**
+ * @param Rectangle[] $rectangles
+ */
+function renderLargeRectangles(array $rectangles): void
 {
     foreach ($rectangles as $rectangle) {
         if ($rectangle instanceof Square) {
