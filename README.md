@@ -1226,7 +1226,6 @@ class Rectangle extends Shape
 
     public function __construct($width, $height)
     {
-        parent::__construct();
         $this->width = $width;
         $this->height = $height;
     }
@@ -1243,7 +1242,6 @@ class Square extends Shape
 
     public function __construct($length)
     {
-        parent::__construct();
         $this->length = $length;
     }
 
