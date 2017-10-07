@@ -1129,7 +1129,7 @@ class BankAccount
       $this->balance = $balance;
     }
 
-    public function withdrawBalance(int $amount): void
+    public function withdraw(int $amount): void
     {
         if ($amount > $this->balance) {
             throw new \Exception('Amount greater than available balance.');
@@ -1138,12 +1138,12 @@ class BankAccount
         $this->balance -= $amount;
     }
 
-    public function depositBalance(int $amount): void
+    public function deposit(int $amount): void
     {
         $this->balance += $amount;
     }
 
-    public function getBalance(): int
+    public function getBalance(): int
     {
         return $this->balance;
     }
@@ -1152,7 +1152,7 @@ class BankAccount
 $bankAccount = new BankAccount();
 
 // Buy shoes...
-$bankAccount->withdrawBalance($shoesPrice);
+$bankAccount->withdraw($shoesPrice);
 
 // Get balance
 $balance = $bankAccount->getBalance();
