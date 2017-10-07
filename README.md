@@ -1143,7 +1143,7 @@ class BankAccount
         $this->balance += $amount;
     }
 
-    public function balance(): int
+    public function getBalance(): int
     {
         return $this->balance;
     }
@@ -1155,7 +1155,7 @@ $bankAccount = new BankAccount();
 $bankAccount->withdraw($shoesPrice);
 
 // Get balance
-$balance = $bankAccount->balance();
+$balance = $bankAccount->getBalance();
 ```
 
 **[⬆ back to top](#table-of-contents)**
