@@ -15,7 +15,6 @@
      * [Don't add unneeded context](#dont-add-unneeded-context)
      * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
   3. [Comparaison](#comparaison)
-     * [Use Yodas conditions](#yoda_condition)
      * [Use identical comparison](#identical_comparison)
   4. [Functions](#functions)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
@@ -390,33 +389,6 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 **[⬆ back to top](#table-of-contents)**
 
 ## Comparison
-
-### Use [Yoda conditions](https://en.wikipedia.org/wiki/Yoda_conditions)
-
-A Yoda condition places the constant portion of the expression on the left side of the conditional statement
-Yoda conditions are part of the [WordPress](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/) and [Symfony coding standards](http://symfony.com/doc/current/contributing/code/standards.html).
-
-**Not good:**
-
-
-```php
-if ( $value == 42) 
-{
-    // ... 
-} 
-```
-Reads like: "If the value equal to 42..." 
-
-**Good:**
-
-
-```php
-if ( 42 == $value) 
-{
-    // ... 
-} 
-```
-Reads like: "If the 42 equal to $value and it's avoid a common mistake 42 = $value" 
 
 **[⬆ back to top](#table-of-contents)**
 
