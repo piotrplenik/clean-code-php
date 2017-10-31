@@ -113,7 +113,10 @@ $result = $serializer->serialize($data, 448);
 **Good:**
 
 ```php
-$json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+$json = $serializer->serialize(
+    $data, 
+    JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+);
 ```
 
 ### Use searchable names (part 2)
