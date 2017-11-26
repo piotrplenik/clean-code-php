@@ -2048,7 +2048,7 @@ function showList(array $employees): void
 
 This is also available in other languages:
 
-*  :cn: **Chinese:**
+* :cn: **Chinese:**
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
 * :ru: **Russian:**
    * [peter-gribanov/clean-code-php](https://github.com/peter-gribanov/clean-code-php)
@@ -2059,5 +2059,7 @@ This is also available in other languages:
    * [jeanjar/clean-code-php](https://github.com/jeanjar/clean-code-php/tree/pt-br)
 * :thailand: **Thai:**
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
+* :fr: **French:**
+   * [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
