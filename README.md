@@ -1647,7 +1647,7 @@ class Rectangle
         $this->height = $height;
     }
 
-    public function area(): int
+    public function getArea(): int
     {
         return $this->width * $this->height;
     }
@@ -1672,7 +1672,7 @@ function printArea(Rectangle $rectangle): void
     $rectangle->setHeight(5);
  
     // BAD: Will return 25 for Square. Should be 20.
-    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->area()).PHP_EOL;
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
 }
 
 $rectangles = [new Rectangle(), new Square()];
@@ -1698,17 +1698,17 @@ class Rectangle
         $this->height = $height;
     }
 
-    public function width(): int
+    public function getWidth(): int
     {
         return $this->width;
     }
 
-    public function height(): int
+    public function getHeight(): int
     {
         return $this->height;
     }
 
-    public function area(): int
+    public function getArea(): int
     {
         return $this->width * $this->height;
     }
@@ -1724,7 +1724,7 @@ class Square extends Rectangle
 
 function printArea(Rectangle $rectangle): void
 {
-    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->area()).PHP_EOL;
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
 }
 
 $rectangles = [new Rectangle(4, 5), new Square(5)];
@@ -1748,7 +1748,7 @@ A square, a rectangle, a rhombus and a parallelogram are separate shapes with th
 ```php
 interface Shape
 {
-    public function area(): int;
+    public function getArea(): int;
 }
 
 class Rectangle implements Shape
@@ -1762,17 +1762,17 @@ class Rectangle implements Shape
         $this->height = $height;
     }
 
-    public function width(): int
+    public function getWdth(): int
     {
         return $this->width;
     }
 
-    public function height(): int
+    public function getHeight(): int
     {
         return $this->height;
     }
 
-    public function area(): int
+    public function getArea(): int
     {
         return $this->width * $this->height;
     }
@@ -1787,12 +1787,12 @@ class Square implements Shape
         $this->length = $length;
     }
 
-    public function length(): int
+    public function getLength(): int
     {
         return $this->length;
     }
 
-    public function area(): int
+    public function getArea(): int
     {
         return $this->length ** 2;
     }
@@ -1800,7 +1800,7 @@ class Square implements Shape
 
 function printArea(Shape $shape): void
 {
-    echo sprintf('%s has area %d.', get_class($shape), $shape->area()).PHP_EOL;
+    echo sprintf('%s has area %d.', get_class($shape), $shape->getArea()).PHP_EOL;
 }
 
 $shapes = [new Rectangle(4, 5), new Square(5)];
