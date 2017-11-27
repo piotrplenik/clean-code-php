@@ -1682,61 +1682,6 @@ foreach ($rectangles as $rectangle) {
 }
 ```
 
-**Not bad:**
-
-You can solve the problem by making objects immutable.
-
-```php
-class Rectangle
-{
-    private $width = 0;
-    private $height = 0;
-
-    public function __construct(int $width, int $height)
-    {
-        $this->width = $width;
-        $this->height = $height;
-    }
-
-    public function getWidth(): int
-    {
-        return $this->width;
-    }
-
-    public function getHeight(): int
-    {
-        return $this->height;
-    }
-
-    public function getArea(): int
-    {
-        return $this->width * $this->height;
-    }
-}
-
-class Square extends Rectangle
-{
-    public function __construct(int $length)
-    {
-        parent::__construct($length, $length);
-    }
-}
-
-function printArea(Rectangle $rectangle): void
-{
-    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
-}
-
-$rectangles = [new Rectangle(4, 5), new Square(5)];
-
-foreach ($rectangles as $rectangle) {
-    printArea($rectangle);
-}
-```
-
-This solution no longer violates the LSP principle because we can use a subtype.
-But this is not a best solution, because the square specifies the invariants of the rectangle.
-
 **Good:**
 
 The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
