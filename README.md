@@ -1729,9 +1729,6 @@ renderLargeRectangles($rectangles);
 ```php
 abstract class Shape
 {
-    protected $width = 0;
-    protected $height = 0;
-
     abstract public function getArea(): int;
 
     public function render(int $area): void
@@ -1742,13 +1739,12 @@ abstract class Shape
 
 class Rectangle extends Shape
 {
-    public function setWidth(int $width): void
+    private $width;
+    private $height;
+
+    public function __construct(int $width, int $height)
     {
         $this->width = $width;
-    }
-
-    public function setHeight(int $height): void
-    {
         $this->height = $height;
     }
 
@@ -1760,9 +1756,9 @@ class Rectangle extends Shape
 
 class Square extends Shape
 {
-    private $length = 0;
+    private $length;
 
-    public function setLength(int $length): void
+    public function __construct(int $length)
     {
         $this->length = $length;
     }
@@ -1779,19 +1775,12 @@ class Square extends Shape
 function renderLargeRectangles(array $rectangles): void
 {
     foreach ($rectangles as $rectangle) {
-        if ($rectangle instanceof Square) {
-            $rectangle->setLength(5);
-        } elseif ($rectangle instanceof Rectangle) {
-            $rectangle->setWidth(4);
-            $rectangle->setHeight(5);
-        }
-
         $area = $rectangle->getArea(); 
         $rectangle->render($area);
     }
 }
 
-$shapes = [new Rectangle(), new Rectangle(), new Square()];
+$shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
 renderLargeRectangles($shapes);
 ```
 
