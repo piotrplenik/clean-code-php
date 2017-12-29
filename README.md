@@ -14,7 +14,9 @@
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
      * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-  3. [Functions](#functions)
+  3. [Comparaison](#comparaison)
+     * [Use identical comparison](#identical_comparison)
+  4. [Functions](#functions)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
      * [Functions should do one thing](#functions-should-do-one-thing)
      * [Function names should say what they do](#function-names-should-say-what-they-do)
@@ -29,20 +31,20 @@
      * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
      * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
      * [Remove dead code](#remove-dead-code)
-  4. [Objects and Data Structures](#objects-and-data-structures)
+  5. [Objects and Data Structures](#objects-and-data-structures)
      * [Use object encapsulation](#use-object-encapsulation)
      * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  5. [Classes](#classes)
+  6. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-  6. [SOLID](#solid)
+  7. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
      * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  7. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  8. [Translations](#translations)
+  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  9. [Translations](#translations)
 
 ## Introduction
 
@@ -385,6 +387,40 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+## Comparison
+
+**[⬆ back to top](#table-of-contents)**
+
+### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
+
+**Not good:**
+
+```php
+$a = '42';
+$b = 42;
+Use the simple comparison will convert the string in an int
+
+if( $a != $b ) {
+   //The expression will always passes
+}
+
+```
+The comparison $a != $b return false but in fact it's true !
+The string '42' is different than the int 42 
+
+**Good:**
+Use the identical comparison will compare type and value
+```php
+if( $a !== $b ) {
+    //The expression is verified
+}
+
+```
+The comparison $a !== $b return true.
+
+**[⬆ back to top](#table-of-contents)**
+
 
 ## Functions
 
