@@ -37,17 +37,17 @@
   6. [Error handling](#error-handling)
      * [Use Exceptions Rather Than Return Codes](#use-exceptions-rather-than-return-codes)
      * [Don't Return Null](#dont-return-null)
-  6. [Classes](#classes)
+  7. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-  7. [SOLID](#solid)
+  8. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
      * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  9. [Translations](#translations)
+  9. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  10. [Translations](#translations)
 
 ## Introduction
 
