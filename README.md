@@ -1338,6 +1338,8 @@ class DeviceController
 }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ### Don't Return Null
 
 When we return null, we are essentially creating work for ourselves and foisting problems upon our callers.
