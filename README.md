@@ -14,7 +14,9 @@
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
      * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-  3. [Functions](#functions)
+  3. [Comparaison](#comparaison)
+     * [Use identical comparison](#identical_comparison)
+  4. [Functions](#functions)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
      * [Functions should do one thing](#functions-should-do-one-thing)
      * [Function names should say what they do](#function-names-should-say-what-they-do)
@@ -29,20 +31,20 @@
      * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
      * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
      * [Remove dead code](#remove-dead-code)
-  4. [Objects and Data Structures](#objects-and-data-structures)
+  5. [Objects and Data Structures](#objects-and-data-structures)
      * [Use object encapsulation](#use-object-encapsulation)
      * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  5. [Classes](#classes)
+  6. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-  6. [SOLID](#solid)
+  7. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
      * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  7. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  8. [Translations](#translations)
+  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  9. [Translations](#translations)
 
 ## Introduction
 
@@ -134,7 +136,7 @@ class User
 {
     const ACCESS_READ = 1;
     const ACCESS_CREATE = 2;
-    const ACCESS_UPDATE = 4;
+    const ACCESS_UPDATE = 4;
     const ACCESS_DELETE = 8;
 }
 
@@ -375,7 +377,7 @@ function createMicrobrewery($name = null): void
 
 **Good:**
 
-If you support only PHP 7+, then you can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+ You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
@@ -385,6 +387,40 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+## Comparison
+
+**[⬆ back to top](#table-of-contents)**
+
+### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
+
+**Not good:**
+
+```php
+$a = '42';
+$b = 42;
+Use the simple comparison will convert the string in an int
+
+if( $a != $b ) {
+   //The expression will always passes
+}
+
+```
+The comparison $a != $b return false but in fact it's true !
+The string '42' is different than the int 42 
+
+**Good:**
+Use the identical comparison will compare type and value
+```php
+if( $a !== $b ) {
+    //The expression is verified
+}
+
+```
+The comparison $a !== $b return true.
+
+**[⬆ back to top](#table-of-contents)**
+
 
 ## Functions
 
@@ -1693,9 +1729,6 @@ renderLargeRectangles($rectangles);
 ```php
 abstract class Shape
 {
-    protected $width = 0;
-    protected $height = 0;
-
     abstract public function getArea(): int;
 
     public function render(int $area): void
@@ -1706,13 +1739,12 @@ abstract class Shape
 
 class Rectangle extends Shape
 {
-    public function setWidth(int $width): void
+    private $width;
+    private $height;
+
+    public function __construct(int $width, int $height)
     {
         $this->width = $width;
-    }
-
-    public function setHeight(int $height): void
-    {
         $this->height = $height;
     }
 
@@ -1724,9 +1756,9 @@ class Rectangle extends Shape
 
 class Square extends Shape
 {
-    private $length = 0;
+    private $length;
 
-    public function setLength(int $length): void
+    public function __construct(int $length)
     {
         $this->length = $length;
     }
@@ -1743,19 +1775,12 @@ class Square extends Shape
 function renderLargeRectangles(array $rectangles): void
 {
     foreach ($rectangles as $rectangle) {
-        if ($rectangle instanceof Square) {
-            $rectangle->setLength(5);
-        } elseif ($rectangle instanceof Rectangle) {
-            $rectangle->setWidth(4);
-            $rectangle->setHeight(5);
-        }
-
         $area = $rectangle->getArea(); 
         $rectangle->render($area);
     }
 }
 
-$shapes = [new Rectangle(), new Rectangle(), new Square()];
+$shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
 renderLargeRectangles($shapes);
 ```
 
