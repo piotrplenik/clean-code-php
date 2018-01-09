@@ -390,34 +390,38 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 
 ## Comparison
 
-**[⬆ back to top](#table-of-contents)**
-
 ### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
 
 **Not good:**
 
+The simple comparison will convert the string in an integer.
+
 ```php
 $a = '42';
 $b = 42;
-Use the simple comparison will convert the string in an int
 
-if( $a != $b ) {
-   //The expression will always passes
+if ($a != $b) {
+   // The expression will always passes
 }
-
 ```
-The comparison $a != $b return false but in fact it's true !
-The string '42' is different than the int 42 
+
+The comparison `$a != $b` return `FALSE` but in fact it's `TRUE`!
+The string `42` is different than the integer `42`.
 
 **Good:**
-Use the identical comparison will compare type and value
-```php
-if( $a !== $b ) {
-    //The expression is verified
-}
 
+The identical comparison will compare type and value.
+
+```php
+$a = '42';
+$b = 42;
+
+if ($a !== $b) {
+    // The expression is verified
+}
 ```
-The comparison $a !== $b return true.
+
+The comparison `$a !== $b` return `TRUE`.
 
 **[⬆ back to top](#table-of-contents)**
 
