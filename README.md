@@ -14,7 +14,9 @@
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
      * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-  3. [Functions](#functions)
+  3. [Comparaison](#comparaison)
+     * [Use identical comparison](#identical_comparison)
+  4. [Functions](#functions)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
      * [Functions should do one thing](#functions-should-do-one-thing)
      * [Function names should say what they do](#function-names-should-say-what-they-do)
@@ -29,20 +31,20 @@
      * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
      * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
      * [Remove dead code](#remove-dead-code)
-  4. [Objects and Data Structures](#objects-and-data-structures)
+  5. [Objects and Data Structures](#objects-and-data-structures)
      * [Use object encapsulation](#use-object-encapsulation)
      * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  5. [Classes](#classes)
+  6. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-  6. [SOLID](#solid)
+  7. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
      * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  7. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  8. [Translations](#translations)
+  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  9. [Translations](#translations)
 
 ## Introduction
 
@@ -134,7 +136,7 @@ class User
 {
     const ACCESS_READ = 1;
     const ACCESS_CREATE = 2;
-    const ACCESS_UPDATE = 4;
+    const ACCESS_UPDATE = 4;
     const ACCESS_DELETE = 8;
 }
 
@@ -151,7 +153,7 @@ if ($user->access & User::ACCESS_UPDATE) {
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
-$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
+$cityZipCodeRegex = '/^[^,]+,\s*(.+?)\s*(\d{5})$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
 saveCityZipCode($matches[1], $matches[2]);
@@ -163,7 +165,7 @@ It's better, but we are still heavily dependent on regex.
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
-$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/';
+$cityZipCodeRegex = '/^[^,]+,\s*(.+?)\s*(\d{5})$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
 [, $city, $zipCode] = $matches;
@@ -176,7 +178,7 @@ Decrease dependence on regex by naming subpatterns.
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
-$cityZipCodeRegex = '/^[^,\\]+[,\\\s]+(?<city>.+?)\s*(?<zipCode>\d{5})?$/';
+$cityZipCodeRegex = '/^[^,]+,\s*(?<city>.+?)\s*(?<zipCode>\d{5})$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
 saveCityZipCode($matches['city'], $matches['zipCode']);
@@ -375,7 +377,7 @@ function createMicrobrewery($name = null): void
 
 **Good:**
 
-If you support only PHP 7+, then you can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+ You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
@@ -385,6 +387,40 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+## Comparison
+
+**[⬆ back to top](#table-of-contents)**
+
+### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
+
+**Not good:**
+
+```php
+$a = '42';
+$b = 42;
+Use the simple comparison will convert the string in an int
+
+if( $a != $b ) {
+   //The expression will always passes
+}
+
+```
+The comparison $a != $b return false but in fact it's true !
+The string '42' is different than the int 42 
+
+**Good:**
+Use the identical comparison will compare type and value
+```php
+if( $a !== $b ) {
+    //The expression is verified
+}
+
+```
+The comparison $a !== $b return true.
+
+**[⬆ back to top](#table-of-contents)**
+
 
 ## Functions
 
@@ -1129,7 +1165,7 @@ class BankAccount
       $this->balance = $balance;
     }
 
-    public function withdrawBalance(int $amount): void
+    public function withdraw(int $amount): void
     {
         if ($amount > $this->balance) {
             throw new \Exception('Amount greater than available balance.');
@@ -1138,12 +1174,12 @@ class BankAccount
         $this->balance -= $amount;
     }
 
-    public function depositBalance(int $amount): void
+    public function deposit(int $amount): void
     {
         $this->balance += $amount;
     }
 
-    public function getBalance(): int
+    public function getBalance(): int
     {
         return $this->balance;
     }
@@ -1152,7 +1188,7 @@ class BankAccount
 $bankAccount = new BankAccount();
 
 // Buy shoes...
-$bankAccount->withdrawBalance($shoesPrice);
+$bankAccount->withdraw($shoesPrice);
 
 // Get balance
 $balance = $bankAccount->getBalance();
@@ -2044,7 +2080,7 @@ function showList(array $employees): void
 
 This is also available in other languages:
 
-*  :cn: **Chinese:**
+* :cn: **Chinese:**
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
 * :ru: **Russian:**
    * [peter-gribanov/clean-code-php](https://github.com/peter-gribanov/clean-code-php)
@@ -2055,5 +2091,7 @@ This is also available in other languages:
    * [jeanjar/clean-code-php](https://github.com/jeanjar/clean-code-php/tree/pt-br)
 * :thailand: **Thai:**
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
+* :fr: **French:**
+   * [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
