@@ -2085,7 +2085,8 @@ This is also available in other languages:
 * :thailand: **Thai:**
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 * :fr: **French:**
-   * [viethuongdev/clean-code-php](https://github.com/viethuongdev/clean-code-php)
+   * [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
 * :vi: **Vietnamese**
+   * [viethuongdev/clean-code-php](https://github.com/viethuongdev/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
