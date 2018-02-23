@@ -1475,7 +1475,7 @@ final class Car
     }
     
     /**
-     * @return string The color of the vehicule
+     * @return string The color of the vehicle
      */
     public function getColor() 
     {
@@ -1487,15 +1487,15 @@ final class Car
 **Good:**
 
 ```php
-interface Vehicule
+interface Vehicle
 {
     /**
-     * @return string The color of the vehicule
+     * @return string The color of the vehicle
      */
     public function getColor();
 }
 
-final class Car interface Vehicule
+final class Car implements Vehicle
 {
     private $color;
     
