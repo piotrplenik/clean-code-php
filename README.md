@@ -37,7 +37,7 @@
   6. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-     * [Prefer `final` keyword](#prefer-final-classes)
+     * [Prefer `final` classes](#prefer-final-classes)
   7. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
