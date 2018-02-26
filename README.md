@@ -2090,9 +2090,9 @@ This is also available in other languages:
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 * :fr: **French:**
    * [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
-* :vi: **Vietnamese**
+* :vietnam: **Vietnamese**
    * [viethuongdev/clean-code-php](https://github.com/viethuongdev/clean-code-php)
-* 🇰🇷 **Korean:**
+* :kr: **Korean:**
    * [yujineeee/clean-code-php](https://github.com/yujineeee/clean-code-php)
    
 **[⬆ back to top](#table-of-contents)**
