@@ -1747,16 +1747,6 @@ class Rectangle implements Shape
         $this->height = $height;
     }
 
-    public function getWdth(): int
-    {
-        return $this->width;
-    }
-
-    public function getHeight(): int
-    {
-        return $this->height;
-    }
-
     public function getArea(): int
     {
         return $this->width * $this->height;
@@ -1770,11 +1760,6 @@ class Square implements Shape
     public function __construct(int $length)
     {
         $this->length = $length;
-    }
-
-    public function getLength(): int
-    {
-        return $this->length;
     }
 
     public function getArea(): int
