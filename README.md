@@ -1,4 +1,4 @@
-# Clean Code PHP
+﻿# Clean Code PHP
 
 ## Table of Contents
 
@@ -14,8 +14,8 @@
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
      * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-  3. [Comparaison](#comparaison)
-     * [Use identical comparison](#identical_comparison)
+  3. [Comparison](#comparison)
+     * [Use identical comparison](#use-identical-comparison)
   4. [Functions](#functions)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
      * [Functions should do one thing](#functions-should-do-one-thing)
@@ -57,7 +57,7 @@ Not every principle herein has to be strictly followed, and even fewer will be u
 agreed upon. These are guidelines and nothing more, but they are ones codified over many 
 years of collective experience by the authors of *Clean Code*.
 
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
+Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
 
 Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
 
@@ -188,7 +188,7 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 ### Avoid nesting too deeply and return early (part 1)
 
-Too many if else statements can make your code hard to follow. Explicit is better
+Too many if-else statements can make your code hard to follow. Explicit is better
 than implicit.
 
 **Bad:**
@@ -399,15 +399,15 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 ```php
 $a = '42';
 $b = 42;
-Use the simple comparison will convert the string in an int
+// Use the simple comparison that will convert the string in an int
 
 if( $a != $b ) {
-   //The expression will always passes
+   // The expression will always pass
 }
 
 ```
-The comparison $a != $b return false but in fact it's true !
-The string '42' is different than the int 42 
+The comparison $a != $b returns false but in fact it's true!
+The string '42' is different than the int 42.
 
 **Good:**
 Use the identical comparison will compare type and value
@@ -417,7 +417,7 @@ if( $a !== $b ) {
 }
 
 ```
-The comparison $a !== $b return true.
+The comparison $a !== $b returns true.
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -783,7 +783,7 @@ var_dump($newName); // ['Ryan', 'McDermott'];
 
 Polluting globals is a bad practice in many languages because you could clash with another 
 library and the user of your API would be none-the-wiser until they get an exception in 
-production. Let's think about an example: what if you wanted to have configuration array. 
+production. Let's think about an example: what if you wanted to have configuration array?
 You could write global function like `config()`, but it could clash with another library 
 that tried to do the same thing.
 
@@ -1356,10 +1356,10 @@ pattern reduces the verbosity of the code (for example the [PHPUnit Mock Builder
 or the [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)),
 more often it comes at some costs:
 
-1. Breaks [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29)
-2. Breaks [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern)
-3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite
-4. Makes diffs of commits harder to read
+1. Breaks [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29).
+2. Breaks [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern).
+3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite.
+4. Makes diffs of commits harder to read.
 
 For more informations you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
 on this topic written by [Marco Pivetta](https://github.com/Ocramius).
@@ -1792,7 +1792,7 @@ ISP states that "Clients should not be forced to depend upon interfaces that
 they do not use." 
 
 A good example to look at that demonstrates this principle is for
-classes that require large settings objects. Not requiring clients to setup
+classes that require large settings objects. Not requiring clients to set up
 huge amounts of options is beneficial, because most of the time they won't need
 all of the settings. Making them optional helps prevent having a "fat interface".
 
@@ -1982,7 +1982,7 @@ tomatoes, onions, garlic, spices, etc. If you have multiple lists that
 you keep this on, then all have to be updated when you serve a dish with
 tomatoes in them. If you only have one list, there's only one place to update!
 
-Oftentimes you have duplicate code because you have two or more slightly
+Often you have duplicate code because you have two or more slightly
 different things, that share a lot in common, but their differences force you
 to have two or more separate functions that do much of the same things. Removing 
 duplicate code means creating an abstraction that can handle this set of different 
@@ -1992,7 +1992,7 @@ Getting the abstraction right is critical, that's why you should follow the
 SOLID principles laid out in the [Classes](#classes) section. Bad abstractions can be
 worse than duplicate code, so be careful! Having said this, if you can make
 a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself 
-updating multiple places anytime you want to change one thing.
+updating multiple places any time you want to change one thing.
 
 **Bad:**
 
@@ -2088,5 +2088,7 @@ This is also available in other languages:
    * [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
 * :vi: **Vietnamese**
    * [viethuongdev/clean-code-php](https://github.com/viethuongdev/clean-code-php)
-
+* 🇰🇷 **Korean:**
+   * [yujineeee/clean-code-php](https://github.com/yujineeee/clean-code-php)
+   
 **[⬆ back to top](#table-of-contents)**
