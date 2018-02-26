@@ -1677,11 +1677,6 @@ class Rectangle
     protected $width = 0;
     protected $height = 0;
 
-    public function render(int $area): void
-    {
-        // ...
-    }
-
     public function setWidth(int $width): void
     {
         $this->width = $width;
@@ -1711,40 +1706,40 @@ class Square extends Rectangle
     }
 }
 
-/**
- * @param Rectangle[] $rectangles
- */
-function renderLargeRectangles(array $rectangles): void
+function printArea(Rectangle $rectangle): void
 {
-    foreach ($rectangles as $rectangle) {
-        $rectangle->setWidth(4);
-        $rectangle->setHeight(5);
-        $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
-        $rectangle->render($area);
-    }
+    $rectangle->setWidth(4);
+    $rectangle->setHeight(5);
+ 
+    // BAD: Will return 25 for Square. Should be 20.
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
 }
 
-$rectangles = [new Rectangle(), new Rectangle(), new Square()];
-renderLargeRectangles($rectangles);
+$rectangles = [new Rectangle(), new Square()];
+
+foreach ($rectangles as $rectangle) {
+    printArea($rectangle);
+}
 ```
 
 **Good:**
 
-```php
-abstract class Shape
-{
-    abstract public function getArea(): int;
+The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
 
-    public function render(int $area): void
-    {
-        // ...
-    }
+Despite the apparent similarity of the square and the rectangle, they are different.
+A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
+A square, a rectangle, a rhombus and a parallelogram are separate shapes with their own properties, albeit similar.
+
+```php
+interface Shape
+{
+    public function getArea(): int;
 }
 
-class Rectangle extends Shape
+class Rectangle implements Shape
 {
-    private $width;
-    private $height;
+    private $width = 0;
+    private $height = 0;
 
     public function __construct(int $width, int $height)
     {
@@ -1758,9 +1753,9 @@ class Rectangle extends Shape
     }
 }
 
-class Square extends Shape
+class Square implements Shape
 {
-    private $length;
+    private $length = 0;
 
     public function __construct(int $length)
     {
@@ -1769,23 +1764,20 @@ class Square extends Shape
 
     public function getArea(): int
     {
-        return pow($this->length, 2);
-    }
+        return $this->length ** 2;
+    }
 }
 
-/**
- * @param Rectangle[] $rectangles
- */
-function renderLargeRectangles(array $rectangles): void
+function printArea(Shape $shape): void
 {
-    foreach ($rectangles as $rectangle) {
-        $area = $rectangle->getArea(); 
-        $rectangle->render($area);
-    }
+    echo sprintf('%s has area %d.', get_class($shape), $shape->getArea()).PHP_EOL;
 }
 
-$shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
-renderLargeRectangles($shapes);
+$shapes = [new Rectangle(4, 5), new Square(5)];
+
+foreach ($shapes as $shape) {
+    printArea($shape);
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
