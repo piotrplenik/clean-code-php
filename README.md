@@ -1462,6 +1462,8 @@ The `final` should be used whenever possible:
 
 The only condition is that your class should implement an interface and no other public methods are defined.
 
+For more informations you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
+
 **Bad:**
 
 ```php
