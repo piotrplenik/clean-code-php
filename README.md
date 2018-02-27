@@ -37,6 +37,7 @@
   6. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
+     * [Prefer `final` classes](#prefer-final-classes)
   7. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
@@ -1449,6 +1450,74 @@ $car->setColor('pink');
 $car->setMake('Ford');
 $car->setModel('F-150');
 $car->dump();
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Prefer final classes
+
+The `final` should be used whenever possible:
+
+1. It prevents uncontrolled inheritance chain.
+2. It encourages [composition](#prefer-composition-over-inheritance).
+3. It encourages the [Single Responsibility Pattern](#single-responsibility-principle-srp).
+4. It encourages developers to use your public methods instead of extending the class to get access on protected ones.
+5. It allows you to change your code without any break of applications that use your class.
+
+The only condition is that your class should implement an interface and no other public methods are defined.
+
+For more informations you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
+
+**Bad:**
+
+```php
+final class Car
+{
+    private $color;
+    
+    public function __construct($color)
+    {
+        $this->color = $color;
+    }
+    
+    /**
+     * @return string The color of the vehicle
+     */
+    public function getColor() 
+    {
+        return $this->color;
+    }
+}
+```
+
+**Good:**
+
+```php
+interface Vehicle
+{
+    /**
+     * @return string The color of the vehicle
+     */
+    public function getColor();
+}
+
+final class Car implements Vehicle
+{
+    private $color;
+    
+    public function __construct($color)
+    {
+        $this->color = $color;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getColor() 
+    {
+        return $this->color;
+    }
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
