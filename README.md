@@ -34,17 +34,20 @@
   5. [Objects and Data Structures](#objects-and-data-structures)
      * [Use object encapsulation](#use-object-encapsulation)
      * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  6. [Classes](#classes)
+  6. [Error handling](#error-handling)
+     * [Use Exceptions Rather Than Return Codes](#use-exceptions-rather-than-return-codes)
+     * [Don't Return Null](#dont-return-null)
+  7. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-  7. [SOLID](#solid)
+  8. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
      * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  9. [Translations](#translations)
+  9. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  10. [Translations](#translations)
 
 ## Introduction
 
@@ -1247,6 +1250,140 @@ class Employee
 
 $employee = new Employee('John Doe');
 echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+## Error handling
+
+### Use Exceptions Rather Than Return Codes
+
+**Bad:**
+
+```php
+class DeviceController 
+{
+    const DEV1 = "/dev/dev1";
+    private $record;
+
+    public function sendShutDown(): void
+    {
+        $handle = $this->getHandle(self::DEV1);
+
+        if ($handle != DeviceHandle::INVALID) {
+            $this->record = $this->retriveDeviceRecord($handle);
+
+            if ($this->record->getStatus() != self::DEVICE_SUSPENDED) {
+                $this->pauseDevice($handle);
+                $this->clearDeviceWorkQueu();
+            } else {
+                Log::debug("Device suspended. Unable to shut down");
+            }
+        } else {
+            Log::debug("Invalid handle for: ". self::DEV1);
+        }
+    }
+
+    private function getHandle($deviceId): DeviceHandle
+    {
+        return new DeviceHandle($devicdId);
+    }
+
+    private function retriveDeviceRecord(DeviceHandle $handle): DeviceRecord
+    {
+        return new DeviceRecord($handle);
+    }
+}
+```
+
+The problem with these approaches is that they clutter the caller. The caller must check for errors immediately after the call. Unfortunately, it’s easy to forget. For this reason it is better to throw an exception when you encounter an error.
+
+**Good:**
+
+```php
+
+class DeviceController 
+{
+    public function sendShutDown(): void
+    {
+        try {
+            $this->tryToShutDown();
+        } catch (Exception $e) {
+            Log::debug($e->getMessage())
+        }
+    }
+
+    private function tryToShutDown(): void
+    {
+        $handle = $this->getHandle(self::DEV1);
+        $this->retriveDeviceRecord($handle);
+        $this->pauseDevice($handle);
+        $this->clearDeviceWorkQueu();
+        
+    }
+
+    private function getHandle($devicdId): DeviceHandle
+    {
+        $handle = new DeviceHandle($devicdId);
+        if ($handle == DeviceHandle::INVALID) {
+            throw new \Exception("Invalid handle. deviceId: " . $deviceID);
+        }
+        return $handle;
+    }
+
+    private function retriveDeviceRecord(DeviceHandle $handle): DeviceRecord
+    {
+        $deviceRecord = new DeviceRecord($handle);
+        if($deviceRecord->getStatus() == self::DEVICE_SUSPENDED) {
+            throw new \Exception("Device suspended");
+        }
+        return $deviceRecord;
+    }
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Don't Return Null
+
+When we return null, we are essentially creating work for ourselves and foisting problems upon our callers.
+
+**Bad:**
+
+```php
+public function getPay(): int
+{
+    $employees = $this->getEmployees();
+    if (!is_null($employees)) {
+        return array_reduce($employees, function($totalPay, $employee) {
+            return $totalPay += $employee->getPay();
+        }, 0);
+    }
+    return 0;
+}
+
+public function getEmployees(): array
+{
+    return $this->employees;
+}
+```
+
+**Good:**
+
+```php
+public function getPay(): int
+{
+    $employees = $this->getEmployees();
+    return array_reduce($employees, function($totalPay, $employee) {
+        return $totalPay += $employee->getPay();
+    }, 0);
+
+}
+
+public function getEmployees(): array
+{
+    return is_null($this->employees) ? [] : $this->employees;
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
