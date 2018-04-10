@@ -1810,7 +1810,7 @@ interface Employee
     public function eat(): void;
 }
 
-class Human implements Employee
+class HumanEmployee implements Employee
 {
     public function work(): void
     {
@@ -1823,7 +1823,7 @@ class Human implements Employee
     }
 }
 
-class Robot implements Employee
+class RobotEmployee implements Employee
 {
     public function work(): void
     {
@@ -1856,7 +1856,7 @@ interface Employee extends Feedable, Workable
 {
 }
 
-class Human implements Employee
+class HumanEmployee implements Employee
 {
     public function work(): void
     {
@@ -1870,7 +1870,7 @@ class Human implements Employee
 }
 
 // robot can only work
-class Robot implements Workable
+class RobotEmployee implements Workable
 {
     public function work(): void
     {
