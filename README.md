@@ -471,7 +471,7 @@ function createMenu(MenuConfig $config): void
     // ...
 }
 ```
-
+Sorry, but the code above is not the same! function createMenu() in "Bad"-Section awaits simple Strings from user or other methods. But in "Good"-Section are the values hardcoded...
 **[⬆ back to top](#table-of-contents)**
 
 ### Functions should do one thing
