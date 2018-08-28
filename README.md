@@ -26,6 +26,8 @@ years of collective experience by the authors of *Clean Code*.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
+Targets Python3.7+
+
 ## **Variables**
 ### Use meaningful and pronounceable variable names
 
@@ -36,13 +38,14 @@ ymdstr = datetime.date.today().strftime("%y-%m-%d")
 
 **Good**:
 ```python
-current_date = datetime.date.today().strftime("%y-%m-%d")
+current_date: str = datetime.date.today().strftime("%y-%m-%d")
 ```
 **[⬆ back to top](#table-of-contents)**
 
 ### Use the same vocabulary for the same type of variable
 
 **Bad:**
+Here we use three different names for the same underlying entity:
 ```python
 get_user_info()
 get_client_data()
@@ -50,9 +53,29 @@ get_customer_record()
 ```
 
 **Good**:
+If the entity is the same, you should be consistent in referring to it in your functions:
 ```python
-get_user()
+get_user_info()
+get_user_data()
+get_user_record()
 ```
+
+**Even better**
+Python is (also) an object oriented programming language. If it makes sense, package the functions together with the concrete implementation
+of the entity in your code, as instance attributes, property methods, or methods:
+
+```python
+class User:
+    info : str
+
+    @property
+    def data(self) -> dict:
+        # ...
+
+    def get_record(self) -> Union[Record, None]:
+        # ...
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use searchable names
@@ -65,7 +88,6 @@ Make your names searchable.
 ```python
 # What the heck is 86400 for?
 time.sleep(86400);
-
 ```
 
 **Good**:
@@ -76,7 +98,6 @@ SECONDS_IN_A_DAY = 60 * 60 * 24
 time.sleep(SECONDS_IN_A_DAY)
 ```
 **[⬆ back to top](#table-of-contents)**
-
 
 ### Use explanatory variables
 **Bad:**
@@ -149,66 +170,46 @@ variable name.
 
 **Bad:**
 
-```php
-class Car
-{
-    public $carMake;
-    public $carModel;
-    public $carColor;
-
-    //...
-}
+```python
+class Car:
+    car_make: str
+    car_model: str
+    car_color: str
 ```
 
 **Good**:
 
-```php
-class Car
-{
-    public $make;
-    public $model;
-    public $color;
-
-    //...
-}
+```python
+class Car:
+    make: str
+    model: str
+    color: str
 ```
 
 **[⬆ back to top](#table-of-contents)**
 
 ### Use default arguments instead of short circuiting or conditionals
 
-**Not good:**
+**Tricky**
 
-This is not good because `$breweryName` can be `NULL`.
+Why write:
 
-```php
-function createMicrobrewery($breweryName = 'Hipster Brew Co.')
-{
-    // ...
-}
+```python
+def create_micro_brewery(name):
+    name = "Hipster Brew Co." if name is None else name
+    slug = hashlib.sha1(name.encode()).hexdigest()
+    # etc.
 ```
 
-**Not bad:**
-
-This opinion is more understandable than the previous version, but it better controls the value of the variable.
-
-```php
-function createMicrobrewery($name = null)
-{
-    $breweryName = $name ?: 'Hipster Brew Co.';
-    // ...
-}
-```
+... when you can specify a default argument instead? This also makes ist clear that
+you are expecting a string as the argument.
 
 **Good**:
 
-If you support only PHP 7+, then you can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
-
-```php
-function createMicrobrewery(string $breweryName = 'Hipster Brew Co.')
-{
-    // ...
-}
+```python
+def create_micro_brewery(name: str="Hipster Brew Co."):
+    slug = hashlib.sha1(name.encode()).hexdigest()
+    # etc.
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -224,33 +225,80 @@ arguments then your function is trying to do too much. In cases where it's not, 
 of the time a higher-level object will suffice as an argument.
 
 **Bad:**
-```php
-function createMenu($title, $body, $buttonText, $cancellable) {
-    // ...
-}
+```python
+def create_menu(title, body, button_text, cancellable):
+    # ...
 ```
 
 **Good**:
-```php
-class MenuConfig
-{
-    public $title;
-    public $body;
-    public $buttonText;
-    public $cancellable = false;
-}
+```python
+class Menu:
+    def __init__(self, config: dict):
+        title = config["title"]
+        body = config["body"]
+        # ...
 
-$config = new MenuConfig();
-$config->title = 'Foo';
-$config->body = 'Bar';
-$config->buttonText = 'Baz';
-$config->cancellable = true;
-
-function createMenu(MenuConfig $config) {
-    // ...
-}
-
+menu = Menu(
+    {
+        "title": "My Menu",
+        "body": "Something about my menu",
+        "button_text": "OK",
+        "cancellable": False
+    }
+)
 ```
+
+**Also good**
+```python
+class MenuConfig:
+    title: str
+    body: str
+    button_text: str
+    cancellable: bool = False
+
+
+def create_menu(config: MenuConfig):
+    title = config.title
+    body = config.body
+    # ...
+
+
+config = MenuConfig
+config.title = "My delicious menu"
+config.body = "A description of the various items on the menu"
+config.button_text = "Order now!"
+# The instance attribute overrides the default class attribute.
+config.cancellable = True
+
+create_menu(config)
+```
+
+**Fancy**
+```python
+from typing import NamedTuple
+
+
+class MenuConfig(NamedTuple):
+    title: str
+    body: str
+    button_text: str
+    cancellable: bool = False
+
+
+def create_menu(config: MenuConfig):
+    title, body, button_text, cancellable = config
+
+
+create_menu(
+    MenuConfig(
+        title="My delicious menu",
+        body="A description of the various items on the menu",
+        button_text="Order now!"
+    )
+)
+```
+
+
 **[⬆ back to top](#table-of-contents)**
 
 
