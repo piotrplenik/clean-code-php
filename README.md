@@ -314,9 +314,7 @@ create_menu(
 )
 ```
 
-
 **[⬆ back to top](#table-of-contents)**
-
 
 ### Functions should do one thing
 This is by far the most important rule in software engineering. When functions do more 
@@ -326,33 +324,49 @@ cleaner. If you take nothing else away from this guide other than this, you'll b
 of many developers.
 
 **Bad:**
-```php
-function emailClients($clients) {
-    foreach ($clients as $client) {
-        $clientRecord = $db->find($client);
-        if ($clientRecord->isActive()) {
-            email($client);
-        }
-    }
-}
+```python
+
+def email_clients(clients: List[Client]):
+    """Filter active clients and send them an email.
+    """
+    for client in clients:
+        if client.active:
+            email(client)
 ```
 
 **Good**:
-```php
-function emailClients($clients) {
-    $activeClients = activeClients($clients);
-    array_walk($activeClients, 'email');
-}
+```python
+def get_active_clients(clients: List[Client]) -> List[Client]:
+    """Filter active clients.
+    """
+    return [client for client in clients if client.active]
 
-function activeClients($clients) {
-    return array_filter($clients, 'isClientActive');
-}
 
-function isClientActive($client) {
-    $clientRecord = $db->find($client);
-    return $clientRecord->isActive();
-}
+def email_clients(clients: List[Client, ...]) -> None:
+    """Send an email to a given list of clients.
+    """
+    for client in clients:
+        email(client)
 ```
+
+Do you see an opportunity for using generators now?
+
+**Even better**
+```python
+def active_clients(clients: List[Client]) -> Generator[Client]:
+    """Only active clients.
+    """
+    return (client for client in clients if client.active)
+
+
+def email_client(clients: Iterator[Client]) -> None:
+    """Send an email to a given list of clients.
+    """
+    for client in clients:
+        email(client)
+```
+
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Function names should say what they do
