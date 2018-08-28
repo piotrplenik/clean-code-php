@@ -373,38 +373,26 @@ def email_client(clients: Iterator[Client]) -> None:
 
 **Bad:**
 
-```php
-class Email
-{
-    //...
+```python
+class Email:
+    def handle(self) -> None:
+        # Do something...
 
-    public function handle()
-    {
-        mail($this->to, $this->subject, $this->body);
-    }
-}
-
-$message = new Email(...);
-// What is this? A handle for the message? Are we writing to a file now?
-$message->handle();
+message = Email()
+# What is this supposed to do again?
+message.handle()
 ```
 
 **Good:**
 
-```php
-class Email 
-{
-    //...
+```python
+class Email:
+    def send(self) -> None:
+        """Send this message.
+        """
 
-    public function send()
-    {
-        mail($this->to, $this->subject, $this->body);
-    }
-}
-
-$message = new Email(...);
-// Clear and obvious
-$message->send();
+message = Email()
+message.send()
 ```
 
 **[⬆ back to top](#table-of-contents)**
