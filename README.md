@@ -251,6 +251,14 @@ menu = Menu(
 **Also good**
 ```python
 class MenuConfig:
+    """A configuration for the Menu.
+
+    Attributes:
+        title: The title of the Menu.
+        body: The body of the Menu.
+        button_text: The text for the button label.
+        cancellable: Can it be cancelled?
+    """
     title: str
     body: str
     button_text: str
@@ -279,6 +287,14 @@ from typing import NamedTuple
 
 
 class MenuConfig(NamedTuple):
+    """A configuration for the Menu.
+
+    Attributes:
+        title: The title of the Menu.
+        body: The body of the Menu.
+        button_text: The text for the button label.
+        cancellable: Can it be cancelled?
+    """
     title: str
     body: str
     button_text: str
