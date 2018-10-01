@@ -1,2 +1,2 @@
 *.md linguist-documentation=false
-*.md linguist-language=PHP
+*.md linguist-language=Python
