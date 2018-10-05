@@ -1044,7 +1044,7 @@ function travelToTexas($vehicle): void
 **Good:**
 
 ```php
-function travelToTexas(Traveler $vehicle): void
+function travelToTexas(Vehicle $vehicle): void
 {
     $vehicle->travelTo(new Location('texas'));
 }
