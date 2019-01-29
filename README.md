@@ -37,6 +37,7 @@
   6. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
+     * [Prefer `final` classes](#prefer-final-classes)
   7. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
@@ -1453,6 +1454,74 @@ $car->dump();
 
 **[⬆ back to top](#table-of-contents)**
 
+### Prefer final classes
+
+The `final` should be used whenever possible:
+
+1. It prevents uncontrolled inheritance chain.
+2. It encourages [composition](#prefer-composition-over-inheritance).
+3. It encourages the [Single Responsibility Pattern](#single-responsibility-principle-srp).
+4. It encourages developers to use your public methods instead of extending the class to get access on protected ones.
+5. It allows you to change your code without any break of applications that use your class.
+
+The only condition is that your class should implement an interface and no other public methods are defined.
+
+For more informations you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
+
+**Bad:**
+
+```php
+final class Car
+{
+    private $color;
+    
+    public function __construct($color)
+    {
+        $this->color = $color;
+    }
+    
+    /**
+     * @return string The color of the vehicle
+     */
+    public function getColor() 
+    {
+        return $this->color;
+    }
+}
+```
+
+**Good:**
+
+```php
+interface Vehicle
+{
+    /**
+     * @return string The color of the vehicle
+     */
+    public function getColor();
+}
+
+final class Car implements Vehicle
+{
+    private $color;
+    
+    public function __construct($color)
+    {
+        $this->color = $color;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getColor() 
+    {
+        return $this->color;
+    }
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
+
 ## SOLID
 
 **SOLID** is the mnemonic acronym introduced by Michael Feathers for the first five principles named by Robert Martin, which meant five basic principles of object-oriented programming and design.
@@ -1677,11 +1746,6 @@ class Rectangle
     protected $width = 0;
     protected $height = 0;
 
-    public function render(int $area): void
-    {
-        // ...
-    }
-
     public function setWidth(int $width): void
     {
         $this->width = $width;
@@ -1711,40 +1775,40 @@ class Square extends Rectangle
     }
 }
 
-/**
- * @param Rectangle[] $rectangles
- */
-function renderLargeRectangles(array $rectangles): void
+function printArea(Rectangle $rectangle): void
 {
-    foreach ($rectangles as $rectangle) {
-        $rectangle->setWidth(4);
-        $rectangle->setHeight(5);
-        $area = $rectangle->getArea(); // BAD: Will return 25 for Square. Should be 20.
-        $rectangle->render($area);
-    }
+    $rectangle->setWidth(4);
+    $rectangle->setHeight(5);
+ 
+    // BAD: Will return 25 for Square. Should be 20.
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
 }
 
-$rectangles = [new Rectangle(), new Rectangle(), new Square()];
-renderLargeRectangles($rectangles);
+$rectangles = [new Rectangle(), new Square()];
+
+foreach ($rectangles as $rectangle) {
+    printArea($rectangle);
+}
 ```
 
 **Good:**
 
-```php
-abstract class Shape
-{
-    abstract public function getArea(): int;
+The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
 
-    public function render(int $area): void
-    {
-        // ...
-    }
+Despite the apparent similarity of the square and the rectangle, they are different.
+A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
+A square, a rectangle, a rhombus and a parallelogram are separate shapes with their own properties, albeit similar.
+
+```php
+interface Shape
+{
+    public function getArea(): int;
 }
 
-class Rectangle extends Shape
+class Rectangle implements Shape
 {
-    private $width;
-    private $height;
+    private $width = 0;
+    private $height = 0;
 
     public function __construct(int $width, int $height)
     {
@@ -1758,9 +1822,9 @@ class Rectangle extends Shape
     }
 }
 
-class Square extends Shape
+class Square implements Shape
 {
-    private $length;
+    private $length = 0;
 
     public function __construct(int $length)
     {
@@ -1769,23 +1833,20 @@ class Square extends Shape
 
     public function getArea(): int
     {
-        return pow($this->length, 2);
-    }
+        return $this->length ** 2;
+    }
 }
 
-/**
- * @param Rectangle[] $rectangles
- */
-function renderLargeRectangles(array $rectangles): void
+function printArea(Shape $shape): void
 {
-    foreach ($rectangles as $rectangle) {
-        $area = $rectangle->getArea(); 
-        $rectangle->render($area);
-    }
+    echo sprintf('%s has area %d.', get_class($shape), $shape->getArea()).PHP_EOL;
 }
 
-$shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
-renderLargeRectangles($shapes);
+$shapes = [new Rectangle(4, 5), new Square(5)];
+
+foreach ($shapes as $shape) {
+    printArea($shape);
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -1810,7 +1871,7 @@ interface Employee
     public function eat(): void;
 }
 
-class Human implements Employee
+class HumanEmployee implements Employee
 {
     public function work(): void
     {
@@ -1823,7 +1884,7 @@ class Human implements Employee
     }
 }
 
-class Robot implements Employee
+class RobotEmployee implements Employee
 {
     public function work(): void
     {
@@ -1856,7 +1917,7 @@ interface Employee extends Feedable, Workable
 {
 }
 
-class Human implements Employee
+class HumanEmployee implements Employee
 {
     public function work(): void
     {
@@ -1870,7 +1931,7 @@ class Human implements Employee
 }
 
 // robot can only work
-class Robot implements Workable
+class RobotEmployee implements Workable
 {
     public function work(): void
     {
@@ -2090,9 +2151,11 @@ This is also available in other languages:
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 * :fr: **French:**
    * [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
-* :vi: **Vietnamese**
+* :vietnam: **Vietnamese**
    * [viethuongdev/clean-code-php](https://github.com/viethuongdev/clean-code-php)
-* 🇰🇷 **Korean:**
+* :kr: **Korean:**
    * [yujineeee/clean-code-php](https://github.com/yujineeee/clean-code-php)
+* :tr: **Turkish:**
+   * [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
    
 **[⬆ back to top](#table-of-contents)**
