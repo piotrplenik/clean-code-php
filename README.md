@@ -134,6 +134,9 @@ class User
 if ($user->access & 4) {
     // ...
 }
+
+// What's going on here?
+$user->access ^= 2;
 ```
 
 **Good:**
@@ -146,12 +149,16 @@ class User
     const ACCESS_UPDATE = 4;
     const ACCESS_DELETE = 8;
 
+    // User as default can read, create and update something
     public $access = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_UPDATE;
 }
 
 if ($user->access & User::ACCESS_UPDATE) {
     // do edit ...
 }
+
+// Deny access rights to create something
+$user->access ^= User::ACCESS_CREATE;
 ```
 
 **[⬆ back to top](#table-of-contents)**
