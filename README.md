@@ -207,7 +207,7 @@ you are expecting a string as the argument.
 **Good**:
 
 ```python
-def create_micro_brewery(name: str="Hipster Brew Co."):
+def create_micro_brewery(name: str = "Hipster Brew Co."):
     slug = hashlib.sha1(name.encode()).hexdigest()
     # etc.
 ```
@@ -496,7 +496,9 @@ def parse(tokens: list) -> list:
 
 ### Don't use flags as function parameters
 
-Flags tell your user that this function does more than one thing. Functions should do one thing. Split your functions if they are following different code paths based on a boolean.
+Flags tell your user that this function does more than one thing. Functions 
+should do one thing. Split your functions if they are following different code 
+paths based on a boolean.
 
 **Bad:**
 
@@ -523,3 +525,52 @@ def create_temp_file(name: str) -> None:
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+### Avoid side effects
+
+A function produces a side effect if it does anything other than take a value in 
+and return another value or values. A side effect could be writing to a file,
+modifying some global variable, or accidentally wiring all your money to a 
+stranger.
+
+Now, you do need to have side effects in a program on occasion - for example, like
+in the previous example, you might need to write to a file. In these cases, you
+should centralize and indicate where you are incorporating side effects. Don't have
+several functions and classes that write to a particular file - rather, have one
+(and only one) service that does it.
+
+The main point is to avoid common pitfalls like sharing state between objects
+without any structure, using mutable data types that can be written to by anything,
+and not centralizing where your side effects occur. If you can do this, you will be
+happier than the vast majority of other programmers.
+
+**Bad:**
+
+```python
+# Global variable referenced by following function.
+# If another function used this name, now it'd be an array and could break.
+name = 'Ryan McDermott'
+
+def split_into_first_and_last_name() -> None:
+    global name
+    name = name.split()
+
+split_into_first_and_last_name()
+
+print(name)  # ['Ryan', 'McDermott']
+```
+
+**Good:**
+```python
+def split_into_first_and_last_name(name: str) -> None:
+    return name.split()
+
+name = 'Ryan McDermott'
+new_name = split_into_first_and_last_name(name)
+
+print(name)  # 'Ryan McDermott'
+print(new_name)  # ['Ryan', 'McDermott']
+```
+
+**[⬆ back to top](#table-of-contents)**
+
