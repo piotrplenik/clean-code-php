@@ -529,9 +529,9 @@ def create_temp_file(name: str) -> None:
 ### Avoid side effects
 
 A function produces a side effect if it does anything other than take a value in 
-and return another value or values. A side effect could be writing to a file,
-modifying some global variable, or accidentally wiring all your money to a 
-stranger.
+and return another value or values. For example, a side effect could be writing 
+to a file, modifying some global variable, or accidentally wiring all your money
+to a stranger.
 
 Now, you do need to have side effects in a program on occasion - for example, like
 in the previous example, you might need to write to a file. In these cases, you
@@ -541,8 +541,8 @@ several functions and classes that write to a particular file - rather, have one
 
 The main point is to avoid common pitfalls like sharing state between objects
 without any structure, using mutable data types that can be written to by anything,
-and not centralizing where your side effects occur. If you can do this, you will be
-happier than the vast majority of other programmers.
+or using an instance of a class, and not centralizing where your side effects occur.
+If you can do this, you will be happier than the vast majority of other programmers.
 
 **Bad:**
 
@@ -570,6 +570,23 @@ new_name = split_into_first_and_last_name(name)
 
 print(name)  # 'Ryan McDermott'
 print(new_name)  # ['Ryan', 'McDermott']
+```
+
+**Also good**
+```python
+class Person:
+    name: str
+
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def name_as_first_and_last(self):
+        return self.name.split() 
+
+person = Person('Ryan McDermott')
+print(person.name)  # 'Ryan McDermott'
+print(person.name_as_first_and_last)  # ['Ryan', 'McDermott']
 ```
 
 **[⬆ back to top](#table-of-contents)**
