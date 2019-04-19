@@ -577,11 +577,11 @@ print(new_name)  # ['Ryan', 'McDermott']
 class Person:
     name: str
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
 
     @property
-    def name_as_first_and_last(self):
+    def name_as_first_and_last(self) -> list:
         return self.name.split() 
 
 person = Person('Ryan McDermott')
