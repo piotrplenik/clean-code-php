@@ -269,7 +269,7 @@ function fibonacci(int $n): int
         return $n;
     }
 
-    if ($n > 50) {
+    if ($n >= 50) {
         throw new \Exception('Not supported');
     }
 
