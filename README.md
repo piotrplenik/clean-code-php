@@ -124,10 +124,19 @@ $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
 **Bad:**
 
 ```php
+class User
+{
+    // What the heck is 7 for?
+    public $access = 7;
+}
+
 // What the heck is 4 for?
 if ($user->access & 4) {
     // ...
 }
+
+// What's going on here?
+$user->access ^= 2;
 ```
 
 **Good:**
@@ -139,11 +148,17 @@ class User
     const ACCESS_CREATE = 2;
     const ACCESS_UPDATE = 4;
     const ACCESS_DELETE = 8;
+
+    // User as default can read, create and update something
+    public $access = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_UPDATE;
 }
 
 if ($user->access & User::ACCESS_UPDATE) {
     // do edit ...
 }
+
+// Deny access rights to create something
+$user->access ^= User::ACCESS_CREATE;
 ```
 
 **[⬆ back to top](#table-of-contents)**
