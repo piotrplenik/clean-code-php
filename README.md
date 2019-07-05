@@ -462,6 +462,12 @@ def parse_better_js_alternative(code: str) -> None:
 **Good:**
 
 ```python
+
+REGEXES = (
+   # ...
+)
+
+
 def parse_better_js_alternative(code: str) -> None:
     tokens = tokenize(code)
     syntax_tree = parse(tokens)
@@ -471,10 +477,6 @@ def parse_better_js_alternative(code: str) -> None:
 
 
 def tokenize(code: str) -> list:
-    REGEXES = [
-        # ...
-    ]
-
     statements = code.split()
     tokens = []
     for regex in REGEXES:
