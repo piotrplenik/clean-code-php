@@ -576,12 +576,12 @@ print(new_name)  # ['Ryan', 'McDermott']
 
 **Also good**
 ```python
+from dataclasses import dataclass
+
+@dataclass
 class Person:
     name: str
-
-    def __init__(self, name: str):
-        self.name = name
-
+#########
     @property
     def name_as_first_and_last(self) -> list:
         return self.name.split() 
