@@ -581,7 +581,7 @@ from dataclasses import dataclass
 @dataclass
 class Person:
     name: str
-#########
+
     @property
     def name_as_first_and_last(self) -> list:
         return self.name.split() 
