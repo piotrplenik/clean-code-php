@@ -11,7 +11,7 @@
      3. [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  6. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  6. [Don't repeat yourself (DRY)](#dont-repeat-yourself-dry)
 
 ## Introduction
 
@@ -588,6 +588,30 @@ person = Person('Ryan McDermott')
 print(person.name)  # 'Ryan McDermott'
 print(person.name_as_first_and_last)  # ['Ryan', 'McDermott']
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+## **Objects and Data Structures**
+
+*Coming soon*
+
+**[⬆ back to top](#table-of-contents)**
+
+## **Classes**
+
+### **Single Responsibility Principle (SRP)**
+### **Open/Closed Principle (OCP)**
+### **Liskov Substitution Principle (LSP)**
+### **Interface Segregation Principle (ISP)**
+### **Dependency Inversion Principle (DIP)**
+
+*Coming soon*
+
+**[⬆ back to top](#table-of-contents)**
+
+## **Don't repeat yourself (DRY)**
+
+*Coming soon*
 
 **[⬆ back to top](#table-of-contents)**
 
