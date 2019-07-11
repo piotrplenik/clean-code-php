@@ -31,7 +31,10 @@ foreach ($readMeFile as $lineNumber => $line) {
             $depth = sprintf(' %s*', str_repeat('  ', strlen($matches['depth']) - 1));
         }
 
-        $link = preg_replace(['/ /', '/[^-\w]+/'], ['-', ''], strtolower($matches['title']));
+        $link = $matches['title'];
+        $link = strtolower($link);
+        $link = str_replace(' ', '-', $link);
+        $link = preg_replace('/[^-\w]+/u', '', $link);
 
         $chaptersFound[] = sprintf('%s [%s](#%s)', $depth, $matches['title'], $link);
     }
