@@ -31,6 +31,9 @@ foreach ($readMeFile as $lineNumber => $line) {
             $depth = sprintf(' %s*', str_repeat('  ', strlen($matches['depth']) - 1));
         }
 
+        // ignore links in title
+        $matches['title'] = preg_replace('/\[([^\]]+)\]\((?:[^\)]+)\)/u', '$1', $matches['title']);
+
         $link = $matches['title'];
         $link = strtolower($link);
         $link = str_replace(' ', '-', $link);
