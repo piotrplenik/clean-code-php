@@ -568,7 +568,7 @@ testing.
 **Bad:**
 
 ```php
-function parseBetterJSAlternative(string $code): void
+function parseBetterPHPAlternative(string $code): void
 {
     $regexes = [
         // ...
@@ -595,7 +595,7 @@ function parseBetterJSAlternative(string $code): void
 
 **Bad too:**
 
-We have carried out some of the functionality, but the `parseBetterJSAlternative()` function is still very complex and not testable.
+We have carried out some of the functionality, but the `parseBetterPHPAlternative()` function is still very complex and not testable.
 
 ```php
 function tokenize(string $code): array
@@ -625,7 +625,7 @@ function lexer(array $tokens): array
     return $ast;
 }
 
-function parseBetterJSAlternative(string $code): void
+function parseBetterPHPAlternative(string $code): void
 {
     $tokens = tokenize($code);
     $ast = lexer($tokens);
@@ -637,7 +637,7 @@ function parseBetterJSAlternative(string $code): void
 
 **Good:**
 
-The best solution is move out the dependencies of `parseBetterJSAlternative()` function.
+The best solution is move out the dependencies of `parseBetterPHPAlternative()` function.
 
 ```php
 class Tokenizer
@@ -673,7 +673,7 @@ class Lexer
     }
 }
 
-class BetterJSAlternative
+class BetterPHPAlternative
 {
     private $tokenizer;
     private $lexer;
