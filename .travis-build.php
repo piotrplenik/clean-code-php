@@ -25,14 +25,15 @@ foreach ($readMeFile as $lineNumber => $line) {
         }
         $tableOfContentsStarted = false;
 
-        $chaptersFound[] = sprintf('%s [%s](#%s)',
-            strlen($matches['depth']) === 2
-                ? sprintf('  %s.', ++$manIndex)
-                : '     *'
-            ,
-            $matches['title'],
-            preg_replace(['/ /', '/[^-\w]+/'], ['-', ''], strtolower($matches['title']))
-        );
+        if (strlen($matches['depth']) === 2) {
+            $depth = sprintf('  %s.', ++$manIndex);
+        } else {
+            $depth = sprintf(' %s*', str_repeat('  ', strlen($matches['depth']) - 1));
+        }
+
+        $link = preg_replace(['/ /', '/[^-\w]+/'], ['-', ''], strtolower($matches['title']));
+
+        $chaptersFound[] = sprintf('%s [%s](#%s)', $depth, $matches['title'], $link);
     }
     if ($tableOfContentsStarted === true && isset($line[0])) {
         $currentTableOfContentsChapters[] = $line;
