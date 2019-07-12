@@ -448,7 +448,7 @@ function createMenu(string $title = '', string $body = '', string $buttonText = 
     // ...
 }
 
-createMenu('', '', '', true);
+createMenu('Foo', '', '', true);
 ```
 
 **Good:**
@@ -468,6 +468,7 @@ function createMenu(MenuConfig $config): void
 }
 
 $config = new MenuConfig();
+$config->title = 'Foo';
 $config->cancellable = true;
 createMenu($config);
 ```
