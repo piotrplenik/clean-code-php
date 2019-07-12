@@ -443,10 +443,12 @@ of the time a higher-level object will suffice as an argument.
 **Bad:**
 
 ```php
-function createMenu(string $title, string $body, string $buttonText, bool $cancellable): void
+function createMenu(string $title = '', string $body = '', string $buttonText = '', bool $cancellable = false): void
 {
     // ...
 }
+
+createMenu('', '', '', true);
 ```
 
 **Good:**
@@ -454,22 +456,20 @@ function createMenu(string $title, string $body, string $buttonText, bool $cance
 ```php
 class MenuConfig
 {
-    public $title;
-    public $body;
-    public $buttonText;
+    public $title = '';
+    public $body = '';
+    public $buttonText = '';
     public $cancellable = false;
 }
-
-$config = new MenuConfig();
-$config->title = 'Foo';
-$config->body = 'Bar';
-$config->buttonText = 'Baz';
-$config->cancellable = true;
 
 function createMenu(MenuConfig $config): void
 {
     // ...
 }
+
+$config = new MenuConfig();
+$config->cancellable = true;
+createMenu($config);
 ```
 
 **[⬆ back to top](#table-of-contents)**
