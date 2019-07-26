@@ -465,9 +465,9 @@ class Questionnaire
 ```php
 class Name
 {
-    private $firstname = '';
-    private $lastname = '';
-    private $patronymic = '';
+    private $firstname;
+    private $lastname;
+    private $patronymic;
 
     public function __construct(string $firstname, string $lastname, string $patronymic)
     {
@@ -481,9 +481,9 @@ class Name
 
 class City
 {
-    private $region = '';
-    private $district = '';
-    private $city = '';
+    private $region;
+    private $district;
+    private $city;
 
     public function __construct(string $region, string $district, string $city)
     {
@@ -497,8 +497,8 @@ class City
 
 class Contact
 {
-    private $phone = '';
-    private $email = '';
+    private $phone;
+    private $email;
 
     public function __construct(string $phone, string $email)
     {
