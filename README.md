@@ -1282,10 +1282,10 @@ You might be wondering then, "when should I use inheritance?" It
 depends on your problem at hand, but this is a decent list of when inheritance
 makes more sense than composition:
 
-1. Your inheritance represents an "is-a" relationship and not a "has-a"
+* Your inheritance represents an "is-a" relationship and not a "has-a"
 relationship (Human->Animal vs. User->UserDetails).
-2. You can reuse code from the base classes (Humans can move like all animals).
-3. You want to make global changes to derived classes by changing a base class.
+* You can reuse code from the base classes (Humans can move like all animals).
+* You want to make global changes to derived classes by changing a base class.
 (Change the caloric expenditure of all animals when they move).
 
 **Bad:**
