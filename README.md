@@ -458,32 +458,78 @@ of the time a higher-level object will suffice as an argument.
 **Bad:**
 
 ```php
-function createMenu(string $title, string $body, string $buttonText, bool $cancellable): void
+class Questionnaire
 {
-    // ...
+    public function __construct(
+        string $firstname,
+        string $lastname,
+        string $patronymic,
+        string $region,
+        string $district,
+        string $city,
+        string $phone,
+        string $email
+    ) {
+        // ...
+    }
 }
 ```
 
 **Good:**
 
 ```php
-class MenuConfig
+class Name
 {
-    public $title;
-    public $body;
-    public $buttonText;
-    public $cancellable = false;
+    private $firstname;
+    private $lastname;
+    private $patronymic;
+
+    public function __construct(string $firstname, string $lastname, string $patronymic)
+    {
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->patronymic = $patronymic;
+    }
+
+    // getters ...
 }
 
-$config = new MenuConfig();
-$config->title = 'Foo';
-$config->body = 'Bar';
-$config->buttonText = 'Baz';
-$config->cancellable = true;
-
-function createMenu(MenuConfig $config): void
+class City
 {
-    // ...
+    private $region;
+    private $district;
+    private $city;
+
+    public function __construct(string $region, string $district, string $city)
+    {
+        $this->region = $region;
+        $this->district = $district;
+        $this->city = $city;
+    }
+
+    // getters ...
+}
+
+class Contact
+{
+    private $phone;
+    private $email;
+
+    public function __construct(string $phone, string $email)
+    {
+        $this->phone = $phone;
+        $this->email = $email;
+    }
+
+    // getters ...
+}
+
+class Questionnaire
+{
+    public function __construct(Name $name, City $city, Contact $contact)
+    {
+        // ...
+    }
 }
 ```
 
