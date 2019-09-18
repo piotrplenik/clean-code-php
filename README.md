@@ -18,7 +18,6 @@
      * [Use identical comparison](#use-identical-comparison)
   4. [Functions](#functions)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
-     * [Functions should do one thing](#functions-should-do-one-thing)
      * [Function names should say what they do](#function-names-should-say-what-they-do)
      * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
      * [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
@@ -530,51 +529,6 @@ class Questionnaire
     {
         // ...
     }
-}
-```
-
-**[⬆ back to top](#table-of-contents)**
-
-### Functions should do one thing
-
-This is by far the most important rule in software engineering. When functions do more
-than one thing, they are harder to compose, test, and reason about. When you can isolate
-a function to just one action, they can be refactored easily and your code will read much
-cleaner. If you take nothing else away from this guide other than this, you'll be ahead
-of many developers.
-
-**Bad:**
-```php
-function emailClients(array $clients): void
-{
-    foreach ($clients as $client) {
-        $clientRecord = $db->find($client);
-        if ($clientRecord->isActive()) {
-            email($client);
-        }
-    }
-}
-```
-
-**Good:**
-
-```php
-function emailClients(array $clients): void
-{
-    $activeClients = activeClients($clients);
-    array_walk($activeClients, 'email');
-}
-
-function activeClients(array $clients): array
-{
-    return array_filter($clients, 'isClientActive');
-}
-
-function isClientActive(int $client): bool
-{
-    $clientRecord = $db->find($client);
-
-    return $clientRecord->isActive();
 }
 ```
 
