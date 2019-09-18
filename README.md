@@ -37,7 +37,7 @@
   6. [Classes](#classes)
      * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
      * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-     * [Prefer `final` classes](#prefer-final-classes)
+     * [Prefer final classes](#prefer-final-classes)
   7. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
@@ -54,8 +54,8 @@ Software engineering principles, from Robert C. Martin's book
 adapted for PHP. This is not a style guide. It's a guide to producing
 readable, reusable, and refactorable software in PHP.
 
-Not every principle herein has to be strictly followed, and even fewer will be universally 
-agreed upon. These are guidelines and nothing more, but they are ones codified over many 
+Not every principle herein has to be strictly followed, and even fewer will be universally
+agreed upon. These are guidelines and nothing more, but they are ones codified over many
 years of collective experience by the authors of *Clean Code*.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
@@ -101,8 +101,8 @@ getUser();
 
 ### Use searchable names (part 1)
 
-We will read more code than we will ever write. It's important that the code we do write is 
-readable and searchable. By *not* naming variables that end up being meaningful for 
+We will read more code than we will ever write. It's important that the code we do write is
+readable and searchable. By *not* naming variables that end up being meaningful for
 understanding our program, we hurt our readers.
 Make your names searchable.
 
@@ -446,13 +446,13 @@ The comparison `$a !== $b` returns `TRUE`.
 
 ### Function arguments (2 or fewer ideally)
 
-Limiting the amount of function parameters is incredibly important because it makes 
-testing your function easier. Having more than three leads to a combinatorial explosion 
+Limiting the amount of function parameters is incredibly important because it makes
+testing your function easier. Having more than three leads to a combinatorial explosion
 where you have to test tons of different cases with each separate argument.
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided. 
-Anything more than that should be consolidated. Usually, if you have more than two 
-arguments then your function is trying to do too much. In cases where it's not, most 
+Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided.
+Anything more than that should be consolidated. Usually, if you have more than two
+arguments then your function is trying to do too much. In cases where it's not, most
 of the time a higher-level object will suffice as an argument.
 
 **Bad:**
@@ -537,10 +537,10 @@ class Questionnaire
 
 ### Functions should do one thing
 
-This is by far the most important rule in software engineering. When functions do more 
-than one thing, they are harder to compose, test, and reason about. When you can isolate 
-a function to just one action, they can be refactored easily and your code will read much 
-cleaner. If you take nothing else away from this guide other than this, you'll be ahead 
+This is by far the most important rule in software engineering. When functions do more
+than one thing, they are harder to compose, test, and reason about. When you can isolate
+a function to just one action, they can be refactored easily and your code will read much
+cleaner. If you take nothing else away from this guide other than this, you'll be ahead
 of many developers.
 
 **Bad:**
@@ -603,7 +603,7 @@ $message->handle();
 **Good:**
 
 ```php
-class Email 
+class Email
 {
     //...
 
@@ -760,8 +760,8 @@ class BetterPHPAlternative
 
 ### Don't use flags as function parameters
 
-Flags tell your user that this function does more than one thing. Functions should 
-do one thing. Split out your functions if they are following different code paths 
+Flags tell your user that this function does more than one thing. Functions should
+do one thing. Split out your functions if they are following different code paths
 based on a boolean.
 
 **Bad:**
@@ -795,18 +795,18 @@ function createTempFile(string $name): void
 
 ### Avoid Side Effects
 
-A function produces a side effect if it does anything other than take a value in and 
-return another value or values. A side effect could be writing to a file, modifying 
+A function produces a side effect if it does anything other than take a value in and
+return another value or values. A side effect could be writing to a file, modifying
 some global variable, or accidentally wiring all your money to a stranger.
 
-Now, you do need to have side effects in a program on occasion. Like the previous 
-example, you might need to write to a file. What you want to do is to centralize where 
-you are doing this. Don't have several functions and classes that write to a particular 
+Now, you do need to have side effects in a program on occasion. Like the previous
+example, you might need to write to a file. What you want to do is to centralize where
+you are doing this. Don't have several functions and classes that write to a particular
 file. Have one service that does it. One and only one.
 
 The main point is to avoid common pitfalls like sharing state between objects without
-any structure, using mutable data types that can be written to by anything, and not 
-centralizing where your side effects occur. If you can do this, you will be happier 
+any structure, using mutable data types that can be written to by anything, and not
+centralizing where your side effects occur. If you can do this, you will be happier
 than the vast majority of other programmers.
 
 **Bad:**
@@ -847,10 +847,10 @@ var_dump($newName); // ['Ryan', 'McDermott'];
 
 ### Don't write to global functions
 
-Polluting globals is a bad practice in many languages because you could clash with another 
-library and the user of your API would be none-the-wiser until they get an exception in 
+Polluting globals is a bad practice in many languages because you could clash with another
+library and the user of your API would be none-the-wiser until they get an exception in
 production. Let's think about an example: what if you wanted to have configuration array?
-You could write global function like `config()`, but it could clash with another library 
+You could write global function like `config()`, but it could clash with another library
 that tried to do the same thing.
 
 **Bad:**
@@ -883,7 +883,7 @@ class Configuration
 }
 ```
 
-Load configuration and create instance of `Configuration` class 
+Load configuration and create instance of `Configuration` class
 
 ```php
 $configuration = new Configuration([
@@ -1191,8 +1191,8 @@ inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 
 ### Use object encapsulation
 
-In PHP you can set `public`, `protected` and `private` keywords for methods. 
-Using it, you can control properties modification on an object. 
+In PHP you can set `public`, `protected` and `private` keywords for methods.
+Using it, you can control properties modification on an object.
 
 * When you want to do more beyond getting an object property, you don't have
 to look up and change every accessor in your codebase.
@@ -1337,7 +1337,7 @@ relationship (Human->Animal vs. User->UserDetails).
 **Bad:**
 
 ```php
-class Employee 
+class Employee
 {
     private $name;
     private $email;
@@ -1351,14 +1351,14 @@ class Employee
     // ...
 }
 
-// Bad because Employees "have" tax data. 
+// Bad because Employees "have" tax data.
 // EmployeeTaxData is not a type of Employee
 
-class EmployeeTaxData extends Employee 
+class EmployeeTaxData extends Employee
 {
     private $ssn;
     private $salary;
-    
+
     public function __construct(string $name, string $email, string $ssn, string $salary)
     {
         parent::__construct($name, $email);
@@ -1374,7 +1374,7 @@ class EmployeeTaxData extends Employee
 **Good:**
 
 ```php
-class EmployeeTaxData 
+class EmployeeTaxData
 {
     private $ssn;
     private $salary;
@@ -1388,7 +1388,7 @@ class EmployeeTaxData
     // ...
 }
 
-class Employee 
+class Employee
 {
     private $name;
     private $email;
@@ -1535,16 +1535,16 @@ For more informations you can read [the blog post](https://ocramius.github.io/bl
 final class Car
 {
     private $color;
-    
+
     public function __construct($color)
     {
         $this->color = $color;
     }
-    
+
     /**
      * @return string The color of the vehicle
      */
-    public function getColor() 
+    public function getColor()
     {
         return $this->color;
     }
@@ -1565,16 +1565,16 @@ interface Vehicle
 final class Car implements Vehicle
 {
     private $color;
-    
+
     public function __construct($color)
     {
         $this->color = $color;
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    public function getColor() 
+    public function getColor()
     {
         return $this->color;
     }
@@ -1633,7 +1633,7 @@ class UserSettings
 **Good:**
 
 ```php
-class UserAuth 
+class UserAuth
 {
     private $user;
 
@@ -1641,19 +1641,19 @@ class UserAuth
     {
         $this->user = $user;
     }
-    
+
     public function verifyCredentials(): bool
     {
         // ...
     }
 }
 
-class UserSettings 
+class UserSettings
 {
     private $user;
     private $auth;
 
-    public function __construct(User $user) 
+    public function __construct(User $user)
     {
         $this->user = $user;
         $this->auth = new UserAuth($user);
@@ -1840,7 +1840,7 @@ function printArea(Rectangle $rectangle): void
 {
     $rectangle->setWidth(4);
     $rectangle->setHeight(5);
- 
+
     // BAD: Will return 25 for Square. Should be 20.
     echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
 }
@@ -1915,7 +1915,7 @@ foreach ($shapes as $shape) {
 ### Interface Segregation Principle (ISP)
 
 ISP states that "Clients should not be forced to depend upon interfaces that
-they do not use." 
+they do not use."
 
 A good example to look at that demonstrates this principle is for
 classes that require large settings objects. Not requiring clients to set up
@@ -2099,25 +2099,25 @@ class Manager
 
 Try to observe the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.
 
-Do your absolute best to avoid duplicate code. Duplicate code is bad because 
-it means that there's more than one place to alter something if you need to 
+Do your absolute best to avoid duplicate code. Duplicate code is bad because
+it means that there's more than one place to alter something if you need to
 change some logic.
 
-Imagine if you run a restaurant and you keep track of your inventory: all your 
+Imagine if you run a restaurant and you keep track of your inventory: all your
 tomatoes, onions, garlic, spices, etc. If you have multiple lists that
 you keep this on, then all have to be updated when you serve a dish with
 tomatoes in them. If you only have one list, there's only one place to update!
 
 Often you have duplicate code because you have two or more slightly
 different things, that share a lot in common, but their differences force you
-to have two or more separate functions that do much of the same things. Removing 
-duplicate code means creating an abstraction that can handle this set of different 
+to have two or more separate functions that do much of the same things. Removing
+duplicate code means creating an abstraction that can handle this set of different
 things with just one function/module/class.
 
 Getting the abstraction right is critical, that's why you should follow the
 SOLID principles laid out in the [Classes](#classes) section. Bad abstractions can be
 worse than duplicate code, so be careful! Having said this, if you can make
-a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself 
+a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
 updating multiple places any time you want to change one thing.
 
 **Bad:**
@@ -2218,5 +2218,5 @@ This is also available in other languages:
    * [yujineeee/clean-code-php](https://github.com/yujineeee/clean-code-php)
 * :tr: **Turkish:**
    * [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
-   
+
 **[⬆ back to top](#table-of-contents)**
