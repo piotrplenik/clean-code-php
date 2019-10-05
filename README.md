@@ -143,10 +143,10 @@ $user->access ^= 2;
 ```php
 class User
 {
-    const ACCESS_READ = 1;
-    const ACCESS_CREATE = 2;
-    const ACCESS_UPDATE = 4;
-    const ACCESS_DELETE = 8;
+    public const ACCESS_READ = 1;
+    public const ACCESS_CREATE = 2;
+    public const ACCESS_UPDATE = 4;
+    public const ACCESS_DELETE = 8;
 
     // User as default can read, create and update something
     public $access = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_UPDATE;
