@@ -271,7 +271,7 @@ def create_menu(config: MenuConfig):
     # ...
 
 
-config = MenuConfig
+config = MenuConfig()
 config.title = "My delicious menu"
 config.body = "A description of the various items on the menu"
 config.button_text = "Order now!"
