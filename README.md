@@ -1298,9 +1298,9 @@ class Employee
         $this->email = $email;
     }
 
-    public function setTaxData(string $ssn, string $salary)
+    public function setTaxData(EmployeeTaxData $taxData)
     {
-        $this->taxData = new EmployeeTaxData($ssn, $salary);
+        $this->taxData = $taxData;
     }
 
     // ...
