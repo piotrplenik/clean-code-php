@@ -814,7 +814,7 @@ function config(): array
 {
     return  [
         'foo' => 'bar',
-    ]
+    ];
 }
 ```
 
@@ -832,7 +832,8 @@ class Configuration
 
     public function get(string $key): ?string
     {
-        return isset($this->configuration[$key]) ? $this->configuration[$key] : null;
+        // null coalescing operator 
+        return $this->configuration[$key] ?? null;
     }
 }
 ```
