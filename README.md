@@ -393,7 +393,7 @@ function createMicrobrewery($name = null): void
 
 **Good:**
 
- You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+ You can use [type hinting](https://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
@@ -406,7 +406,7 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 
 ## Comparison
 
-### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
+### Use [identical comparison](https://php.net/manual/en/language.operators.comparison.php)
 
 **Not good:**
 
@@ -924,7 +924,7 @@ class DBConnection
 }
 ```
 
-Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+Create instance of `DBConnection` class and configure it with [DSN](https://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
 
 ```php
 $connection = new DBConnection($dsn);
@@ -1096,7 +1096,7 @@ function travelToTexas(Vehicle $vehicle): void
 If you are working with basic primitive values like strings, integers, and arrays,
 and you use PHP 7+ and you can't use polymorphism but you still feel the need to
 type-check, you should consider
-[type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
+[type declaration](https://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
 or strict mode. It provides you with static typing on top of standard PHP syntax.
 The problem with manually type-checking is that doing it will require so much
 extra verbiage that the faux "type-safety" you get doesn't make up for the lost
@@ -1244,7 +1244,7 @@ $balance = $bankAccount->getBalance();
 
 * `public` methods and properties are most dangerous for changes, because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of class.**
 * `protected` modifier are as dangerous as public, because they are available in scope of any child class. This effectively means that difference between public and protected is only in access mechanism, but encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
-* `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
+* `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](https://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
 
 Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
 
@@ -1397,7 +1397,7 @@ oriented API that aims to improve the readability of the source code by using
 
 While there can be some contexts, frequently builder objects, where this
 pattern reduces the verbosity of the code (for example the [PHPUnit Mock Builder](https://phpunit.de/manual/current/en/test-doubles.html)
-or the [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)),
+or the [Doctrine Query Builder](https://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)),
 more often it comes at some costs:
 
 1. Breaks [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29).
