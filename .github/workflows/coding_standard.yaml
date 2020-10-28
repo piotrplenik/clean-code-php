@@ -15,6 +15,6 @@ jobs:
                     php-version: 7.4
                     coverage: none
 
-            -   run: composer install --no-progress
+            -   run: composer install --no-progress --ansi
 
             -   run: vendor/bin/ecs check-markdown README.md --ansi

@@ -453,7 +453,7 @@ declare(strict_types=1);
 $a = '42';
 $b = 42;
 
-if ($a !== $b) {
+if ($a != $b) {
     // The expression will always pass
 }
 ```
@@ -862,8 +862,8 @@ function splitIntoFirstAndLastName(): void
 
 splitIntoFirstAndLastName();
 
-// ['Ryan', 'McDermott'];
 var_dump($name);
+// ['Ryan', 'McDermott'];
 ```
 
 **Good:**
@@ -879,10 +879,11 @@ function splitIntoFirstAndLastName(string $name): array
 $name = 'Ryan McDermott';
 $newName = splitIntoFirstAndLastName($name);
 
-// 'Ryan McDermott';
 var_dump($name);
-// ['Ryan', 'McDermott'];
+// 'Ryan McDermott';
+
 var_dump($newName);
+// ['Ryan', 'McDermott'];
 ```
 
 **[⬆ back to top](#table-of-contents)**

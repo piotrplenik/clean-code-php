@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer;
+use PhpCsFixer\Fixer\Strict\StrictComparisonFixer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\EasyCodingStandard\ValueObject\Option;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
@@ -22,6 +24,7 @@ return static function (ContainerConfigurator $containerConfigurator): void
     ]);
 
     $parameters->set(Option::SKIP, [
-        \PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer::class => null,
+        BlankLineAfterOpeningTagFixer::class => null,
+        StrictComparisonFixer::class => null,
     ]);
 };
