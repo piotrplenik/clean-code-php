@@ -4,7 +4,7 @@
         "symplify/easy-coding-standard": "^8.3"
     },
     "scripts": {
-        "check-cs": "vendor/bin/ecs check README.md",
-        "fix-cs": "vendor/bin/ecs check README.md --fix"
+        "check-cs": "vendor/bin/ecs check-markdown README.md",
+        "fix-cs": "vendor/bin/ecs check-markdown README.md --fix"
     }
 }

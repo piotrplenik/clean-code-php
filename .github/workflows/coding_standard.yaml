@@ -17,4 +17,4 @@ jobs:
 
             -   run: composer install --no-progress
 
-            -   run: vendor/bin/ecs check README.md --ansi
+            -   run: vendor/bin/ecs check-markdown README.md --ansi

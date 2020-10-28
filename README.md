@@ -69,12 +69,16 @@ Although many developers still use PHP 5, most of the examples in this article o
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 $ymdstr = $moment->format('y-m-d');
 ```
 
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 $currentDate = $moment->format('y-m-d');
 ```
 
@@ -85,6 +89,8 @@ $currentDate = $moment->format('y-m-d');
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 getUserInfo();
 getUserData();
 getUserRecord();
@@ -94,6 +100,8 @@ getUserProfile();
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 getUser();
 ```
 
@@ -109,6 +117,8 @@ Make your names searchable.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 // What the heck is 448 for?
 $result = $serializer->serialize($data, 448);
 ```
@@ -116,6 +126,8 @@ $result = $serializer->serialize($data, 448);
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
 
@@ -124,6 +136,8 @@ $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class User
 {
     // What the heck is 7 for?
@@ -142,11 +156,16 @@ $user->access ^= 2;
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class User
 {
     public const ACCESS_READ = 1;
+
     public const ACCESS_CREATE = 2;
+
     public const ACCESS_UPDATE = 4;
+
     public const ACCESS_DELETE = 8;
 
     // User as default can read, create and update something
@@ -168,6 +187,8 @@ $user->access ^= User::ACCESS_CREATE;
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,]+,\s*(.+?)\s*(\d{5})$/';
 preg_match($cityZipCodeRegex, $address, $matches);
@@ -180,6 +201,8 @@ saveCityZipCode($matches[1], $matches[2]);
 It's better, but we are still heavily dependent on regex.
 
 ```php
+declare(strict_types=1);
+
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,]+,\s*(.+?)\s*(\d{5})$/';
 preg_match($cityZipCodeRegex, $address, $matches);
@@ -193,6 +216,8 @@ saveCityZipCode($city, $zipCode);
 Decrease dependence on regex by naming subpatterns.
 
 ```php
+declare(strict_types=1);
+
 $address = 'One Infinite Loop, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,]+,\s*(?<city>.+?)\s*(?<zipCode>\d{5})$/';
 preg_match($cityZipCodeRegex, $address, $matches);
@@ -210,6 +235,8 @@ than implicit.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function isShopOpen($day): bool
 {
     if ($day) {
@@ -221,30 +248,27 @@ function isShopOpen($day): bool
                 return true;
             } elseif ($day === 'sunday') {
                 return true;
-            } else {
-                return false;
             }
-        } else {
             return false;
         }
-    } else {
         return false;
     }
+    return false;
 }
 ```
 
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 function isShopOpen(string $day): bool
 {
     if (empty($day)) {
         return false;
     }
 
-    $openingDays = [
-        'friday', 'saturday', 'sunday'
-    ];
+    $openingDays = ['friday', 'saturday', 'sunday'];
 
     return in_array(strtolower($day), $openingDays, true);
 }
@@ -257,27 +281,28 @@ function isShopOpen(string $day): bool
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function fibonacci(int $n)
 {
     if ($n < 50) {
         if ($n !== 0) {
             if ($n !== 1) {
                 return fibonacci($n - 1) + fibonacci($n - 2);
-            } else {
-                return 1;
             }
-        } else {
-            return 0;
+            return 1;
         }
-    } else {
-        return 'Not supported';
+        return 0;
     }
+    return 'Not supported';
 }
 ```
 
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 function fibonacci(int $n): int
 {
     if ($n === 0 || $n === 1) {
@@ -285,7 +310,7 @@ function fibonacci(int $n): int
     }
 
     if ($n >= 50) {
-        throw new \Exception('Not supported');
+        throw new Exception('Not supported');
     }
 
     return fibonacci($n - 1) + fibonacci($n - 2);
@@ -319,6 +344,8 @@ for ($i = 0; $i < count($l); $i++) {
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 $locations = ['Austin', 'New York', 'San Francisco'];
 
 foreach ($locations as $location) {
@@ -341,10 +368,14 @@ variable name.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class Car
 {
     public $carMake;
+
     public $carModel;
+
     public $carColor;
 
     //...
@@ -354,10 +385,14 @@ class Car
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class Car
 {
     public $make;
+
     public $model;
+
     public $color;
 
     //...
@@ -413,11 +448,13 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 The simple comparison will convert the string in an integer.
 
 ```php
+declare(strict_types=1);
+
 $a = '42';
 $b = 42;
 
-if ($a != $b) {
-   // The expression will always pass
+if ($a !== $b) {
+    // The expression will always pass
 }
 ```
 
@@ -429,6 +466,8 @@ The string `42` is different than the integer `42`.
 The identical comparison will compare type and value.
 
 ```php
+declare(strict_types=1);
+
 $a = '42';
 $b = 42;
 
@@ -448,6 +487,8 @@ Null coalescing is a new operator [introduced in PHP 7](https://www.php.net/manu
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 if (isset($_GET['name'])) {
     $name = $_GET['name'];
 } elseif (isset($_POST['name'])) {
@@ -459,6 +500,8 @@ if (isset($_GET['name'])) {
 
 **Good:**
 ```php
+declare(strict_types=1);
+
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
@@ -480,6 +523,8 @@ of the time a higher-level object will suffice as an argument.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class Questionnaire
 {
     public function __construct(
@@ -500,10 +545,14 @@ class Questionnaire
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class Name
 {
     private $firstname;
+
     private $lastname;
+
     private $patronymic;
 
     public function __construct(string $firstname, string $lastname, string $patronymic)
@@ -519,7 +568,9 @@ class Name
 class City
 {
     private $region;
+
     private $district;
+
     private $city;
 
     public function __construct(string $region, string $district, string $city)
@@ -535,6 +586,7 @@ class City
 class Contact
 {
     private $phone;
+
     private $email;
 
     public function __construct(string $phone, string $email)
@@ -606,6 +658,8 @@ testing.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function parseBetterPHPAlternative(string $code): void
 {
     $regexes = [
@@ -744,10 +798,12 @@ based on a boolean.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function createFile(string $name, bool $temp = false): void
 {
     if ($temp) {
-        touch('./temp/'.$name);
+        touch('./temp/' . $name);
     } else {
         touch($name);
     }
@@ -757,6 +813,8 @@ function createFile(string $name, bool $temp = false): void
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 function createFile(string $name): void
 {
     touch($name);
@@ -764,7 +822,7 @@ function createFile(string $name): void
 
 function createTempFile(string $name): void
 {
-    touch('./temp/'.$name);
+    touch('./temp/' . $name);
 }
 ```
 
@@ -789,6 +847,8 @@ than the vast majority of other programmers.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 // Global variable referenced by following function.
 // If we had another function that used this name, now it'd be an array and it could break it.
 $name = 'Ryan McDermott';
@@ -802,12 +862,15 @@ function splitIntoFirstAndLastName(): void
 
 splitIntoFirstAndLastName();
 
-var_dump($name); // ['Ryan', 'McDermott'];
+// ['Ryan', 'McDermott'];
+var_dump($name);
 ```
 
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 function splitIntoFirstAndLastName(string $name): array
 {
     return explode(' ', $name);
@@ -816,8 +879,10 @@ function splitIntoFirstAndLastName(string $name): array
 $name = 'Ryan McDermott';
 $newName = splitIntoFirstAndLastName($name);
 
-var_dump($name); // 'Ryan McDermott';
-var_dump($newName); // ['Ryan', 'McDermott'];
+// 'Ryan McDermott';
+var_dump($name);
+// ['Ryan', 'McDermott'];
+var_dump($newName);
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -833,9 +898,11 @@ that tried to do the same thing.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function config(): array
 {
-    return  [
+    return [
         'foo' => 'bar',
     ];
 }
@@ -844,6 +911,8 @@ function config(): array
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class Configuration
 {
     private $configuration = [];
@@ -855,7 +924,7 @@ class Configuration
 
     public function get(string $key): ?string
     {
-        // null coalescing operator 
+        // null coalescing operator
         return $this->configuration[$key] ?? null;
     }
 }
@@ -864,6 +933,8 @@ class Configuration
 Load configuration and create instance of `Configuration` class
 
 ```php
+declare(strict_types=1);
+
 $configuration = new Configuration([
     'foo' => 'bar',
 ]);
@@ -886,6 +957,8 @@ There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class DBConnection
 {
     private static $instance;
@@ -895,7 +968,7 @@ class DBConnection
         // ...
     }
 
-    public static function getInstance(): DBConnection
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -913,6 +986,8 @@ $singleton = DBConnection::getInstance();
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class DBConnection
 {
     public function __construct(string $dsn)
@@ -920,13 +995,15 @@ class DBConnection
         // ...
     }
 
-     // ...
+    // ...
 }
 ```
 
 Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
 
 ```php
+declare(strict_types=1);
+
 $connection = new DBConnection($dsn);
 ```
 
@@ -939,6 +1016,8 @@ And now you must use instance of `DBConnection` in your application.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 if ($article->state === 'published') {
     // ...
 }
@@ -947,6 +1026,8 @@ if ($article->state === 'published') {
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 if ($article->isPublished()) {
     // ...
 }
@@ -959,13 +1040,14 @@ if ($article->isPublished()) {
 **Bad:**
 
 ```php
-function isDOMNodeNotPresent(\DOMNode $node): bool
+declare(strict_types=1);
+
+function isDOMNodeNotPresent(DOMNode $node): bool
 {
     // ...
 }
 
-if (!isDOMNodeNotPresent($node))
-{
+if (! isDOMNodeNotPresent($node)) {
     // ...
 }
 ```
@@ -973,7 +1055,9 @@ if (!isDOMNodeNotPresent($node))
 **Good:**
 
 ```php
-function isDOMNodePresent(\DOMNode $node): bool
+declare(strict_types=1);
+
+function isDOMNodePresent(DOMNode $node): bool
 {
     // ...
 }
@@ -999,6 +1083,8 @@ just do one thing.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class Airplane
 {
     // ...
@@ -1020,6 +1106,8 @@ class Airplane
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 interface Airplane
 {
     // ...
@@ -1070,6 +1158,8 @@ The first thing to consider is consistent APIs.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function travelToTexas($vehicle): void
 {
     if ($vehicle instanceof Bicycle) {
@@ -1083,6 +1173,8 @@ function travelToTexas($vehicle): void
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 function travelToTexas(Vehicle $vehicle): void
 {
     $vehicle->travelTo(new Location('texas'));
@@ -1106,10 +1198,12 @@ Otherwise, do all of that but with PHP strict type declaration or strict mode.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function combine($val1, $val2): int
 {
-    if (!is_numeric($val1) || !is_numeric($val2)) {
-        throw new \Exception('Must be of type Number');
+    if (! is_numeric($val1) || ! is_numeric($val2)) {
+        throw new Exception('Must be of type Number');
     }
 
     return $val1 + $val2;
@@ -1119,6 +1213,8 @@ function combine($val1, $val2): int
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 function combine(int $val1, int $val2): int
 {
     return $val1 + $val2;
@@ -1136,6 +1232,8 @@ in your version history if you still need it.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function oldRequestModule(string $url): void
 {
     // ...
@@ -1153,6 +1251,8 @@ inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 function requestModule(string $url): void
 {
     // ...
@@ -1186,6 +1286,8 @@ Additionally, this is part of [Open/Closed](#openclosed-principle-ocp) principle
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class BankAccount
 {
     public $balance = 1000;
@@ -1253,6 +1355,8 @@ For more informations you can read the [blog post](http://fabien.potencier.org/p
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class Employee
 {
     public $name;
@@ -1264,12 +1368,15 @@ class Employee
 }
 
 $employee = new Employee('John Doe');
-echo 'Employee name: '.$employee->name; // Employee name: John Doe
+// Employee name: John Doe
+echo 'Employee name: ' . $employee->name;
 ```
 
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class Employee
 {
     private $name;
@@ -1286,7 +1393,8 @@ class Employee
 }
 
 $employee = new Employee('John Doe');
-echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
+// Employee name: John Doe
+echo 'Employee name: ' . $employee->getName();
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -1315,9 +1423,12 @@ relationship (Human->Animal vs. User->UserDetails).
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class Employee
 {
     private $name;
+
     private $email;
 
     public function __construct(string $name, string $email)
@@ -1335,6 +1446,7 @@ class Employee
 class EmployeeTaxData extends Employee
 {
     private $ssn;
+
     private $salary;
 
     public function __construct(string $name, string $email, string $ssn, string $salary)
@@ -1352,9 +1464,12 @@ class EmployeeTaxData extends Employee
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class EmployeeTaxData
 {
     private $ssn;
+
     private $salary;
 
     public function __construct(string $ssn, string $salary)
@@ -1369,7 +1484,9 @@ class EmployeeTaxData
 class Employee
 {
     private $name;
+
     private $email;
+
     private $taxData;
 
     public function __construct(string $name, string $email)
@@ -1378,7 +1495,7 @@ class Employee
         $this->email = $email;
     }
 
-    public function setTaxData(EmployeeTaxData $taxData)
+    public function setTaxData(EmployeeTaxData $taxData): void
     {
         $this->taxData = $taxData;
     }
@@ -1411,10 +1528,14 @@ on this topic written by [Marco Pivetta](https://github.com/Ocramius).
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class Car
 {
     private $make = 'Honda';
+
     private $model = 'Accord';
+
     private $color = 'white';
 
     public function setMake(string $make): self
@@ -1448,19 +1569,23 @@ class Car
 }
 
 $car = (new Car())
-  ->setColor('pink')
-  ->setMake('Ford')
-  ->setModel('F-150')
-  ->dump();
+    ->setColor('pink')
+    ->setMake('Ford')
+    ->setModel('F-150')
+    ->dump();
 ```
 
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class Car
 {
     private $make = 'Honda';
+
     private $model = 'Accord';
+
     private $color = 'white';
 
     public function setMake(string $make): void
@@ -1510,6 +1635,8 @@ For more informations you can read [the blog post](https://ocramius.github.io/bl
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 final class Car
 {
     private $color;
@@ -1532,6 +1659,8 @@ final class Car
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 interface Vehicle
 {
     /**
@@ -1549,9 +1678,6 @@ final class Car implements Vehicle
         $this->color = $color;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getColor()
     {
         return $this->color;
@@ -1585,6 +1711,8 @@ your codebase.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class UserSettings
 {
     private $user;
@@ -1611,6 +1739,8 @@ class UserSettings
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 class UserAuth
 {
     private $user;
@@ -1629,6 +1759,7 @@ class UserAuth
 class UserSettings
 {
     private $user;
+
     private $auth;
 
     public function __construct(User $user)
@@ -1658,6 +1789,8 @@ add new functionalities without changing existing code.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 abstract class Adapter
 {
     protected $name;
@@ -1723,6 +1856,8 @@ class HttpRequester
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 interface Adapter
 {
     public function request(string $url): Promise;
@@ -1780,9 +1915,12 @@ get into trouble.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class Rectangle
 {
     protected $width = 0;
+
     protected $height = 0;
 
     public function setWidth(int $width): void
@@ -1820,7 +1958,7 @@ function printArea(Rectangle $rectangle): void
     $rectangle->setHeight(5);
 
     // BAD: Will return 25 for Square. Should be 20.
-    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()) . PHP_EOL;
 }
 
 $rectangles = [new Rectangle(), new Square()];
@@ -1903,6 +2041,8 @@ all of the settings. Making them optional helps prevent having a "fat interface"
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 interface Employee
 {
     public function work(): void;
@@ -1942,6 +2082,8 @@ class RobotEmployee implements Employee
 Not every worker is an employee, but every employee is a worker.
 
 ```php
+declare(strict_types=1);
+
 interface Workable
 {
     public function work(): void;
@@ -1999,6 +2141,8 @@ it makes your code hard to refactor.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 class Employee
 {
     public function work(): void
@@ -2034,6 +2178,8 @@ class Manager
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 interface Employee
 {
     public function work(): void;
@@ -2101,17 +2247,15 @@ updating multiple places any time you want to change one thing.
 **Bad:**
 
 ```php
+declare(strict_types=1);
+
 function showDeveloperList(array $developers): void
 {
     foreach ($developers as $developer) {
         $expectedSalary = $developer->calculateExpectedSalary();
         $experience = $developer->getExperience();
         $githubLink = $developer->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
+        $data = [$expectedSalary, $experience, $githubLink];
 
         render($data);
     }
@@ -2123,11 +2267,7 @@ function showManagerList(array $managers): void
         $expectedSalary = $manager->calculateExpectedSalary();
         $experience = $manager->getExperience();
         $githubLink = $manager->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
+        $data = [$expectedSalary, $experience, $githubLink];
 
         render($data);
     }
@@ -2137,17 +2277,15 @@ function showManagerList(array $managers): void
 **Good:**
 
 ```php
+declare(strict_types=1);
+
 function showList(array $employees): void
 {
     foreach ($employees as $employee) {
         $expectedSalary = $employee->calculateExpectedSalary();
         $experience = $employee->getExperience();
         $githubLink = $employee->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
+        $data = [$expectedSalary, $experience, $githubLink];
 
         render($data);
     }
@@ -2159,14 +2297,12 @@ function showList(array $employees): void
 It is better to use a compact version of the code.
 
 ```php
+declare(strict_types=1);
+
 function showList(array $employees): void
 {
     foreach ($employees as $employee) {
-        render([
-            $employee->calculateExpectedSalary(),
-            $employee->getExperience(),
-            $employee->getGithubLink()
-        ]);
+        render([$employee->calculateExpectedSalary(), $employee->getExperience(), $employee->getGithubLink()]);
     }
 }
 ```
