@@ -1,9 +1,9 @@
 # PHP Toza Kod
 
-## Table of Contents
+## Mundarija
 
-1. [Introduction](#introduction)
-2. [Variables](#variables)
+1. [Kirish](#introduction)
+2. [O'zgaruvchilar](#variables)
    - [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
    - [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
    - [Use searchable names (part 1)](#use-searchable-names-part-1)
