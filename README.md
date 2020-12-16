@@ -1,62 +1,62 @@
-# Clean Code PHP
+# PHP Toza Kod
 
 ## Table of Contents
 
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-     * [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
-     * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
-     * [Use searchable names (part 1)](#use-searchable-names-part-1)
-     * [Use searchable names (part 2)](#use-searchable-names-part-2)
-     * [Use explanatory variables](#use-explanatory-variables)
-     * [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
-     * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
-     * [Avoid Mental Mapping](#avoid-mental-mapping)
-     * [Don't add unneeded context](#dont-add-unneeded-context)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-  3. [Comparison](#comparison)
-     * [Use identical comparison](#use-identical-comparison)
-     * [Null coalescing operator](#null-coalescing-operator)
-  4. [Functions](#functions)
-     * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
-     * [Function names should say what they do](#function-names-should-say-what-they-do)
-     * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
-     * [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
-     * [Avoid Side Effects](#avoid-side-effects)
-     * [Don't write to global functions](#dont-write-to-global-functions)
-     * [Don't use a Singleton pattern](#dont-use-a-singleton-pattern)
-     * [Encapsulate conditionals](#encapsulate-conditionals)
-     * [Avoid negative conditionals](#avoid-negative-conditionals)
-     * [Avoid conditionals](#avoid-conditionals)
-     * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
-     * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
-     * [Remove dead code](#remove-dead-code)
-  5. [Objects and Data Structures](#objects-and-data-structures)
-     * [Use object encapsulation](#use-object-encapsulation)
-     * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  6. [Classes](#classes)
-     * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
-     * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-     * [Prefer final classes](#prefer-final-classes)
-  7. [SOLID](#solid)
-     * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
-     * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
-     * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
-     * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
-     * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  9. [Translations](#translations)
+1. [Introduction](#introduction)
+2. [Variables](#variables)
+   - [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
+   - [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
+   - [Use searchable names (part 1)](#use-searchable-names-part-1)
+   - [Use searchable names (part 2)](#use-searchable-names-part-2)
+   - [Use explanatory variables](#use-explanatory-variables)
+   - [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
+   - [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
+   - [Avoid Mental Mapping](#avoid-mental-mapping)
+   - [Don't add unneeded context](#dont-add-unneeded-context)
+   - [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
+3. [Comparison](#comparison)
+   - [Use identical comparison](#use-identical-comparison)
+   - [Null coalescing operator](#null-coalescing-operator)
+4. [Functions](#functions)
+   - [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
+   - [Function names should say what they do](#function-names-should-say-what-they-do)
+   - [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
+   - [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
+   - [Avoid Side Effects](#avoid-side-effects)
+   - [Don't write to global functions](#dont-write-to-global-functions)
+   - [Don't use a Singleton pattern](#dont-use-a-singleton-pattern)
+   - [Encapsulate conditionals](#encapsulate-conditionals)
+   - [Avoid negative conditionals](#avoid-negative-conditionals)
+   - [Avoid conditionals](#avoid-conditionals)
+   - [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
+   - [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
+   - [Remove dead code](#remove-dead-code)
+5. [Objects and Data Structures](#objects-and-data-structures)
+   - [Use object encapsulation](#use-object-encapsulation)
+   - [Make objects have private/protected members](#make-objects-have-privateprotected-members)
+6. [Classes](#classes)
+   - [Prefer composition over inheritance](#prefer-composition-over-inheritance)
+   - [Avoid fluent interfaces](#avoid-fluent-interfaces)
+   - [Prefer final classes](#prefer-final-classes)
+7. [SOLID](#solid)
+   - [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
+   - [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
+   - [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
+   - [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
+   - [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
+9. [Translations](#translations)
 
 ## Introduction
 
 Software engineering principles, from Robert C. Martin's book
-[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
+[_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
 adapted for PHP. This is not a style guide. It's a guide to producing
 readable, reusable, and refactorable software in PHP.
 
 Not every principle herein has to be strictly followed, and even fewer will be universally
 agreed upon. These are guidelines and nothing more, but they are ones codified over many
-years of collective experience by the authors of *Clean Code*.
+years of collective experience by the authors of _Clean Code_.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
 
@@ -110,7 +110,7 @@ getUser();
 ### Use searchable names (part 1)
 
 We will read more code than we will ever write. It's important that the code we do write is
-readable and searchable. By *not* naming variables that end up being meaningful for
+readable and searchable. By _not_ naming variables that end up being meaningful for
 understanding our program, we hurt our readers.
 Make your names searchable.
 
@@ -428,7 +428,7 @@ function createMicrobrewery($name = null): void
 
 **Good:**
 
- You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
@@ -499,6 +499,7 @@ if (isset($_GET['name'])) {
 ```
 
 **Good:**
+
 ```php
 declare(strict_types=1);
 
@@ -948,10 +949,11 @@ And now you must use instance of `Configuration` in your application.
 ### Don't use a Singleton pattern
 
 Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern). Paraphrased from Brian Button:
- 1. They are generally used as a **global instance**, why is that so bad? Because **you hide the dependencies** of your application in your code, instead of exposing them through the interfaces. Making something global to avoid passing it around is a [code smell](https://en.wikipedia.org/wiki/Code_smell).
- 2. They violate the [single responsibility principle](#single-responsibility-principle-srp): by virtue of the fact that **they control their own creation and lifecycle**.
- 3. They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under **test rather difficult** in many cases.
- 4. They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent from the other.
+
+1.  They are generally used as a **global instance**, why is that so bad? Because **you hide the dependencies** of your application in your code, instead of exposing them through the interfaces. Making something global to avoid passing it around is a [code smell](https://en.wikipedia.org/wiki/Code_smell).
+2.  They violate the [single responsibility principle](#single-responsibility-principle-srp): by virtue of the fact that **they control their own creation and lifecycle**.
+3.  They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under **test rather difficult** in many cases.
+4.  They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent from the other.
 
 There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
 
@@ -1265,7 +1267,6 @@ inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Objects and Data Structures
 
 ### Use object encapsulation
@@ -1273,14 +1274,14 @@ inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 In PHP you can set `public`, `protected` and `private` keywords for methods.
 Using it, you can control properties modification on an object.
 
-* When you want to do more beyond getting an object property, you don't have
-to look up and change every accessor in your codebase.
-* Makes adding validation simple when doing a `set`.
-* Encapsulates the internal representation.
-* Easy to add logging and error handling when getting and setting.
-* Inheriting this class, you can override default functionality.
-* You can lazy load your object's properties, let's say getting it from a
-server.
+- When you want to do more beyond getting an object property, you don't have
+  to look up and change every accessor in your codebase.
+- Makes adding validation simple when doing a `set`.
+- Encapsulates the internal representation.
+- Easy to add logging and error handling when getting and setting.
+- Inheriting this class, you can override default functionality.
+- You can lazy load your object's properties, let's say getting it from a
+  server.
 
 Additionally, this is part of [Open/Closed](#openclosed-principle-ocp) principle.
 
@@ -1345,9 +1346,9 @@ $balance = $bankAccount->getBalance();
 
 ### Make objects have private/protected members
 
-* `public` methods and properties are most dangerous for changes, because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of class.**
-* `protected` modifier are as dangerous as public, because they are available in scope of any child class. This effectively means that difference between public and protected is only in access mechanism, but encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
-* `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
+- `public` methods and properties are most dangerous for changes, because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of class.**
+- `protected` modifier are as dangerous as public, because they are available in scope of any child class. This effectively means that difference between public and protected is only in access mechanism, but encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
+- `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
 
 Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
 
@@ -1404,7 +1405,7 @@ echo 'Employee name: ' . $employee->getName();
 
 ### Prefer composition over inheritance
 
-As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
+As stated famously in [_Design Patterns_](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
 you should prefer composition over inheritance where you can. There are lots of
 good reasons to use inheritance and lots of good reasons to use composition.
 The main point for this maxim is that if your mind instinctively goes for
@@ -1416,10 +1417,10 @@ depends on your problem at hand, but this is a decent list of when inheritance
 makes more sense than composition:
 
 1. Your inheritance represents an "is-a" relationship and not a "has-a"
-relationship (Human->Animal vs. User->UserDetails).
+   relationship (Human->Animal vs. User->UserDetails).
 2. You can reuse code from the base classes (Humans can move like all animals).
 3. You want to make global changes to derived classes by changing a base class.
-(Change the caloric expenditure of all animals when they move).
+   (Change the caloric expenditure of all animals when they move).
 
 **Bad:**
 
@@ -1692,11 +1693,11 @@ final class Car implements Vehicle
 
 **SOLID** is the mnemonic acronym introduced by Michael Feathers for the first five principles named by Robert Martin, which meant five basic principles of object-oriented programming and design.
 
- * [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
- * [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
- * [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
- * [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
- * [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+- [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
+- [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
+- [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
+- [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
+- [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
 
 ### Single Responsibility Principle (SRP)
 
@@ -2127,10 +2128,11 @@ class RobotEmployee implements Workable
 ### Dependency Inversion Principle (DIP)
 
 This principle states two essential things:
+
 1. High-level modules should not depend on low-level modules. Both should
-depend on abstractions.
+   depend on abstractions.
 2. Abstractions should not depend upon details. Details should depend on
-abstractions.
+   abstractions.
 
 This can be hard to understand at first, but if you've worked with PHP frameworks (like Symfony), you've seen an implementation of this principle in the form of Dependency
 Injection (DI). While they are not identical concepts, DIP keeps high-level
@@ -2314,24 +2316,24 @@ function showList(array $employees): void
 
 This is also available in other languages:
 
-* :cn: **Chinese:**
-   * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
-* :ru: **Russian:**
-   * [peter-gribanov/clean-code-php](https://github.com/peter-gribanov/clean-code-php)
-* :es: **Spanish:**
-   * [fikoborquez/clean-code-php](https://github.com/fikoborquez/clean-code-php)
-* :brazil: **Portuguese:**
-   * [fabioars/clean-code-php](https://github.com/fabioars/clean-code-php)
-   * [jeanjar/clean-code-php](https://github.com/jeanjar/clean-code-php/tree/pt-br)
-* :thailand: **Thai:**
-   * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
-* :fr: **French:**
-   * [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
-* :vietnam: **Vietnamese**
-   * [viethuongdev/clean-code-php](https://github.com/viethuongdev/clean-code-php)
-* :kr: **Korean:**
-   * [yujineeee/clean-code-php](https://github.com/yujineeee/clean-code-php)
-* :tr: **Turkish:**
-   * [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
+- :cn: **Chinese:**
+  - [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
+- :ru: **Russian:**
+  - [peter-gribanov/clean-code-php](https://github.com/peter-gribanov/clean-code-php)
+- :es: **Spanish:**
+  - [fikoborquez/clean-code-php](https://github.com/fikoborquez/clean-code-php)
+- :brazil: **Portuguese:**
+  - [fabioars/clean-code-php](https://github.com/fabioars/clean-code-php)
+  - [jeanjar/clean-code-php](https://github.com/jeanjar/clean-code-php/tree/pt-br)
+- :thailand: **Thai:**
+  - [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
+- :fr: **French:**
+  - [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
+- :vietnam: **Vietnamese**
+  - [viethuongdev/clean-code-php](https://github.com/viethuongdev/clean-code-php)
+- :kr: **Korean:**
+  - [yujineeee/clean-code-php](https://github.com/yujineeee/clean-code-php)
+- :tr: **Turkish:**
+  - [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
