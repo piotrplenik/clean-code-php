@@ -116,7 +116,7 @@ Biz kod yozishdan ko'ra ko'proq ularni o'qiymiz. Shuning uchun biz yozadigan kod
 ```php
 declare(strict_types=1);
 
-// What the heck is 448 for?
+// 448 nimani anglatadi?
 $result = $serializer->serialize($data, 448);
 ```
 
@@ -165,7 +165,7 @@ class User
 
     public const ACCESS_DELETE = 8;
 
-    // Bu yerda esa hammasi tushunarli. Boshlang'ich holatda foydalanuvchi o'qishi, tahrirlashi yoki yaratishi mumkin
+    // Bu yerda esa hammasi tushunarli. Boshlang'ich holatda `$access`ga o'qish, tahrirlash va yaratish huquqlari o'zlashtirilmoqda.
     public $access = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_UPDATE;
 }
 
@@ -394,8 +394,6 @@ class Car
 ```
 
 **[⬆ boshiga qaytish](#mundarija)**
-
-### Use default arguments instead of short circuiting or conditionals
 
 ### Qisqa formalar yoki shartlar o'rniga standart argumentlardan foydalaning
 
