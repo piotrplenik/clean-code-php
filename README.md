@@ -8,12 +8,12 @@
    - [Bir xil turdagi o'zgaruvchilar uchun xuddi shunday nomdan foydalaning](#bir-xil-turdagi-ozgaruvchilar-uchun-xuddi-shunday-nomdan-foydalaning)
    - [Izlashga qulay bo'lgan nomlardan foydalaning (1-qism)](#izlashga-qulay-bolgan-nomlardan-foydalaning-1-qism)
    - [Izlashga qulay bo'lgan nomlardan foydalaning (2-qism)](#izlashga-qulay-bolgan-nomlardan-foydalaning-2-qism)
-   - [Use explanatory variables](#use-explanatory-variables)
-   - [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
-   - [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
-   - [Avoid Mental Mapping](#avoid-mental-mapping)
-   - [Don't add unneeded context](#dont-add-unneeded-context)
-   - [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
+   - [Mantiqni izohlaydigan o'zgaruvchilardan foydalaning](#mantiqni-izohlaydigan-ozgaruvchilardan-foydalaning)
+   - [Shart operatorlarini bir birini ichiga chuqur joylashtirishni va qiymatlarni erta qaytarishni oldini oling (1-qism)](#shart-operatorlarini-bir-birini-ichiga-chuqur-joylashtirishni-va-qiymatlarni-erta-qaytarishni-oldini-oling-1-qism)
+   - [Shart operatorlarini bir birini ichiga chuqur joylashtirishni va qiymatlarni erta qaytarishni oldini oling (2-qism)](#shart-operatorlarini-bir-birini-ichiga-chuqur-joylashtirishni-va-qiymatlarni-erta-qaytarishni-oldini-oling-2-qism)
+   - [O'zgaruvchilarni nomlashda Aqliy Xaritalamang](#ozgaruvchilarni-nomlashda-aqliy-xaritalamang)
+   - [Keraksiz kontekst qo'shmang](#keraksiz-kontekst-qoshmang)
+   - [Qisqa formalar yoki shartlar o'rniga standart argumentlardan foydalaning](#qisqa-formalar-yoki-shartlar-orniga-standart-argumentlardan-foydalaning)
 3. [Comparison](#comparison)
    - [Use identical comparison](#use-identical-comparison)
    - [Null coalescing operator](#null-coalescing-operator)
@@ -179,7 +179,7 @@ $user->access ^= User::ACCESS_CREATE;
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-### Use explanatory variables
+### Mantiqni izohlaydigan o'zgaruvchilardan foydalaning
 
 **Yomon:**
 
@@ -193,9 +193,9 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
-**Not bad:**
+**Yomon emas:**
 
-It's better, but we are still heavily dependent on regex.
+Bu yaxshiroq, lekin biz haliham to'liq mantiqni tushunish uchun regex'ga bog'liqmiz.
 
 ```php
 declare(strict_types=1);
@@ -210,7 +210,7 @@ saveCityZipCode($city, $zipCode);
 
 **Yaxshi:**
 
-Decrease dependence on regex by naming subpatterns.
+Subpattern'larni nomlash orqali regex'ga bog'liqligimizni kamaytirdik.
 
 ```php
 declare(strict_types=1);
@@ -224,10 +224,9 @@ saveCityZipCode($matches['city'], $matches['zipCode']);
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-### Avoid nesting too deeply and return early (part 1)
+### Shart operatorlarini bir birini ichiga chuqur joylashtirishni va qiymatlarni erta qaytarishni oldini oling (1-qism)
 
-Too many if-else statements can make your code hard to follow. Explicit is better
-than implicit.
+Juda ham ko'p if-else operatorlari kodingizni tushunishni qiyinlashtiradi. Aniqlik mujmallikdan ko'ra yaxshiroq.
 
 **Yomon:**
 
@@ -273,7 +272,7 @@ function isShopOpen(string $day): bool
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-### Avoid nesting too deeply and return early (part 2)
+### Shart operatorlarini bir birini ichiga chuqur joylashtirishni va qiymatlarni erta qaytarishni oldini oling (2-qism)
 
 **Yomon:**
 
@@ -316,10 +315,9 @@ function fibonacci(int $n): int
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-### Avoid Mental Mapping
+### O'zgaruvchilarni nomlashda Aqliy Xaritalamang
 
-Don’t force the reader of your code to translate what the variable means.
-Explicit is better than implicit.
+Kodingiz o'quvchisini o'zgaruvchi nimani anglatishini tarjima qilishiga majburlamang. Aniqlik mujmallikdan ko'ra yaxshiroq.
 
 **Yomon:**
 
@@ -333,7 +331,7 @@ for ($i = 0; $i < count($l); $i++) {
     // ...
     // ...
     // ...
-    // Wait, what is `$li` for again?
+    // Shoshmang, `$li` nima bo'ldi bu yana?
     dispatch($li);
 }
 ```
@@ -357,10 +355,9 @@ foreach ($locations as $location) {
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-### Don't add unneeded context
+### Keraksiz kontekst qo'shmang
 
-If your class/object name tells you something, don't repeat that in your
-variable name.
+Agar class/obyekt'ingizni nomi nimanidir anglatib turgan bo'lsa, o'zgaruvchingizni nomida uni takrorlamang
 
 **Yomon:**
 
@@ -400,9 +397,11 @@ class Car
 
 ### Use default arguments instead of short circuiting or conditionals
 
-**Not good:**
+### Qisqa formalar yoki shartlar o'rniga standart argumentlardan foydalaning
 
-This is not good because `$breweryName` can be `NULL`.
+**Yaxshi emas:**
+
+Bu yaxshi emas chunki `$breweryName` ning qiymati `NULL` bo'lishi mumkin.
 
 ```php
 function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
@@ -411,9 +410,9 @@ function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**Not bad:**
+**Yomon emas:**
 
-This opinion is more understandable than the previous version, but it better controls the value of the variable.
+Bu variant oldingisiga qaraganda ancha tushunarli, ammo u o'zgaruvchining qiymatini yaxshiroq boshqaradi.
 
 ```php
 function createMicrobrewery($name = null): void
@@ -425,7 +424,7 @@ function createMicrobrewery($name = null): void
 
 **Yaxshi:**
 
-You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+[Toifalarni boshqarish](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) dan foydalanishingiz mumkin va `$breweryName` ning qiymati `NULL` ga teng bo'lmasligiga ishonchingiz komil bo'ladi.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
