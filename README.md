@@ -2,12 +2,12 @@
 
 ## Mundarija
 
-1. [Kirish](#introduction)
-2. [O'zgaruvchilar](#variables)
-   - [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
-   - [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
-   - [Use searchable names (part 1)](#use-searchable-names-part-1)
-   - [Use searchable names (part 2)](#use-searchable-names-part-2)
+1. [Kirish](#kirish)
+2. [O'zgaruvchilar](#o`zgaruvchilar)
+   - [Ma'noli va tushunarli nomlardan foydalaning](#manoli-va-tushunarli-nomlardan-foydalaning)
+   - [Bir xil turdagi o'zgaruvchilar uchun xuddi shunday nomdan foydalaning](#bir-xil-turdagi-ozgaruvchilar-uchun-xuddi-shunday-nomdan-foydalaning)
+   - [Izlashga qulay bo'lgan nomlardan foydalaning (1-qism)](#izlashga-qulay-bolgan-nomlardan-foydalaning-1-qism)
+   - [Izlashga qulay bo'lgan nomlardan foydalaning (2-qism)](#izlashga-qulay-bolgan-nomlardan-foydalaning-2-qism)
    - [Use explanatory variables](#use-explanatory-variables)
    - [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
    - [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
@@ -47,7 +47,7 @@
 8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
 9. [Translations](#translations)
 
-## Introduction
+## Kirish
 
 Software engineering principles, from Robert C. Martin's book
 [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
@@ -62,11 +62,11 @@ Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-cod
 
 Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
 
-## Variables
+## O'zgaruvchilar
 
-### Use meaningful and pronounceable variable names
+### Ma'noli va tushunarli nomlardan foydalaning
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -74,7 +74,7 @@ declare(strict_types=1);
 $ymdstr = $moment->format('y-m-d');
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -82,11 +82,11 @@ declare(strict_types=1);
 $currentDate = $moment->format('y-m-d');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
-### Use the same vocabulary for the same type of variable
+### Bir xil turdagi o'zgaruvchilar uchun xuddi shunday nomdan foydalaning
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -97,7 +97,7 @@ getUserRecord();
 getUserProfile();
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -105,16 +105,13 @@ declare(strict_types=1);
 getUser();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
-### Use searchable names (part 1)
+### Izlashga qulay bo'lgan nomlardan foydalaning (1-qism)
 
-We will read more code than we will ever write. It's important that the code we do write is
-readable and searchable. By _not_ naming variables that end up being meaningful for
-understanding our program, we hurt our readers.
-Make your names searchable.
+Biz kod yozishdan ko'ra ko'proq ularni o'qiymiz. Shuning uchun biz yozadigan kod izlashga va o'qishga qulay bo'lishi muhimdir. Dasturimizni tushunishda ahamaiyatga ega bo'lgan o'zgaruvchilarni ma'noli qilib nomlamaslik, kodni o'qiyotgan dasturchiga qiyinchilik tug'diradi. O'zgaruvchilarni izlashga qulay qilib nomlang.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -123,7 +120,7 @@ declare(strict_types=1);
 $result = $serializer->serialize($data, 448);
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -131,29 +128,29 @@ declare(strict_types=1);
 $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
 
-### Use searchable names (part 2)
+### Izlashga qulay bo'lgan nomlardan foydalaning (2-qism)
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
 
 class User
 {
-    // What the heck is 7 for?
+    // 7 nimani anglatadi ?
     public $access = 7;
 }
 
-// What the heck is 4 for?
+// 4 nimani anglatadi?
 if ($user->access & 4) {
     // ...
 }
 
-// What's going on here?
+// By yerda qanday mantiq ketayorgani vaqti kelib o'zingizni ham yodingizdan ko'tariladi
 $user->access ^= 2;
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -168,23 +165,23 @@ class User
 
     public const ACCESS_DELETE = 8;
 
-    // User as default can read, create and update something
+    // Bu yerda esa hammasi tushunarli. Boshlang'ich holatda foydalanuvchi o'qishi, tahrirlashi yoki yaratishi mumkin
     public $access = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_UPDATE;
 }
 
 if ($user->access & User::ACCESS_UPDATE) {
-    // do edit ...
+    // tahrirlash ...
 }
 
-// Deny access rights to create something
+// Nimadir yaratishga bo'lgan huquqni cheklash
 $user->access ^= User::ACCESS_CREATE;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Use explanatory variables
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -211,7 +208,7 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($city, $zipCode);
 ```
 
-**Good:**
+**Yaxshi:**
 
 Decrease dependence on regex by naming subpatterns.
 
@@ -225,14 +222,14 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid nesting too deeply and return early (part 1)
 
 Too many if-else statements can make your code hard to follow. Explicit is better
 than implicit.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -257,7 +254,7 @@ function isShopOpen($day): bool
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -274,11 +271,11 @@ function isShopOpen(string $day): bool
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid nesting too deeply and return early (part 2)
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -298,7 +295,7 @@ function fibonacci(int $n)
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -317,14 +314,14 @@ function fibonacci(int $n): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid Mental Mapping
 
 Don’t force the reader of your code to translate what the variable means.
 Explicit is better than implicit.
 
-**Bad:**
+**Yomon:**
 
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
@@ -341,7 +338,7 @@ for ($i = 0; $i < count($l); $i++) {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -358,14 +355,14 @@ foreach ($locations as $location) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Don't add unneeded context
 
 If your class/object name tells you something, don't repeat that in your
 variable name.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -382,7 +379,7 @@ class Car
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -399,7 +396,7 @@ class Car
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Use default arguments instead of short circuiting or conditionals
 
@@ -426,7 +423,7 @@ function createMicrobrewery($name = null): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
 
@@ -437,7 +434,7 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ## Comparison
 
@@ -461,7 +458,7 @@ if ($a != $b) {
 The comparison `$a != $b` returns `FALSE` but in fact it's `TRUE`!
 The string `42` is different than the integer `42`.
 
-**Good:**
+**Yaxshi:**
 
 The identical comparison will compare type and value.
 
@@ -478,13 +475,13 @@ if ($a !== $b) {
 
 The comparison `$a !== $b` returns `TRUE`.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Null coalescing operator
 
 Null coalescing is a new operator [introduced in PHP 7](https://www.php.net/manual/en/migration70.new-features.php). The null coalescing operator `??` has been added as syntactic sugar for the common case of needing to use a ternary in conjunction with `isset()`. It returns its first operand if it exists and is not `null`; otherwise it returns its second operand.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -498,7 +495,7 @@ if (isset($_GET['name'])) {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -506,7 +503,7 @@ declare(strict_types=1);
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ## Functions
 
@@ -521,7 +518,7 @@ Anything more than that should be consolidated. Usually, if you have more than t
 arguments then your function is trying to do too much. In cases where it's not, most
 of the time a higher-level object will suffice as an argument.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -543,7 +540,7 @@ class Questionnaire
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -608,11 +605,11 @@ class Questionnaire
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Function names should say what they do
 
-**Bad:**
+**Yomon:**
 
 ```php
 class Email
@@ -630,7 +627,7 @@ $message = new Email(...);
 $message->handle();
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class Email
@@ -648,7 +645,7 @@ $message = new Email(...);
 $message->send();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Functions should only be one level of abstraction
 
@@ -656,7 +653,7 @@ When you have more than one level of abstraction your function is usually
 doing too much. Splitting up functions leads to reusability and easier
 testing.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -728,7 +725,7 @@ function parseBetterPHPAlternative(string $code): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 The best solution is move out the dependencies of `parseBetterPHPAlternative()` function.
 
@@ -788,7 +785,7 @@ class BetterPHPAlternative
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Don't use flags as function parameters
 
@@ -796,7 +793,7 @@ Flags tell your user that this function does more than one thing. Functions shou
 do one thing. Split out your functions if they are following different code paths
 based on a boolean.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -811,7 +808,7 @@ function createFile(string $name, bool $temp = false): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -827,7 +824,7 @@ function createTempFile(string $name): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid Side Effects
 
@@ -845,7 +842,7 @@ any structure, using mutable data types that can be written to by anything, and 
 centralizing where your side effects occur. If you can do this, you will be happier
 than the vast majority of other programmers.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -867,7 +864,7 @@ var_dump($name);
 // ['Ryan', 'McDermott'];
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -887,7 +884,7 @@ var_dump($newName);
 // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Don't write to global functions
 
@@ -897,7 +894,7 @@ production. Let's think about an example: what if you wanted to have configurati
 You could write global function like `config()`, but it could clash with another library
 that tried to do the same thing.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -910,7 +907,7 @@ function config(): array
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -944,7 +941,7 @@ $configuration = new Configuration([
 
 And now you must use instance of `Configuration` in your application.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Don't use a Singleton pattern
 
@@ -957,7 +954,7 @@ Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
 
 There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -986,7 +983,7 @@ class DBConnection
 $singleton = DBConnection::getInstance();
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1012,11 +1009,11 @@ $connection = new DBConnection($dsn);
 
 And now you must use instance of `DBConnection` in your application.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Encapsulate conditionals
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1026,7 +1023,7 @@ if ($article->state === 'published') {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1036,11 +1033,11 @@ if ($article->isPublished()) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid negative conditionals
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1055,7 +1052,7 @@ if (! isDOMNodeNotPresent($node)) {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1070,7 +1067,7 @@ if (isDOMNodePresent($node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid conditionals
 
@@ -1083,7 +1080,7 @@ one thing. When you have classes and functions that have `if` statements, you
 are telling your user that your function does more than one thing. Remember,
 just do one thing.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1106,7 +1103,7 @@ class Airplane
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1149,7 +1146,7 @@ class Cessna implements Airplane
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid type-checking (part 1)
 
@@ -1158,7 +1155,7 @@ Sometimes you are bitten by this freedom and it becomes tempting to do
 type-checking in your functions. There are many ways to avoid having to do this.
 The first thing to consider is consistent APIs.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1173,7 +1170,7 @@ function travelToTexas($vehicle): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1184,7 +1181,7 @@ function travelToTexas(Vehicle $vehicle): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid type-checking (part 2)
 
@@ -1198,7 +1195,7 @@ extra verbiage that the faux "type-safety" you get doesn't make up for the lost
 readability. Keep your PHP clean, write good tests, and have good code reviews.
 Otherwise, do all of that but with PHP strict type declaration or strict mode.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1213,7 +1210,7 @@ function combine($val1, $val2): int
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1224,7 +1221,7 @@ function combine(int $val1, int $val2): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Remove dead code
 
@@ -1232,7 +1229,7 @@ Dead code is just as bad as duplicate code. There's no reason to keep it in
 your codebase. If it's not being called, get rid of it! It will still be safe
 in your version history if you still need it.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1251,7 +1248,7 @@ $request = newRequestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1265,7 +1262,7 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ## Objects and Data Structures
 
@@ -1285,7 +1282,7 @@ Using it, you can control properties modification on an object.
 
 Additionally, this is part of [Open/Closed](#openclosed-principle-ocp) principle.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1301,7 +1298,7 @@ $bankAccount = new BankAccount();
 $bankAccount->balance -= 100;
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class BankAccount
@@ -1342,7 +1339,7 @@ $bankAccount->withdraw($shoesPrice);
 $balance = $bankAccount->getBalance();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Make objects have private/protected members
 
@@ -1354,7 +1351,7 @@ Therefore, use `private` by default and `public/protected` when you need to prov
 
 For more informations you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1374,7 +1371,7 @@ $employee = new Employee('John Doe');
 echo 'Employee name: ' . $employee->name;
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1399,7 +1396,7 @@ $employee = new Employee('John Doe');
 echo 'Employee name: ' . $employee->getName();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ## Classes
 
@@ -1422,7 +1419,7 @@ makes more sense than composition:
 3. You want to make global changes to derived classes by changing a base class.
    (Change the caloric expenditure of all animals when they move).
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1463,7 +1460,7 @@ class EmployeeTaxData extends Employee
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1506,7 +1503,7 @@ class Employee
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Avoid fluent interfaces
 
@@ -1527,7 +1524,7 @@ more often it comes at some costs:
 For more informations you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
 on this topic written by [Marco Pivetta](https://github.com/Ocramius).
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1577,7 +1574,7 @@ $car = (new Car())
     ->dump();
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1618,7 +1615,7 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Prefer final classes
 
@@ -1634,7 +1631,7 @@ The only condition is that your class should implement an interface and no other
 
 For more informations you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1658,7 +1655,7 @@ final class Car
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1687,7 +1684,7 @@ final class Car implements Vehicle
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ## SOLID
 
@@ -1710,7 +1707,7 @@ It's important because if too much functionality is in one class and you modify 
 it can be difficult to understand how that will affect other dependent modules in
 your codebase.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1738,7 +1735,7 @@ class UserSettings
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1779,7 +1776,7 @@ class UserSettings
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Open/Closed Principle (OCP)
 
@@ -1788,7 +1785,7 @@ etc.) should be open for extension, but closed for modification." What does that
 mean though? This principle basically states that you should allow users to
 add new functionalities without changing existing code.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1855,7 +1852,7 @@ class HttpRequester
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -1897,7 +1894,7 @@ class HttpRequester
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Liskov Substitution Principle (LSP)
 
@@ -1914,7 +1911,7 @@ classic Square-Rectangle example. Mathematically, a square is a rectangle, but
 if you model it using the "is-a" relationship via inheritance, you quickly
 get into trouble.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -1970,7 +1967,7 @@ foreach ($rectangles as $rectangle) {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
 
@@ -2028,7 +2025,7 @@ foreach ($shapes as $shape) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Interface Segregation Principle (ISP)
 
@@ -2040,7 +2037,7 @@ classes that require large settings objects. Not requiring clients to set up
 huge amounts of options is beneficial, because most of the time they won't need
 all of the settings. Making them optional helps prevent having a "fat interface".
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -2079,7 +2076,7 @@ class RobotEmployee implements Employee
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 Not every worker is an employee, but every employee is a worker.
 
@@ -2123,7 +2120,7 @@ class RobotEmployee implements Workable
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ### Dependency Inversion Principle (DIP)
 
@@ -2141,7 +2138,7 @@ It can accomplish this through DI. A huge benefit of this is that it reduces
 the coupling between modules. Coupling is a very bad development pattern because
 it makes your code hard to refactor.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -2178,7 +2175,7 @@ class Manager
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -2220,7 +2217,7 @@ class Manager
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ## Don’t repeat yourself (DRY)
 
@@ -2247,7 +2244,7 @@ worse than duplicate code, so be careful! Having said this, if you can make
 a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
 updating multiple places any time you want to change one thing.
 
-**Bad:**
+**Yomon:**
 
 ```php
 declare(strict_types=1);
@@ -2277,7 +2274,7 @@ function showManagerList(array $managers): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 declare(strict_types=1);
@@ -2310,7 +2307,7 @@ function showList(array $employees): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
 
 ## Translations
 
@@ -2336,4 +2333,4 @@ This is also available in other languages:
 - :tr: **Turkish:**
   - [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ boshiga qaytish](#mundarija)**
