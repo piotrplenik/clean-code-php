@@ -14,9 +14,9 @@
    - [O'zgaruvchilarni nomlashda Aqliy Xaritalamang](#ozgaruvchilarni-nomlashda-aqliy-xaritalamang)
    - [Keraksiz kontekst qo'shmang](#keraksiz-kontekst-qoshmang)
    - [Qisqa formalar yoki shartlar o'rniga standart argumentlardan foydalaning](#qisqa-formalar-yoki-shartlar-orniga-standart-argumentlardan-foydalaning)
-3. [Comparison](#comparison)
-   - [Use identical comparison](#use-identical-comparison)
-   - [Null coalescing operator](#null-coalescing-operator)
+3. [Taqqsolash](#taqqoslash)
+   - [Toifa bilan taqqoslash'dan foydalaning](#toifa-bilan-taqqoslashdan-foydalaning)
+   - [Null birlashma operatori](#null-birlashma-operatori)
 4. [Functions](#functions)
    - [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
    - [Function names should say what they do](#function-names-should-say-what-they-do)
@@ -433,13 +433,13 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-## Comparison
+## Taqqoslash
 
-### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
+### [Toifa bilan taqqoslash](http://php.net/manual/en/language.operators.comparison.php)dan foydalaning
 
-**Not good:**
+**Yaxshi emas:**
 
-The simple comparison will convert the string in an integer.
+Oddiy taqqoslash satrni butun songa aylantiradi.
 
 ```php
 declare(strict_types=1);
@@ -448,16 +448,15 @@ $a = '42';
 $b = 42;
 
 if ($a != $b) {
-    // The expression will always pass
+    // Ifoda bajarilmaydi
 }
 ```
 
-The comparison `$a != $b` returns `FALSE` but in fact it's `TRUE`!
-The string `42` is different than the integer `42`.
+`$a != $b` ifodasi `FALSE` (yolg'on) qiymat qaytaradi, aslide esa `TRUE` (rost) qaytarishi kerak. Chunki, satr toifasidagi `42` butun toifadagi `42` dan farq qiladi.
 
 **Yaxshi:**
 
-The identical comparison will compare type and value.
+Toifa bilan taqqoslaganda o'zgaruvchilarning qiymati bilan birgalikda toifasi ham solishtiriladi.
 
 ```php
 declare(strict_types=1);
@@ -466,17 +465,17 @@ $a = '42';
 $b = 42;
 
 if ($a !== $b) {
-    // The expression is verified
+    // Ifoda bajariladi
 }
 ```
 
-The comparison `$a !== $b` returns `TRUE`.
+`$a !== $b` taqqosi `TRUE` (rost) qiymat qaytaradi.
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-### Null coalescing operator
+### Null birlashma operatori
 
-Null coalescing is a new operator [introduced in PHP 7](https://www.php.net/manual/en/migration70.new-features.php). The null coalescing operator `??` has been added as syntactic sugar for the common case of needing to use a ternary in conjunction with `isset()`. It returns its first operand if it exists and is not `null`; otherwise it returns its second operand.
+Null birlashma operatori [PHP 7](https://www.php.net/manual/en/migration70.new-features.php) versiyadan boshlab joriy qilingan yangi operator hisoblanadi. Bu operator ternar `isset ()` bilan birgalikda ishlatish kerak bo'lgan oddiy holat uchun sintaktik qisqartma sifatida qo'shilgan. Bu operator dastlabki operanda mavjud bo'lsa va u `null` ga teng bo'lmasa shu operandani qaytaradi, aks holda keyingi operandani qaytaradi;
 
 **Yomon:**
 
