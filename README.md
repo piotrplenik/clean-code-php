@@ -2333,5 +2333,7 @@ This is also available in other languages:
    * [yujineeee/clean-code-php](https://github.com/yujineeee/clean-code-php)
 * :tr: **Turkish:**
    * [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
+* :iran: **Persian:**
+     * [amirshnll/clean-code-php](https://github.com/amirshnll/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
