@@ -17,8 +17,8 @@
 3. [Taqqsolash](#taqqoslash)
    - [Toifa bilan taqqoslash'dan foydalaning](#toifa-bilan-taqqoslashdan-foydalaning)
    - [Null birlashma operatori](#null-birlashma-operatori)
-4. [Functions](#functions)
-   - [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
+4. [Funksiyalar](#funksiyalar)
+   - [Funksiya argumentlari (2 yoki kamrog'i ideal)](#funksiya-argumentlari-2-yoki-kamrogi-ideal)
    - [Function names should say what they do](#function-names-should-say-what-they-do)
    - [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
    - [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
@@ -501,18 +501,13 @@ $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-## Functions
+## Funksiyalar
 
-### Function arguments (2 or fewer ideally)
+### Funksiya argumentlari (2 yoki kamrog'i ideal)
 
-Limiting the amount of function parameters is incredibly important because it makes
-testing your function easier. Having more than three leads to a combinatorial explosion
-where you have to test tons of different cases with each separate argument.
+Funksiya qabul qiluvchi parametrlarini cheklash juda muhimdir, chunki bu testlash jarayonini osonlashtiradi. Uchtadan ortiq parametrlarni qabul qilish har bir holatni testlayotgan paytingizda ko'plab qiyinchiliklarni yuzaga keltiradi.
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided.
-Anything more than that should be consolidated. Usually, if you have more than two
-arguments then your function is trying to do too much. In cases where it's not, most
-of the time a higher-level object will suffice as an argument.
+Argumentsiz funksiyalar bu ideal holatdir. Bir yoki ikkita argument qabul qilish yaxshi, uchtadan esa qochgan ma'qul. Bundan boshqa holatlarda esa imkon qadar birlashtirish kerak. Odatda, agar sizda 2 tadan ortiq argument bo'lsa u holda sizning funksiyangiz juda ko'p amalni bajarishga harakat qiladi. Bunday bo'lmagan hollarda esa argumentlarni obyektlarga joylashtiring.
 
 **Yomon:**
 
