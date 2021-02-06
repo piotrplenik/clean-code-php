@@ -19,8 +19,8 @@
    - [Null birlashma operatori](#null-birlashma-operatori)
 4. [Funksiyalar](#funksiyalar)
    - [Funksiya argumentlari (2 yoki kamrog'i ideal)](#funksiya-argumentlari-2-yoki-kamrogi-ideal)
-   - [Function names should say what they do](#function-names-should-say-what-they-do)
-   - [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
+   - [Funksiya nomlari qanday amal bajarilayotganini aytishlari kerak](#funksiya-nomlari-qanday-amal-bajarilayotganini-aytishlari-kerak)
+   - [Funksiyalar bir darajada abstrakt bo'lishi kerak](#funksiyalar-bir-darajada-abstrakt-bo'lishi-kerak)
    - [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
    - [Avoid Side Effects](#avoid-side-effects)
    - [Don't write to global functions](#dont-write-to-global-functions)
@@ -598,7 +598,7 @@ class Questionnaire
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-### Function names should say what they do
+### Funksiya nomlari qanday amal bajarilayotganini aytishlari kerak
 
 **Yomon:**
 
@@ -614,7 +614,7 @@ class Email
 }
 
 $message = new Email(...);
-// What is this? A handle for the message? Are we writing to a file now?
+// Nima bu ? Hozir biz faylga yozayapmizmi ?
 $message->handle();
 ```
 
@@ -632,17 +632,15 @@ class Email
 }
 
 $message = new Email(...);
-// Clear and obvious
+// Tushunarli va aniq
 $message->send();
 ```
 
 **[⬆ boshiga qaytish](#mundarija)**
 
-### Functions should only be one level of abstraction
+### Funksiyalar bir darajada abstrakt bo'lishi kerak
 
-When you have more than one level of abstraction your function is usually
-doing too much. Splitting up functions leads to reusability and easier
-testing.
+Sizda bir darajadan ortiq abstraktsiya bo'lganida funksiyangiz odatada ko'p ishlaydi. Funksiyalarni ajratish qayta foydalanuvchanlikni yaxshilaydi va testlashni osonlashtiradi.
 
 **Yomon:**
 
@@ -674,9 +672,9 @@ function parseBetterPHPAlternative(string $code): void
 }
 ```
 
-**Bad too:**
+**Yaxshi emas:**
 
-We have carried out some of the functionality, but the `parseBetterPHPAlternative()` function is still very complex and not testable.
+Biz biroz funksionnalikni amalga oshirdik, lekin `parseBetterPHPAlternative()` funksiyasi haliham testlab bo'lmaydigan darajada juda murakkab.
 
 ```php
 function tokenize(string $code): array
@@ -718,7 +716,7 @@ function parseBetterPHPAlternative(string $code): void
 
 **Yaxshi:**
 
-The best solution is move out the dependencies of `parseBetterPHPAlternative()` function.
+Eng yaxshi yechim bu `parseBetterPHPAlternative()` funksiyasini bog'liqligini ko'chirish.
 
 ```php
 class Tokenizer
