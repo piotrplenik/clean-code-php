@@ -20,7 +20,7 @@
 4. [Funksiyalar](#funksiyalar)
    - [Funksiya argumentlari (2 yoki kamrog'i ideal)](#funksiya-argumentlari-2-yoki-kamrogi-ideal)
    - [Funksiya nomlari qanday amal bajarilayotganini aytishlari kerak](#funksiya-nomlari-qanday-amal-bajarilayotganini-aytishlari-kerak)
-   - [Funksiyalar bir darajada abstrakt bo'lishi kerak](#funksiyalar-bir-darajada-abstrakt-bo'lishi-kerak)
+   - [Funksiyalar bir darajada abstrakt bo'lishi kerak](#funksiyalar-bir-darajada-abstrakt-bolishi-kerak)
    - [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
    - [Avoid Side Effects](#avoid-side-effects)
    - [Don't write to global functions](#dont-write-to-global-functions)
