@@ -1511,8 +1511,7 @@ $car->dump();
 
 **[⬆ back to top](#table-of-contents)**
 
-### Prefer 
-classes
+### Prefer final classes
 
 The `final` should be used whenever possible:
 
