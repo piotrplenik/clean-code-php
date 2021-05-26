@@ -1255,7 +1255,7 @@ $balance = $bankAccount->getBalance();
 
 Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
 
-For more informations you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
+For more information you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
 
 **Bad:**
 
@@ -1419,7 +1419,7 @@ more often it comes at some costs:
 3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite.
 4. Makes diffs of commits harder to read.
 
-For more informations you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
+For more information you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
 on this topic written by [Marco Pivetta](https://github.com/Ocramius).
 
 **Bad:**
@@ -1513,13 +1513,13 @@ $car->dump();
 
 ### Prefer final classes
 
-The `final` should be used whenever possible:
+The `final` keyword should be used whenever possible:
 
-1. It prevents uncontrolled inheritance chain.
+1. It prevents an uncontrolled inheritance chain.
 2. It encourages [composition](#prefer-composition-over-inheritance).
-3. It encourages the [Single Responsibility Principle](#single-responsibility-principle-srp).
-4. It encourages developers to use your public methods instead of extending the class to get access on protected ones.
-5. It allows you to change your code without any break of applications that use your class.
+3. It encourages the [Single Responsibility Pattern](#single-responsibility-principle-srp).
+4. It encourages developers to use your public methods instead of extending the class to get access to protected ones.
+5. It allows you to change your code without breaking applications that use your class.
 
 The only condition is that your class should implement an interface and no other public methods are defined.
 
@@ -1852,7 +1852,7 @@ foreach ($rectangles as $rectangle) {
 The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
 
 Despite the apparent similarity of the square and the rectangle, they are different.
-A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
+A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtypes.
 A square, a rectangle, a rhombus and a parallelogram are separate shapes with their own properties, albeit similar.
 
 ```php
