@@ -2,6 +2,7 @@ name: Coding Standard
 
 on:
     pull_request: null
+    push: null
 
 jobs:
     coding_standard:
