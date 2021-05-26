@@ -13,11 +13,11 @@
      * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
   3. [Comparison](#comparison)
      * [Use identical comparison](#use-identical-comparison)
      * [Null coalescing operator](#null-coalescing-operator)
   4. [Functions](#functions)
+     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
      * [Function names should say what they do](#function-names-should-say-what-they-do)
      * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
@@ -365,44 +365,6 @@ class Car
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use default arguments instead of short circuiting or conditionals
-
-**Not good:**
-
-This is not good because `$breweryName` can be `NULL`.
-
-```php
-function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
-{
-    // ...
-}
-```
-
-**Not bad:**
-
-This opinion is more understandable than the previous version, but it better controls the value of the variable.
-
-```php
-function createMicrobrewery($name = null): void
-{
-    $breweryName = $name ?: 'Hipster Brew Co.';
-    // ...
-}
-```
-
-**Good:**
-
- You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
-
-```php
-function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
-{
-    // ...
-}
-```
-
-**[⬆ back to top](#table-of-contents)**
-
 ## Comparison
 
 ### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
@@ -464,6 +426,44 @@ $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 **[⬆ back to top](#table-of-contents)**
 
 ## Functions
+
+### Use default arguments instead of short circuiting or conditionals
+
+**Not good:**
+
+This is not good because `$breweryName` can be `NULL`.
+
+```php
+function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
+{
+    // ...
+}
+```
+
+**Not bad:**
+
+This opinion is more understandable than the previous version, but it better controls the value of the variable.
+
+```php
+function createMicrobrewery($name = null): void
+{
+    $breweryName = $name ?: 'Hipster Brew Co.';
+    // ...
+}
+```
+
+**Good:**
+
+ You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+
+```php
+function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
+{
+    // ...
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 ### Function arguments (2 or fewer ideally)
 
