@@ -1517,7 +1517,7 @@ The `final` should be used whenever possible:
 
 1. It prevents uncontrolled inheritance chain.
 2. It encourages [composition](#prefer-composition-over-inheritance).
-3. It encourages the [Single Responsibility Pattern](#single-responsibility-principle-srp).
+3. It encourages the [Single Responsibility Principle](#single-responsibility-principle-srp).
 4. It encourages developers to use your public methods instead of extending the class to get access on protected ones.
 5. It allows you to change your code without any break of applications that use your class.
 
