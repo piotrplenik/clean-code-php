@@ -2198,6 +2198,8 @@ This is also available in other languages:
 * :tr: **Turkish:**
    * [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
 * :iran: **Persian:**
-     * [amirshnll/clean-code-php](https://github.com/amirshnll/clean-code-php)
+   * [amirshnll/clean-code-php](https://github.com/amirshnll/clean-code-php)
+* :bangladesh: **Bangla:**
+   * [nayeemdev/clean-code-php](https://github.com/nayeemdev/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
