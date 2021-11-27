@@ -2201,5 +2201,7 @@ This is also available in other languages:
    * [amirshnll/clean-code-php](https://github.com/amirshnll/clean-code-php)
 * :bangladesh: **Bangla:**
    * [nayeemdev/clean-code-php](https://github.com/nayeemdev/clean-code-php)
+* :egypt: **Arabic:**
+   * [ahmedjoda/clean-code-php](https://github.com/ahmedjoda/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
