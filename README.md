@@ -2203,5 +2203,7 @@ This is also available in other languages:
    * [nayeemdev/clean-code-php](https://github.com/nayeemdev/clean-code-php)
 * :egypt: **Arabic:**
    * [ahmedjoda/clean-code-php](https://github.com/ahmedjoda/clean-code-php)
+* :jp: **Japanese:**
+   * [hayato07/clean-code-php](https://github.com/hayato07/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
