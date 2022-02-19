@@ -1,88 +1,88 @@
-# Clean Code PHP
+# Clean Code PHP - uz
 
 ## Table of Contents
 
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-     * [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
-     * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
-     * [Use searchable names (part 1)](#use-searchable-names-part-1)
-     * [Use searchable names (part 2)](#use-searchable-names-part-2)
-     * [Use explanatory variables](#use-explanatory-variables)
-     * [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
-     * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
-     * [Avoid Mental Mapping](#avoid-mental-mapping)
-     * [Don't add unneeded context](#dont-add-unneeded-context)
-  3. [Comparison](#comparison)
-     * [Use identical comparison](#use-identical-comparison)
-     * [Null coalescing operator](#null-coalescing-operator)
-  4. [Functions](#functions)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-     * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
-     * [Function names should say what they do](#function-names-should-say-what-they-do)
-     * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
-     * [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
-     * [Avoid Side Effects](#avoid-side-effects)
-     * [Don't write to global functions](#dont-write-to-global-functions)
-     * [Don't use a Singleton pattern](#dont-use-a-singleton-pattern)
-     * [Encapsulate conditionals](#encapsulate-conditionals)
-     * [Avoid negative conditionals](#avoid-negative-conditionals)
-     * [Avoid conditionals](#avoid-conditionals)
-     * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
-     * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
-     * [Remove dead code](#remove-dead-code)
-  5. [Objects and Data Structures](#objects-and-data-structures)
-     * [Use object encapsulation](#use-object-encapsulation)
-     * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  6. [Classes](#classes)
-     * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
-     * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-     * [Prefer final classes](#prefer-final-classes)
+  1. [Kirish](#introduction)
+  2. [Oʻzgaruvchilar](#variables)
+     * [Ma'noli va talaffuz qilinadigan o'zgaruvchilar nomlaridan foydalaning](#use-meaningful-and-pronounceable-variable-names)
+     * [Xuddi shu turdagi o'zgaruvchilar uchun bir xil lug'atdan foydalaning](#use-the-same-vocabulary-for-the-same-type-of-variable)
+     * [Qidiriladigan nomlardan foydalaning (1-qism)](#use-searchable-names-part-1)
+     * [Qidiriladigan nomlardan foydalaning (2-qism)](#use-searchable-names-part-2)
+     * [Tushuntiruvchi o'zgaruvchilardan foydalaning](#use-explanatory-variables)
+     * [Juda chuqur joylashdan saqlaning va erta qayting (1-qism)](#avoid-nesting-too-deeply-and-return-early-part-1)
+     * [Juda chuqur joylashdan saqlaning va erta qayting (2-qism)](#avoid-nesting-too-deeply-and-return-early-part-2)
+     * [Ruhiy xaritalashdan saqlaning](#avoid-mental-mapping)
+     * [Keraksiz kontekstni qo'shmang](#dont-add-unneeded-context)
+  3. [Taqqoslash](#comparison)
+     * [Bir xil taqqoslashdan foydalaning](#use-identical-comparison)
+     * [Null birlashtiruvchi operator](#null-coalescing-operator)
+  4. [Funksiyalar](#functions)
+     * [Qisqa tutashuv yoki shartli shartlar o'rniga standart argumentlardan foydalaning](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
+     * [Funktsiya argumentlari (ideal holda 2 yoki undan kam)](#function-arguments-2-or-fewer-ideally)
+     * [Funktsiya nomlari nima qilishlarini ko'rsatishi kerak](#function-names-should-say-what-they-do)
+     * [Funktsiyalar faqat mavhumlikning bir darajasi bo'lishi kerak](#functions-should-only-be-one-level-of-abstraction)
+     * [Bayroqlarni funktsiya parametrlari sifatida ishlatmang](#dont-use-flags-as-function-parameters)
+     * [Nojo'ya ta'sirlardan qoching](#avoid-side-effects)
+     * [Global funktsiyalarga yozmang](#dont-write-to-global-functions)
+     * [Singleton naqshini ishlatmang](#dont-use-a-singleton-pattern)
+     * [Shartli gaplarni inkapsulyatsiya qilish](#encapsulate-conditionals)
+     * [Salbiy shartlardan saqlaning](#avoid-negative-conditionals)
+     * [Shartli shartlardan saqlaning](#avoid-conditionals)
+     * [Turni tekshirishdan saqlaning (1-qism)](#avoid-type-checking-part-1)
+     * [Turni tekshirishdan saqlaning (2-qism)](#avoid-type-checking-part-2)
+     * [O'lik kodni olib tashlang](#remove-dead-code)
+  5. [Ob'ektlar va ma'lumotlar tuzilmalari](#objects-and-data-structures)
+     * [Ob'ektni inkapsulyatsiya qilishdan foydalaning](#use-object-encapsulation)
+     * [Ob'ektlarni shaxsiy/himoyalangan a'zolarga ega qiling](#make-objects-have-privateprotected-members)
+  6. [Sinflar](#classes)
+     * [Merosdan ko'ra kompozitsiyani afzal ko'ring](#prefer-composition-over-inheritance)
+     * [Ravon interfeyslardan saqlaning](#avoid-fluent-interfaces)
+     * [Yakuniy darslarni afzal ko'ring](#prefer-final-classes)
   7. [SOLID](#solid)
-     * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
-     * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
-     * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
-     * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
-     * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  9. [Translations](#translations)
+     * [Yagona javobgarlik printsipi (SRP)](#single-responsibility-principle-srp)
+     * [Ochiq/yopiq printsip (OCP)](#openclosed-principle-ocp)
+     * [Liskov almashtirish printsipi (LSP)](#liskov-substitution-principle-lsp)
+     * [Interfeysni ajratish printsipi (ISP)](#interface-segregation-principle-isp)
+     * [Bog'liqlik inversiyasi printsipi (DIP)](#dependency-inversion-principle-dip)
+  8. [O'zingizni takrorlamang (DRY)](#dont-repeat-yourself-dry)
+  9. [Tarjimalar](#translations)
 
 ## Introduction
 
-Software engineering principles, from Robert C. Martin's book
+Robert C. Martinning kitobidan dasturiy ta'minot muhandisligi tamoyillari
 [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for PHP. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in PHP.
+PHP uchun moslashtirilgan. Bu uslublar bo'yicha qo'llanma emas. Bu ishlab chiqarish uchun qo'llanma
+PHP da o'qilishi mumkin bo'lgan, qayta ishlatilishi mumkin bo'lgan va qayta tiklanadigan dasturiy ta'minot.
 
-Not every principle herein has to be strictly followed, and even fewer will be universally
-agreed upon. These are guidelines and nothing more, but they are ones codified over many
-years of collective experience by the authors of *Clean Code*.
+Bu erda har bir tamoyilga qat'iy rioya qilish shart emas, va undan ham ozrog'i universal bo'ladi
+kelishilgan. Bu ko'rsatmalar va boshqa hech narsa emas, lekin ular ko'pchilik uchun kodlangan
+*Clean Code* mualliflarining ko'p yillik jamoaviy tajribasi.
 
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+[clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)dan ilhomlangan.
 
-Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
+Garchi ko'pgina ishlab chiquvchilar hali ham PHP 5 dan foydalanishsa ham, ushbu maqoladagi misollarning aksariyati faqat PHP 7.1+ bilan ishlaydi.
 
-## Variables
+## o'zgaruvchilar
 
-### Use meaningful and pronounceable variable names
+### Ma'noli va talaffuz qilinadigan o'zgaruvchilar nomlaridan foydalaning
 
-**Bad:**
+**Yomon:**
 
 ```php
 $ymdstr = $moment->format('y-m-d');
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 $currentDate = $moment->format('y-m-d');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 ### Use the same vocabulary for the same type of variable
 
-**Bad:**
+**Yomon:**
 
 ```php
 getUserInfo();
@@ -91,29 +91,28 @@ getUserRecord();
 getUserProfile();
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 getUser();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Use searchable names (part 1)
+### Qidiriladigan nomlardan foydalaning (1-qism)
 
-We will read more code than we will ever write. It's important that the code we do write is
-readable and searchable. By *not* naming variables that end up being meaningful for
-understanding our program, we hurt our readers.
-Make your names searchable.
-
-**Bad:**
+Biz yozganimizdan ko'ra ko'proq kodni o'qiymiz. Muhimi, biz yozadigan kod
+o'qish va qidirish mumkin. Ma'noli bo'lgan o'zgaruvchilarni * nomlash orqali
+dasturimizni tushunib, biz o'quvchilarimizga zarar yetkazamiz.
+Ismlaringizni qidirish mumkin bo'lsin.
+**Yomon:**
 
 ```php
 // What the heck is 448 for?
 $result = $serializer->serialize($data, 448);
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
@@ -121,7 +120,7 @@ $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
 
 ### Use searchable names (part 2)
 
-**Bad:**
+**Yomon:**
 
 ```php
 class User
@@ -139,7 +138,7 @@ if ($user->access & 4) {
 $user->access ^= 2;
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class User
@@ -164,11 +163,11 @@ if ($user->access & User::ACCESS_UPDATE) {
 $user->access ^= User::ACCESS_CREATE;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 ### Use explanatory variables
 
-**Bad:**
+**Yomon:**
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -178,9 +177,9 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
-**Not bad:**
+**Yomon emas:**
 
-It's better, but we are still heavily dependent on regex.
+Bu yaxshiroq, lekin biz hali ham regexga juda bog'liqmiz.
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -191,26 +190,26 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($city, $zipCode);
 ```
 
-**Good:**
+**Yaxshi:**
 
-Decrease dependence on regex by naming subpatterns.
+Pastki naqshlarni nomlash orqali regexga bog'liqlikni kamaytiring.
 
 ```php
-$address = 'One Infinite Loop, Cupertino 95014';
+$address = 'Bitta cheksiz pastadir, Cupertino 95014';
 $cityZipCodeRegex = '/^[^,]+,\s*(?<city>.+?)\s*(?<zipCode>\d{5})$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Avoid nesting too deeply and return early (part 1)
+### Juda chuqur joylashdan saqlaning va erta qayting (1-qism)
 
-Too many if-else statements can make your code hard to follow. Explicit is better
-than implicit.
+Ko'p if-else iboralari kodingizga amal qilishni qiyinlashtirishi mumkin. Aniqroq
+yashirindan ko'ra.
 
-**Bad:**
+**Yomon:**
 
 ```php
 function isShopOpen($day): bool
@@ -233,7 +232,7 @@ function isShopOpen($day): bool
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function isShopOpen(string $day): bool
@@ -248,11 +247,11 @@ function isShopOpen(string $day): bool
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 ### Avoid nesting too deeply and return early (part 2)
 
-**Bad:**
+**Yomon:**
 
 ```php
 function fibonacci(int $n)
@@ -266,11 +265,11 @@ function fibonacci(int $n)
         }
         return 0;
     }
-    return 'Not supported';
+    return 'Qo\'llab-quvvatlanmaydi';
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function fibonacci(int $n): int
@@ -280,21 +279,21 @@ function fibonacci(int $n): int
     }
 
     if ($n >= 50) {
-        throw new Exception('Not supported');
+        throw new Exception('Qo\'llab-quvvatlanmaydi');
     }
 
     return fibonacci($n - 1) + fibonacci($n - 2);
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Avoid Mental Mapping
+### Ruhiy xaritalashdan saqlaning
 
-Don’t force the reader of your code to translate what the variable means.
-Explicit is better than implicit.
+Kod o'quvchini o'zgaruvchi nimani anglatishini tarjima qilishga majburlamang.
+Yopiqdan ko'ra ochiq-oydin.
 
-**Bad:**
+**Yomon:**
 
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
@@ -311,7 +310,7 @@ for ($i = 0; $i < count($l); $i++) {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 $locations = ['Austin', 'New York', 'San Francisco'];
@@ -326,14 +325,14 @@ foreach ($locations as $location) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Don't add unneeded context
+### Keraksiz kontekstni qo'shmang
 
-If your class/object name tells you something, don't repeat that in your
-variable name.
+Agar sizning sinfingiz/ob'ekt nomi sizga biror narsa aytsa, buni o'zingizning sinfingizda takrorlamang
+o'zgaruvchan nomi.
 
-**Bad:**
+**Yomon:**
 
 ```php
 class Car
@@ -348,7 +347,7 @@ class Car
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class Car
@@ -363,15 +362,14 @@ class Car
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
+## Taqqoslash
 
-## Comparison
+### [bir xil taqqoslash] (http://php.net/manual/en/language.operators.comparison.php)dan foydalaning
 
-### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
+**Yaxshi emas:**
 
-**Not good:**
-
-The simple comparison will convert the string in an integer.
+Oddiy taqqoslash qatorni butun songa aylantiradi.
 
 ```php
 $a = '42';
@@ -381,32 +379,31 @@ if ($a != $b) {
     // The expression will always pass
 }
 ```
+Taqqoslash `$a != $b` `FALSE`ni qaytaradi, lekin aslida bu `TRUE`!
+`42` qatori `42` butun sonidan farq qiladi.
 
-The comparison `$a != $b` returns `FALSE` but in fact it's `TRUE`!
-The string `42` is different than the integer `42`.
+**Yaxshi:**
 
-**Good:**
-
-The identical comparison will compare type and value.
+Xuddi shunday taqqoslash turi va qiymatini taqqoslaydi.
 
 ```php
 $a = '42';
 $b = 42;
 
 if ($a !== $b) {
-    // The expression is verified
+    // ifoda tasdiqlandi
 }
 ```
 
-The comparison `$a !== $b` returns `TRUE`.
+`$a !== $b` taqqoslash `TRUE`ni qaytaradi.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 ### Null coalescing operator
 
-Null coalescing is a new operator [introduced in PHP 7](https://www.php.net/manual/en/migration70.new-features.php). The null coalescing operator `??` has been added as syntactic sugar for the common case of needing to use a ternary in conjunction with `isset()`. It returns its first operand if it exists and is not `null`; otherwise it returns its second operand.
+Null coalescing - bu yangi operator [PHP 7 da kiritilgan](https://www.php.net/manual/en/migration70.new-features.php). Nol birlashtiruvchi operator `??` `isset()` bilan birgalikda uchlikdan foydalanish zarurati uchun sintaktik shakar sifatida qo`shilgan. Agar u mavjud bo'lsa va "null" bo'lmasa, u o'zining birinchi operandini qaytaradi; aks holda u ikkinchi operandni qaytaradi.
 
-**Bad:**
+**Yomon:**
 
 ```php
 if (isset($_GET['name'])) {
@@ -418,20 +415,20 @@ if (isset($_GET['name'])) {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 ```php
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-## Functions
+## Funktsiyalar
 
-### Use default arguments instead of short circuiting or conditionals
+### Qisqa tutashuv yoki shartli shartlar o'rniga standart argumentlardan foydalaning
 
-**Not good:**
+**Yaxshi emas:**
 
-This is not good because `$breweryName` can be `NULL`.
+Bu yaxshi emas, chunki `$breweryName` `NULL` bo`lishi mumkin.
 
 ```php
 function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
@@ -439,10 +436,9 @@ function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
     // ...
 }
 ```
+**Yomon emas:**
 
-**Not bad:**
-
-This opinion is more understandable than the previous version, but it better controls the value of the variable.
+Bu fikr oldingi versiyadan ko'ra tushunarli, ammo u o'zgaruvchining qiymatini yaxshiroq nazorat qiladi.
 
 ```php
 function createMicrobrewery($name = null): void
@@ -452,9 +448,11 @@ function createMicrobrewery($name = null): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
- You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+
+
+ Siz [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) dan foydalanishingiz mumkin va `$breweryName` `NULL` bo'lmasligiga ishonch hosil qilishingiz mumkin.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
@@ -463,20 +461,20 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Function arguments (2 or fewer ideally)
+### Funktsiya argumentlari (ideal holda 2 yoki undan kam)
 
-Limiting the amount of function parameters is incredibly important because it makes
-testing your function easier. Having more than three leads to a combinatorial explosion
-where you have to test tons of different cases with each separate argument.
+Funktsiya parametrlarining miqdorini cheklash juda muhim, chunki u qiladi
+funktsiyangizni sinab ko'rish osonroq. Uchdan ortiq bo'lsa, kombinat portlashiga olib keladi
+bu erda har bir alohida argument bilan tonnalab turli holatlarni sinab ko'rishingiz kerak.
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided.
-Anything more than that should be consolidated. Usually, if you have more than two
-arguments then your function is trying to do too much. In cases where it's not, most
-of the time a higher-level object will suffice as an argument.
+Nol argumentlar ideal holatdir. Bir yoki ikkita argument to'g'ri va uchtadan qochish kerak.
+Bundan ko'proq narsa birlashtirilishi kerak. Odatda, agar sizda ikkitadan ortiq bo'lsa
+argumentlar bo'lsa, sizning funktsiyangiz juda ko'p narsa qilishga harakat qilmoqda. Bunday bo'lmagan hollarda, ko'pchilik
+argument sifatida yuqori darajadagi ob'ekt etarli bo'ladi.
 
-**Bad:**
+**Yomon:**
 
 ```php
 class Questionnaire
@@ -496,7 +494,7 @@ class Questionnaire
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class Name
@@ -559,11 +557,11 @@ class Questionnaire
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 ### Function names should say what they do
 
-**Bad:**
+**Yomon:**
 
 ```php
 class Email
@@ -577,11 +575,11 @@ class Email
 }
 
 $message = new Email(...);
-// What is this? A handle for the message? Are we writing to a file now?
+// Bu nima? Xabar uchun tutqich? Endi biz faylga yozyapmizmi?
 $message->handle();
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class Email
@@ -595,19 +593,19 @@ class Email
 }
 
 $message = new Email(...);
-// Clear and obvious
+// Aniq va ravshan
 $message->send();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Functions should only be one level of abstraction
+### Funksiyalar faqat mavhumlikning bir darajasi bo'lishi kerak
 
-When you have more than one level of abstraction your function is usually
-doing too much. Splitting up functions leads to reusability and easier
-testing.
+Agar sizda bir nechta mavhumlik darajasi bo'lsa, sizning funksiyangiz odatda bo'ladi
+juda ko'p qilish. Funktsiyalarni bo'lish qayta foydalanishga va osonroq foydalanishga olib keladi
+sinovdan o'tkazish.
 
-**Bad:**
+**Yomon:**
 
 ```php
 function parseBetterPHPAlternative(string $code): void
@@ -635,9 +633,9 @@ function parseBetterPHPAlternative(string $code): void
 }
 ```
 
-**Bad too:**
+**Yomon ham:**
 
-We have carried out some of the functionality, but the `parseBetterPHPAlternative()` function is still very complex and not testable.
+Biz baʼzi funksiyalarni bajardik, biroq “parseBetterPHPAalternative()” funksiyasi hali ham juda murakkab va sinovdan oʻtkazilmaydi.
 
 ```php
 function tokenize(string $code): array
@@ -677,9 +675,9 @@ function parseBetterPHPAlternative(string $code): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
-The best solution is move out the dependencies of `parseBetterPHPAlternative()` function.
+Eng yaxshi yechim `parseBetterPHPAalternative()` funksiyasiga bog‘liqliklarni olib tashlashdir.
 
 ```php
 class Tokenizer
@@ -737,15 +735,15 @@ class BetterPHPAlternative
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Don't use flags as function parameters
+### Bayroqlarni funksiya parametrlari sifatida ishlatmang
 
-Flags tell your user that this function does more than one thing. Functions should
-do one thing. Split out your functions if they are following different code paths
-based on a boolean.
+Bayroqlar foydalanuvchiga bu funksiya bir nechta ishni bajarishini bildiradi. Funktsiyalar kerak
+bir narsa qiling. Funktsiyalaringizni turli kod yo'llari bo'yicha bo'lsa, ajrating
+booleanga asoslanadi.
 
-**Bad:**
+**Yomon:**
 
 ```php
 function createFile(string $name, bool $temp = false): void
@@ -758,7 +756,7 @@ function createFile(string $name, bool $temp = false): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function createFile(string $name): void
@@ -772,29 +770,30 @@ function createTempFile(string $name): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Avoid Side Effects
+### Nojo'ya ta'sirlardan saqlaning
 
-A function produces a side effect if it does anything other than take a value in and
-return another value or values. A side effect could be writing to a file, modifying
-some global variable, or accidentally wiring all your money to a stranger.
+Funksiya va ichida qiymat olishdan boshqa biror narsa qilsa, yon ta'sir hosil qiladi
+boshqa qiymat yoki qiymatlarni qaytaring. Yon ta'sir faylga yozish, o'zgartirish bo'lishi mumkin
+ba'zi global o'zgaruvchi, yoki tasodifan barcha pulingizni begonaga ulash.
 
-Now, you do need to have side effects in a program on occasion. Like the previous
-example, you might need to write to a file. What you want to do is to centralize where
-you are doing this. Don't have several functions and classes that write to a particular
-file. Have one service that does it. One and only one.
+Endi, vaqti-vaqti bilan dasturda nojo'ya ta'sirlarga ega bo'lishingiz kerak. Oldingi kabi
+masalan, faylga yozishingiz kerak bo'lishi mumkin. Siz nima qilmoqchi bo'lsangiz, qaerda markazlashtirish
+siz buni qilyapsiz. Muayyanga yozadigan bir nechta funksiya va sinflarga ega bo'lmang
+fayl. Buni amalga oshiradigan bitta xizmatga ega bo'ling. Bitta va yagona.
 
-The main point is to avoid common pitfalls like sharing state between objects without
-any structure, using mutable data types that can be written to by anything, and not
-centralizing where your side effects occur. If you can do this, you will be happier
-than the vast majority of other programmers.
+Asosiy nuqta, ob'ektlar orasidagi holatni almashish kabi umumiy tuzoqlardan qochishdir
+har qanday tuzilma, har qanday narsa tomonidan yozilishi mumkin bo'lgan o'zgaruvchan ma'lumotlar turlaridan foydalangan holda
+nojo'ya ta'sirlaringiz sodir bo'ladigan joyni markazlashtirish. Agar buni qila olsangiz, baxtliroq bo'lasiz
+boshqa dasturchilarning aksariyatiga qaraganda.
 
-**Bad:**
+**Yomon:**
 
 ```php
-// Global variable referenced by following function.
-// If we had another function that used this name, now it'd be an array and it could break it.
+// Global o'zgaruvchiga quyidagi funktsiya tomonidan havola qilingan.
+// Agar bizda bu nomdan foydalanadigan boshqa funksiya bo'lsa, endi u massiv bo'lardi va uni buzishi mumkin edi.
+
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName(): void
@@ -810,7 +809,7 @@ var_dump($name);
 // ['Ryan', 'McDermott'];
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function splitIntoFirstAndLastName(string $name): array
@@ -828,17 +827,16 @@ var_dump($newName);
 // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Don't write to global functions
+### Global funksiyalarga yozmang
 
-Polluting globals is a bad practice in many languages because you could clash with another
-library and the user of your API would be none-the-wiser until they get an exception in
-production. Let's think about an example: what if you wanted to have configuration array?
-You could write global function like `config()`, but it could clash with another library
-that tried to do the same thing.
-
-**Bad:**
+Globallarni ifloslantirish ko'p tillarda yomon amaliyotdir, chunki siz boshqa til bilan to'qnashishingiz mumkin
+kutubxona va sizning API foydalanuvchisi istisnoga duch kelmaguncha aqlli bo'lmaydi
+ishlab chiqarish. Keling, bir misol haqida o'ylab ko'raylik: agar siz konfiguratsiya qatoriga ega bo'lishni istasangiz nima bo'ladi?
+Siz `config()` kabi global funktsiyani yozishingiz mumkin, lekin u boshqa kutubxona bilan to'qnash kelishi mumkin
+xuddi shu narsani qilishga harakat qilgan.
+**Yomon:**
 
 ```php
 function config(): array
@@ -849,7 +847,7 @@ function config(): array
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class Configuration
@@ -869,7 +867,7 @@ class Configuration
 }
 ```
 
-Load configuration and create instance of `Configuration` class
+Konfiguratsiyani yuklang va "Configuration" klassining namunasini yarating
 
 ```php
 $configuration = new Configuration([
@@ -879,19 +877,19 @@ $configuration = new Configuration([
 
 And now you must use instance of `Configuration` in your application.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 ### Don't use a Singleton pattern
 
-Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern). Paraphrased from Brian Button:
- 1. They are generally used as a **global instance**, why is that so bad? Because **you hide the dependencies** of your application in your code, instead of exposing them through the interfaces. Making something global to avoid passing it around is a [code smell](https://en.wikipedia.org/wiki/Code_smell).
- 2. They violate the [single responsibility principle](#single-responsibility-principle-srp): by virtue of the fact that **they control their own creation and lifecycle**.
- 3. They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under **test rather difficult** in many cases.
- 4. They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent from the other.
+Singleton - bu [naqshga qarshi](https://en.wikipedia.org/wiki/Singleton_pattern). Brayan Buttondan tarjima qilingan:
+  1. Ular odatda **global misol** sifatida ishlatiladi, nega bu juda yomon? Chunki **siz ilovangizning bog'liqliklarini** interfeyslar orqali ochish o'rniga, kodingizda yashirasiz. Biror narsani o'tkazib yubormaslik uchun uni global qilish [kod hidi](https://en.wikipedia.org/wiki/Code_smell).
+ 2. Ular [yagona javobgarlik printsipini](#single-responsibility-principle-srp) buzadilar: **o'z yaratilishi va hayot aylanishini** o'zlari nazorat qilishlari sababli.
+ 3. Ular tabiatan kodni mahkam bog'lashga olib keladi [juft](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). Bu ko'p hollarda ularni **sinov ostida soxtalashtirishni qiyinlashtiradi**.
+  4. Ular ilovaning butun umri davomida holatni olib yuradi. Sinov uchun yana bir zarba, chunki **siz sinovlarga buyurtma berish kerak bo'lgan vaziyatga duch kelishingiz mumkin** bu birlik testlari uchun katta yo'q. Nega? Chunki har bir birlik testi boshqasidan mustaqil bo'lishi kerak.
 
-There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
+[Misko Hevery](http://misko.hevery.com/about/) tomonidan [muammoning ildizi](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/) haqida juda yaxshi fikrlar ham bor..
 
-**Bad:**
+**Yomon:**
 
 ```php
 class DBConnection
@@ -918,7 +916,7 @@ class DBConnection
 $singleton = DBConnection::getInstance();
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class DBConnection
@@ -932,19 +930,19 @@ class DBConnection
 }
 ```
 
-Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+`DBConnection` klassi namunasini yarating va uni [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters) bilan sozlang.
 
 ```php
 $connection = new DBConnection($dsn);
 ```
 
-And now you must use instance of `DBConnection` in your application.
+Endi siz ilovangizda `DBConnection` misolidan foydalanishingiz kerak.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Encapsulate conditionals
+### Shartli gaplarni inkapsulyatsiya qiling
 
-**Bad:**
+**Yomon:**
 
 ```php
 if ($article->state === 'published') {
@@ -952,7 +950,7 @@ if ($article->state === 'published') {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 if ($article->isPublished()) {
@@ -960,11 +958,11 @@ if ($article->isPublished()) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Avoid negative conditionals
+### Salbiy shartlardan saqlaning
 
-**Bad:**
+**Yomon:**
 
 ```php
 function isDOMNodeNotPresent(DOMNode $node): bool
@@ -977,7 +975,7 @@ if (! isDOMNodeNotPresent($node)) {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function isDOMNodePresent(DOMNode $node): bool
@@ -990,20 +988,21 @@ if (isDOMNodePresent($node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Avoid conditionals
+### Shartli so'zlardan saqlaning
 
-This seems like an impossible task. Upon first hearing this, most people say,
-"how am I supposed to do anything without an `if` statement?" The answer is that
-you can use polymorphism to achieve the same task in many cases. The second
-question is usually, "well that's great but why would I want to do that?" The
-answer is a previous clean code concept we learned: a function should only do
-one thing. When you have classes and functions that have `if` statements, you
-are telling your user that your function does more than one thing. Remember,
-just do one thing.
+Bu imkonsiz vazifaga o'xshaydi. Buni birinchi eshitgan ko'pchilik shunday deyishadi:
+"Qanday qilib men "if" iborasisiz biror narsa qilishim kerak?" Javob shunday
+ko'p hollarda bir xil vazifaga erishish uchun polimorfizmdan foydalanishingiz mumkin. Ikkinchisi
+Odatda savol: "Bu juda zo'r, lekin nega men buni qilishni xohlayman?" The
+javob - bu biz o'rgangan oldingi toza kod tushunchasi: funktsiya faqat bajarishi kerak
+bir narsa. Agar sizda "if" iboralari mavjud bo'lgan sinflar va funktsiyalar mavjud bo'lsa, siz
+foydalanuvchiga sizning funksiyangiz bir nechta narsani qilishini aytmoqda. Eslab qoling,
+faqat bitta narsani qiling.
 
-**Bad:**
+
+**Yomon:**
 
 ```php
 class Airplane
@@ -1024,7 +1023,7 @@ class Airplane
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 interface Airplane
@@ -1065,16 +1064,16 @@ class Cessna implements Airplane
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Avoid type-checking (part 1)
+### Turni tekshirishdan saqlaning (1-qism)
 
-PHP is untyped, which means your functions can take any type of argument.
-Sometimes you are bitten by this freedom and it becomes tempting to do
-type-checking in your functions. There are many ways to avoid having to do this.
-The first thing to consider is consistent APIs.
+PHP yozilmagan, bu sizning funksiyalaringiz har qanday turdagi argumentlarni qabul qilishi mumkinligini anglatadi.
+Ba'zida bu erkinlik sizni tishlab oladi va u qilish istagi paydo bo'ladi
+funksiyalaringizni turini tekshirish. Buni qilishdan qochishning ko'plab usullari mavjud.
+Ko'rib chiqilishi kerak bo'lgan birinchi narsa - izchil API.
 
-**Bad:**
+**Yomon:**
 
 ```php
 function travelToTexas($vehicle): void
@@ -1087,7 +1086,7 @@ function travelToTexas($vehicle): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function travelToTexas(Vehicle $vehicle): void
@@ -1096,21 +1095,20 @@ function travelToTexas(Vehicle $vehicle): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Avoid type-checking (part 2)
+### Turni tekshirishdan saqlaning (2-qism)
 
-If you are working with basic primitive values like strings, integers, and arrays,
-and you use PHP 7+ and you can't use polymorphism but you still feel the need to
-type-check, you should consider
+Agar siz satrlar, butun sonlar va massivlar kabi asosiy ibtidoiy qiymatlar bilan ishlayotgan bo'lsangiz,
+va siz PHP 7+ dan foydalanasiz va siz polimorfizmdan foydalana olmaysiz, lekin siz hali ham bunga ehtiyoj sezasiz turini tekshirish, siz o'ylab ko'rishingiz kerak
 [type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
-or strict mode. It provides you with static typing on top of standard PHP syntax.
-The problem with manually type-checking is that doing it will require so much
-extra verbiage that the faux "type-safety" you get doesn't make up for the lost
-readability. Keep your PHP clean, write good tests, and have good code reviews.
-Otherwise, do all of that but with PHP strict type declaration or strict mode.
+yoki qattiq rejim. U standart PHP sintaksisi ustiga statik yozishni ta'minlaydi.
+Turni qo'lda tekshirish bilan bog'liq muammo shundaki, uni bajarish juda ko'p narsani talab qiladi
+qo'shimcha so'zlar siz olgan soxta "turi-xavfsizlik" yo'qolgan o'rnini bosmaydi
+o'qish qobiliyati. PHP-ni toza tuting, yaxshi testlar yozing va yaxshi kod sharhlariga ega bo'ling.
+Aks holda, bularning barchasini PHP qattiq turdagi deklaratsiya yoki qat'iy rejim bilan bajaring.
 
-**Bad:**
+**Yomon:**
 
 ```php
 function combine($val1, $val2): int
@@ -1123,7 +1121,7 @@ function combine($val1, $val2): int
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function combine(int $val1, int $val2): int
@@ -1132,15 +1130,15 @@ function combine(int $val1, int $val2): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Remove dead code
+### O'lik kodni olib tashlang
 
-Dead code is just as bad as duplicate code. There's no reason to keep it in
-your codebase. If it's not being called, get rid of it! It will still be safe
-in your version history if you still need it.
+O'lik kod ikki nusxadagi kod kabi yomon. Uni saqlash uchun hech qanday sabab yo'q
+sizning kod bazangiz. Agar u chaqirilmasa, undan qutuling! Bu hali ham xavfsiz bo'ladi
+Agar sizga hali ham kerak bo'lsa, versiyalar tarixida.
 
-**Bad:**
+**Yomon:**
 
 ```php
 function oldRequestModule(string $url): void
@@ -1157,7 +1155,7 @@ $request = newRequestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function requestModule(string $url): void
@@ -1169,28 +1167,28 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 
-## Objects and Data Structures
+## Ob'ektlar va ma'lumotlar tuzilmalari
 
-### Use object encapsulation
+### Obyekt inkapsulyatsiyasidan foydalaning
 
-In PHP you can set `public`, `protected` and `private` keywords for methods.
-Using it, you can control properties modification on an object.
+PHPda usullar uchun `public`, `protected` va `private` kalit soʻzlarni oʻrnatishingiz mumkin.
+Undan foydalanib, siz ob'ektning xususiyatlarini o'zgartirishni boshqarishingiz mumkin.
 
-* When you want to do more beyond getting an object property, you don't have
-to look up and change every accessor in your codebase.
-* Makes adding validation simple when doing a `set`.
-* Encapsulates the internal representation.
-* Easy to add logging and error handling when getting and setting.
-* Inheriting this class, you can override default functionality.
-* You can lazy load your object's properties, let's say getting it from a
+* Ob'ekt xususiyatini olishdan tashqari ko'proq narsani qilishni xohlasangiz, sizda yo'q
+kod bazangizdagi har bir aksessuarni qidirish va o'zgartirish uchun.
+* “To‘plam”ni bajarishda tekshirishni qo‘shishni osonlashtiradi.
+* Ichki vakillikni qamrab oladi.
+* Qabul qilish va sozlashda jurnalni qo'shish va xatolarni boshqarish oson.
+* Ushbu sinfni meros qilib olgan holda siz standart funksiyani bekor qilishingiz mumkin.
+* Ob'ektingizning xususiyatlarini dangasa yuklashingiz mumkin, aytaylik, uni a dan oling
 server.
 
-Additionally, this is part of [Open/Closed](#openclosed-principle-ocp) principle.
+Bundan tashqari, bu [Open/Closed](#openclosed-principle-ocp) tamoyilining bir qismidir.
 
-**Bad:**
+**Yomon:**
 
 ```php
 class BankAccount
@@ -1204,7 +1202,7 @@ $bankAccount = new BankAccount();
 $bankAccount->balance -= 100;
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class BankAccount
@@ -1245,19 +1243,21 @@ $bankAccount->withdraw($shoesPrice);
 $balance = $bankAccount->getBalance();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 ### Make objects have private/protected members
 
-* `public` methods and properties are most dangerous for changes, because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of class.**
-* `protected` modifier are as dangerous as public, because they are available in scope of any child class. This effectively means that difference between public and protected is only in access mechanism, but encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
-* `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
+* `public` usullar va xususiyatlar o'zgarishlar uchun eng xavflidir, chunki ba'zi tashqi kodlar ularga osongina tayanishi mumkin va siz ularga qanday kod tayanishini nazorat qila olmaysiz. **Sinfdagi o‘zgartirishlar sinfning barcha foydalanuvchilari uchun xavflidir.**
+* `protected` modifikatorlar ommaviy kabi xavflidir, chunki ular har qanday bolalar sinfi doirasida mavjud. Bu shuni anglatadiki, ommaviy va himoyalangan o'rtasidagi farq faqat kirish mexanizmida, lekin inkapsulyatsiya kafolati bir xil bo'lib qoladi. **Sinfdagi o‘zgarishlar barcha avlod sinflari uchun xavflidir.**
+* `private` modifikator kodni **faqat bitta sinf chegaralarida o'zgartirish xavfli ekanligini kafolatlaydi** (siz o'zgartirishlar uchun xavfsizsiz va sizda [Jenga effekti](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196) bo'lmaydi).
 
-Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
+Shuning uchun, tashqi sinflarga kirishni ta'minlash uchun sukut bo'yicha `private` va `public/protected` dan foydalaning.
 
 For more information you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
 
-**Bad:**
+Qo'shimcha ma'lumot olish uchun siz [Fabien Potencier](https://github.com/fabpot) tomonidan yozilgan ushbu mavzu bo'yicha [blog postini](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) o'qishingiz mumkin .
+
+**Yomon:**
 
 ```php
 class Employee
@@ -1271,11 +1271,12 @@ class Employee
 }
 
 $employee = new Employee('John Doe');
-// Employee name: John Doe
+// Xodimning ismi: Jon Doe
+
 echo 'Employee name: ' . $employee->name;
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class Employee
@@ -1298,30 +1299,29 @@ $employee = new Employee('John Doe');
 echo 'Employee name: ' . $employee->getName();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-## Classes
+## Darslar
 
-### Prefer composition over inheritance
+### Merosdan ko'ra kompozitsiyani afzal ko'ring
 
-As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
-you should prefer composition over inheritance where you can. There are lots of
-good reasons to use inheritance and lots of good reasons to use composition.
-The main point for this maxim is that if your mind instinctively goes for
-inheritance, try to think if composition could model your problem better. In some
-cases it can.
+Gang of Four tomonidan [*Dizayn Naqshlari*](https://en.wikipedia.org/wiki/Design_Patterns) da mashhur bo'lganidek,
+iloji bo'lsa, merosdan ko'ra kompozitsiyani afzal ko'rishingiz kerak. Ko'p bor
+merosdan foydalanish uchun yaxshi sabablar va kompozitsiyadan foydalanish uchun juda ko'p yaxshi sabablar.
+Ushbu maksimning asosiy nuqtasi shundaki, agar sizning fikringiz instinktiv ravishda harakat qilsa
+meros, kompozitsiya muammoingizni yaxshiroq modellashtirishi mumkinmi, deb o'ylashga harakat qiling. Ba'zilarida
+mumkin bo'lgan hollarda.
 
-You might be wondering then, "when should I use inheritance?" It
-depends on your problem at hand, but this is a decent list of when inheritance
-makes more sense than composition:
+O'shanda siz "qachon merosdan foydalanishim kerak?" deb hayron bo'lishingiz mumkin. Bu
+Sizning muammoingizga bog'liq, ammo bu meros qachon bo'lganining munosib ro'yxati
+kompozitsiyadan ko'ra ko'proq ma'noga ega:
 
-1. Your inheritance represents an "is-a" relationship and not a "has-a"
-relationship (Human->Animal vs. User->UserDetails).
-2. You can reuse code from the base classes (Humans can move like all animals).
-3. You want to make global changes to derived classes by changing a base class.
-(Change the caloric expenditure of all animals when they move).
-
-**Bad:**
+1. Merosingiz "has-a" emas, balki "is-a" munosabatlarini ifodalaydi
+munosabatlari (Odam->Hayvon va boshqalar. Foydalanuvchi->UserDetails).
+2. Siz asosiy sinflardan kodni qayta ishlatishingiz mumkin (odamlar barcha hayvonlar kabi harakatlanishi mumkin).
+3. Asosiy sinfni o'zgartirish orqali olingan sinflarga global o'zgarishlar kiritmoqchisiz.
+(Hamma hayvonlar harakatlanayotganda kaloriya sarfini o'zgartiring).
+**Yomon:**
 
 ```php
 class Employee
@@ -1339,8 +1339,8 @@ class Employee
     // ...
 }
 
-// Bad because Employees "have" tax data.
-// EmployeeTaxData is not a type of Employee
+// Yomon, chunki xodimlar soliq ma'lumotlariga ega.
+// EmployeeTaxData xodimning bir turi emas
 
 class EmployeeTaxData extends Employee
 {
@@ -1360,7 +1360,7 @@ class EmployeeTaxData extends Employee
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class EmployeeTaxData
@@ -1401,28 +1401,28 @@ class Employee
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Avoid fluent interfaces
+### Ravon interfeyslardan saqlaning
 
-A [Fluent interface](https://en.wikipedia.org/wiki/Fluent_interface) is an object
-oriented API that aims to improve the readability of the source code by using
-[Method chaining](https://en.wikipedia.org/wiki/Method_chaining).
+[Fluent interfeysi](https://en.wikipedia.org/wiki/Fluent_interface) ob'ektdir.
+foydalanish orqali manba kodining o'qilishini yaxshilashga qaratilgan yo'naltirilgan API
+[Usul zanjiri](https://en.wikipedia.org/wiki/Method_chaining).
 
-While there can be some contexts, frequently builder objects, where this
-pattern reduces the verbosity of the code (for example the [PHPUnit Mock Builder](https://phpunit.de/manual/current/en/test-doubles.html)
-or the [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)),
-more often it comes at some costs:
+Ba'zi kontekstlar bo'lishi mumkin bo'lsa-da, tez-tez quruvchi ob'ektlar, bu erda
+naqsh kodning aniqligini kamaytiradi (masalan, [PHPUnit Mock Builder](https://phpunit.de/manual/current/en/test-doubles.html) yoki [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)), ko'pincha bu ba'zi xarajatlarga to'g'ri keladi:
 
-1. Breaks [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29).
-2. Breaks [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern).
-3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite.
-4. Makes diffs of commits harder to read.
 
-For more information you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
-on this topic written by [Marco Pivetta](https://github.com/Ocramius).
+1. [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29) buziladi.
+2. Tanaffuslar [Dekoratorlar](https://en.wikipedia.org/wiki/Decorator_pattern).
+3. Test to'plamida [masxara](https://en.wikipedia.org/wiki/Mock_object) qiyinroq.
+4. Farqlarni o‘qishni qiyinlashtiradi.
 
-**Bad:**
+Qo'shimcha ma'lumot olish uchun to'liq [blog postini](https://ocramius.github.io/blog/fluent-interfaces-are-evil/) o'qishingiz mumkin.
+bu mavzuda [Marko Pivetta](https://github.com/Ocramius) tomonidan yozilgan.
+
+
+**Yomon:**
 
 ```php
 class Car
@@ -1437,7 +1437,7 @@ class Car
     {
         $this->make = $make;
 
-        // NOTE: Returning this for chaining
+       // QAYD: Buni zanjirband qilish uchun qaytaring
         return $this;
     }
 
@@ -1445,7 +1445,7 @@ class Car
     {
         $this->model = $model;
 
-        // NOTE: Returning this for chaining
+       // QAYD: Buni zanjirband qilish uchun qaytaring
         return $this;
     }
 
@@ -1453,7 +1453,7 @@ class Car
     {
         $this->color = $color;
 
-        // NOTE: Returning this for chaining
+       // QAYD: Buni zanjirband qilish uchun qaytaring
         return $this;
     }
 
@@ -1470,7 +1470,7 @@ $car = (new Car())
     ->dump();
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class Car
@@ -1509,23 +1509,23 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Prefer final classes
+### Yakuniy darslarni afzal ko'ring
 
-The `final` keyword should be used whenever possible:
+"Yakuniy" kalit so'zidan iloji boricha foydalanish kerak:
 
-1. It prevents an uncontrolled inheritance chain.
-2. It encourages [composition](#prefer-composition-over-inheritance).
-3. It encourages the [Single Responsibility Principle](#single-responsibility-principle-srp).
-4. It encourages developers to use your public methods instead of extending the class to get access to protected ones.
-5. It allows you to change your code without breaking applications that use your class.
+1. Nazoratsiz meros zanjirining oldini oladi.
+2. [kompozitsiyani] (#prefer-composition-over-meros) rag'batlantiradi.
+3. U [Yagona javobgarlik printsipi](#single-responsibility-principle-srp)ni rag'batlantiradi.
+4. U ishlab chiquvchilarni himoyalanganlarga kirish uchun sinfni kengaytirish o'rniga sizning umumiy usullaringizdan foydalanishga undaydi.
+5. Bu sizning sinfingizdan foydalanadigan ilovalarni buzmasdan kodingizni o'zgartirishga imkon beradi.
 
-The only condition is that your class should implement an interface and no other public methods are defined.
+Yagona shart shundaki, sizning sinfingiz interfeysni amalga oshirishi kerak va boshqa umumiy usullar aniqlanmagan.
 
-For more informations you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
+Qo'shimcha ma'lumot olish uchun siz [Marko Pivetta Ocramius](https://ocramius.github.io/) tomonidan yozilgan [blog postini](https://ocramius.github.io/blog/when-to-declare-classes-final/) o'qishingiz mumkin .
 
-**Bad:**
+**Yomon:**
 
 ```php
 final class Car
@@ -1547,7 +1547,7 @@ final class Car
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 interface Vehicle
@@ -1574,30 +1574,30 @@ final class Car implements Vehicle
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
 ## SOLID
 
-**SOLID** is the mnemonic acronym introduced by Michael Feathers for the first five principles named by Robert Martin, which meant five basic principles of object-oriented programming and design.
+**SOLID** - bu Robert Martin tomonidan atalgan birinchi besh tamoyil uchun Maykl Feathers tomonidan kiritilgan mnemonik qisqartma bo'lib, u ob'ektga yo'naltirilgan dasturlash va dizaynning beshta asosiy tamoyilini bildiradi.
 
- * [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
- * [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
- * [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
- * [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
- * [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+  * [S: Yagona javobgarlik printsipi (SRP)](#single-responsibility-principle-srp)
+  * [O: ochiq/yopiq printsip (OCP)](#openclosed-printsip-ocp)
+  * [L: Liskov almashtirish printsipi (LSP)](#liskov-substitution-principle-lsp)
+  * [I: Interfeysni ajratish printsipi (ISP)](#interfeys-segregatsiya-prinsipi-isp)
+  * [D: Bog'liqlik inversiyasi printsipi (DIP)](#dependency-inversion-principle-dip)
 
-### Single Responsibility Principle (SRP)
+### Yagona javobgarlik printsipi (SRP)
 
-As stated in Clean Code, "There should never be more than one reason for a class
-to change". It's tempting to jam-pack a class with a lot of functionality, like
-when you can only take one suitcase on your flight. The issue with this is
-that your class won't be conceptually cohesive and it will give it many reasons
-to change. Minimizing the amount of times you need to change a class is important.
-It's important because if too much functionality is in one class and you modify a piece of it,
-it can be difficult to understand how that will affect other dependent modules in
-your codebase.
+Toza Kodekda aytilganidek, "Sinf uchun hech qachon bir nechta sabab bo'lmasligi kerak
+o'zgartirish". Bu kabi ko'plab funksiyalarga ega bo'lgan sinfni jamlash vasvasasi
+parvozingizda faqat bitta chamadon olishingiz mumkin bo'lganda. Bu bilan bog'liq masala
+Sizning sinfingiz kontseptual jihatdan birlashtirilgan bo'lmaydi va bu unga ko'p sabablarni beradi
+tuzatmoq. Sinfni o'zgartirishingiz kerak bo'lgan vaqtni minimallashtirish muhimdir.
+Bu juda muhim, chunki bitta sinfda juda ko'p funksiya mavjud bo'lsa va siz uning bir qismini o'zgartirsangiz,
+bu boshqa bog'liq modullarga qanday ta'sir qilishini tushunish qiyin bo'lishi mumkin
+sizning kod bazangiz.
 
-**Bad:**
+**Yomon:**
 
 ```php
 class UserSettings
@@ -1623,7 +1623,7 @@ class UserSettings
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 class UserAuth
@@ -1662,16 +1662,16 @@ class UserSettings
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Open/Closed Principle (OCP)
+### Ochiq/yopiq printsip (OCP)
 
-As stated by Bertrand Meyer, "software entities (classes, modules, functions,
-etc.) should be open for extension, but closed for modification." What does that
-mean though? This principle basically states that you should allow users to
-add new functionalities without changing existing code.
+Bertran Meyer ta'kidlaganidek, "dasturiy ta'minot ob'ektlari (sinflar, modullar, funktsiyalar,
+va hokazo) kengaytirish uchun ochiq bo'lishi kerak, lekin o'zgartirish uchun yopiq bo'lishi kerak." Bu nima qiladi
+degani? Bu tamoyil asosan foydalanuvchilarga ruxsat berish kerakligini bildiradi
+mavjud kodni o'zgartirmasdan yangi funksiyalarni qo'shing.
 
-**Bad:**
+**Yomon:**
 
 ```php
 abstract class Adapter
@@ -1726,17 +1726,17 @@ class HttpRequester
 
     private function makeAjaxCall(string $url): Promise
     {
-        // request and return promise
+        // so'rash va qaytarish va'dasi
     }
 
     private function makeHttpCall(string $url): Promise
     {
-        // request and return promise
+        // so'rash va qaytarish va'dasi
     }
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 interface Adapter
@@ -1748,7 +1748,7 @@ class AjaxAdapter implements Adapter
 {
     public function request(string $url): Promise
     {
-        // request and return promise
+        // so'rash va qaytarish va'dasi
     }
 }
 
@@ -1756,7 +1756,7 @@ class NodeAdapter implements Adapter
 {
     public function request(string $url): Promise
     {
-        // request and return promise
+        // so'rash va qaytarish va'dasi
     }
 }
 
@@ -1776,24 +1776,24 @@ class HttpRequester
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Liskov Substitution Principle (LSP)
+### Liskov almashtirish printsipi (LSP)
 
-This is a scary term for a very simple concept. It's formally defined as "If S
-is a subtype of T, then objects of type T may be replaced with objects of type S
-(i.e., objects of type S may substitute objects of type T) without altering any
-of the desirable properties of that program (correctness, task performed,
-etc.)." That's an even scarier definition.
+Bu juda oddiy tushuncha uchun qo'rqinchli atama. Bu rasmiy ravishda "Agar S
+T ning kichik turi bo'lsa, u holda T tipidagi ob'ektlar S tipidagi ob'ektlar bilan almashtirilishi mumkin
+(ya'ni, S tipidagi ob'ektlar T tipidagi ob'ektlarni almashtirishi mumkin) hech qanday o'zgarmasdan
+ushbu dasturning kerakli xususiyatlari (to'g'riligi, bajarilgan vazifa,
+va hokazo)." Bu yanada dahshatli ta'rif.
 
-The best explanation for this is if you have a parent class and a child class,
-then the base class and child class can be used interchangeably without getting
-incorrect results. This might still be confusing, so let's take a look at the
-classic Square-Rectangle example. Mathematically, a square is a rectangle, but
-if you model it using the "is-a" relationship via inheritance, you quickly
-get into trouble.
+Buning eng yaxshi tushuntirishi, agar sizda ota-onalar sinfi va bolalar sinfi bo'lsa,
+u holda asosiy sinf va bola sinfini olinmasdan bir-birining o'rnida ishlatish mumkin
+noto'g'ri natijalar. Bu hali ham chalkash bo'lishi mumkin, shuning uchun keling, buni ko'rib chiqaylik
+Klassik Kvadrat-To'rtburchak misoli. Matematik jihatdan kvadrat to'rtburchak, lekin
+Agar siz uni meros orqali "is-a" munosabatidan foydalanib model qilsangiz, siz tezda
+muammoga duch kelish.
 
-**Bad:**
+**Yomon:**
 
 ```php
 class Rectangle
@@ -1847,13 +1847,13 @@ foreach ($rectangles as $rectangle) {
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
-The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
+Eng yaxshi usul - to'rtburchaklarni ajratish va ikkala shakl uchun umumiyroq kichik turni ajratish.
 
-Despite the apparent similarity of the square and the rectangle, they are different.
-A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtypes.
-A square, a rectangle, a rhombus and a parallelogram are separate shapes with their own properties, albeit similar.
+Kvadrat va to'rtburchakning ko'rinadigan o'xshashligiga qaramay, ular bir-biridan farq qiladi.
+Kvadrat romb va parallelogramm bilan to'rtburchaklar bilan juda ko'p umumiyliklarga ega, ammo ular kichik turlar emas.
+Kvadrat, to'rtburchak, romb va parallelogramm o'xshash bo'lsa-da, o'ziga xos xususiyatlarga ega bo'lgan alohida shakllardir.
 
 ```php
 interface Shape
@@ -1905,19 +1905,20 @@ foreach ($shapes as $shape) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Interface Segregation Principle (ISP)
+### Interfeysni ajratish printsipi (ISP)
 
-ISP states that "Clients should not be forced to depend upon interfaces that
-they do not use."
+ISPning ta'kidlashicha, "mijozlarni interfeyslarga bog'lanishga majburlamaslik kerak
+foydalanmaydilar."
 
-A good example to look at that demonstrates this principle is for
-classes that require large settings objects. Not requiring clients to set up
-huge amounts of options is beneficial, because most of the time they won't need
-all of the settings. Making them optional helps prevent having a "fat interface".
+Ko'rib chiqish uchun yaxshi misol bu tamoyilni ko'rsatadi
+katta sozlamalar ob'ektlarini talab qiladigan sinflar. Mijozlardan sozlashni talab qilmaydi
+katta hajmdagi variantlar foydalidir, chunki ko'pincha ularga kerak bo'lmaydi
+barcha sozlamalar. Ularni ixtiyoriy qilish "yog'li interfeys" ga ega bo'lishni oldini olishga yordam beradi.
 
-**Bad:**
+
+**Yomon:**
 
 ```php
 interface Employee
@@ -1954,9 +1955,9 @@ class RobotEmployee implements Employee
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
-Not every worker is an employee, but every employee is a worker.
+Har bir ishchi xodim emas, lekin har bir xodim ishchi.
 
 ```php
 interface Workable
@@ -1996,24 +1997,24 @@ class RobotEmployee implements Workable
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-### Dependency Inversion Principle (DIP)
+### Bog'liqlik inversiyasi printsipi (DIP)
 
-This principle states two essential things:
-1. High-level modules should not depend on low-level modules. Both should
-depend on abstractions.
-2. Abstractions should not depend upon details. Details should depend on
-abstractions.
+Ushbu tamoyil ikkita muhim narsani belgilaydi:
+1. Yuqori darajadagi modullar past darajadagi modullarga bog'liq bo'lmasligi kerak. Ikkalasi ham kerak
+abstraksiyalarga bog‘liq.
+2. Abstraktsiyalar tafsilotlarga bog'liq bo'lmasligi kerak. Tafsilotlar quyidagilarga bog'liq bo'lishi kerak
+abstraktsiyalar.
 
-This can be hard to understand at first, but if you've worked with PHP frameworks (like Symfony), you've seen an implementation of this principle in the form of Dependency
-Injection (DI). While they are not identical concepts, DIP keeps high-level
-modules from knowing the details of its low-level modules and setting them up.
-It can accomplish this through DI. A huge benefit of this is that it reduces
-the coupling between modules. Coupling is a very bad development pattern because
-it makes your code hard to refactor.
+Avvaliga buni tushunish qiyin bo'lishi mumkin, lekin agar siz PHP ramkalari (masalan, Symfony) bilan ishlagan bo'lsangiz, bu tamoyilning qaramlik ko'rinishida amalga oshirilishini ko'rgansiz.
+In'ektsiya (DI). Ular bir xil tushunchalar bo'lmasa-da, DIP yuqori darajada saqlanadi
+modullari uning past darajadagi modullari tafsilotlarini bilish va ularni sozlash.
+Buni DI orqali amalga oshirishi mumkin. Buning katta foydasi shundaki, u kamayadi
+modullar orasidagi ulanish. Bog'lanish juda yomon rivojlanish namunasidir, chunki
+bu sizning kodingizni qayta ishlashni qiyinlashtiradi.
 
-**Bad:**
+**Yomon:**
 
 ```php
 class Employee
@@ -2048,7 +2049,7 @@ class Manager
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 interface Employee
@@ -2088,34 +2089,34 @@ class Manager
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-## Don’t repeat yourself (DRY)
+## O'zingizni takrorlamang (QURUQ)
 
-Try to observe the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.
+[DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) tamoyiliga rioya qilishga harakat qiling.
 
-Do your absolute best to avoid duplicate code. Duplicate code is bad because
-it means that there's more than one place to alter something if you need to
-change some logic.
+Ikki nusxadagi kodni oldini olish uchun qo'lingizdan kelganini qiling. Ikki nusxadagi kod yomon, chunki
+Agar kerak bo'lsa, biror narsani o'zgartirish uchun bir nechta joy borligini anglatadi
+ba'zi mantiqni o'zgartiring.
 
-Imagine if you run a restaurant and you keep track of your inventory: all your
-tomatoes, onions, garlic, spices, etc. If you have multiple lists that
-you keep this on, then all have to be updated when you serve a dish with
-tomatoes in them. If you only have one list, there's only one place to update!
+Tasavvur qiling-a, agar siz restoran ishlasangiz va inventarizatsiyangizni kuzatib borsangiz: hammasi sizning
+pomidor, piyoz, sarimsoq, ziravorlar va boshqalar. Agar sizda bir nechta ro'yxat mavjud bo'lsa
+Buni davom ettirasiz, keyin taomga xizmat qilganingizda hammasi yangilanishi kerak
+ulardagi pomidor. Agar sizda faqat bitta ro'yxat bo'lsa, yangilanish uchun faqat bitta joy bor!
 
-Often you have duplicate code because you have two or more slightly
-different things, that share a lot in common, but their differences force you
-to have two or more separate functions that do much of the same things. Removing
-duplicate code means creating an abstraction that can handle this set of different
-things with just one function/module/class.
+Ko'pincha sizda ikki nusxadagi kod bor, chunki sizda ikkita yoki undan ko'p bir oz
+turli xil narsalar, ular juda ko'p umumiyliklarga ega, ammo ularning farqlari sizni majbur qiladi
+bir xil ishlarni bajaradigan ikki yoki undan ortiq alohida funktsiyalarga ega bo'lish. O'chirish
+dublikat kod bu turli xil to'plamlarni boshqara oladigan abstraktsiyani yaratishni anglatadi
+faqat bitta funktsiya/modul/sinfga ega narsalar.
 
-Getting the abstraction right is critical, that's why you should follow the
-SOLID principles laid out in the [Classes](#classes) section. Bad abstractions can be
-worse than duplicate code, so be careful! Having said this, if you can make
-a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
-updating multiple places any time you want to change one thing.
+Abstraktsiyani to'g'ri qabul qilish juda muhim, shuning uchun siz amal qilishingiz kerak
+SOLID tamoyillari [Sinflar](#class) bo'limida keltirilgan. Yomon abstraktsiyalar bo'lishi mumkin
+Ikki nusxadagi koddan ham yomonroq, shuning uchun ehtiyot bo'ling! Buni aytib, agar qila olsangiz
+yaxshi abstraksiya, buni qiling! O'zingizni takrorlamang, aks holda siz o'zingizni topasiz
+bir narsani o'zgartirmoqchi bo'lgan har qanday vaqtda bir nechta joylarni yangilash.
 
-**Bad:**
+**Yomon:**
 
 ```php
 function showDeveloperList(array $developers): void
@@ -2143,7 +2144,7 @@ function showManagerList(array $managers): void
 }
 ```
 
-**Good:**
+**Yaxshi:**
 
 ```php
 function showList(array $employees): void
@@ -2172,11 +2173,11 @@ function showList(array $employees): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Tepaga qaytish](#table-of-contents)**
 
-## Translations
+## translations
 
-This is also available in other languages:
+Bu boshqa tillarda ham mavjud:
 
 * :cn: **Chinese:**
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
@@ -2205,5 +2206,9 @@ This is also available in other languages:
    * [ahmedjoda/clean-code-php](https://github.com/ahmedjoda/clean-code-php)
 * :jp: **Japanese:**
    * [hayato07/clean-code-php](https://github.com/hayato07/clean-code-php)
+* :uz: **Uzbekcha:**
+   * [AxlidinovJ/Clean-Code-PHP-uz](https://github.com/AxlidinovJ/Clean-Code-PHP-uz)
 
-**[⬆ back to top](#table-of-contents)**
+
+
+**[⬆ Tepaga qaytish](#table-of-contents)**
