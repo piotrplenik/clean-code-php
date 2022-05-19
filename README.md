@@ -1103,7 +1103,7 @@ function travelToTexas(Vehicle $vehicle): void
 If you are working with basic primitive values like strings, integers, and arrays,
 and you use PHP 7+ and you can't use polymorphism but you still feel the need to
 type-check, you should consider
-[type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
+[type declaration](https://www.php.net/manual/en/language.types.declarations.php)
 or strict mode. It provides you with static typing on top of standard PHP syntax.
 The problem with manually type-checking is that doing it will require so much
 extra verbiage that the faux "type-safety" you get doesn't make up for the lost
