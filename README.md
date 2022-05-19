@@ -454,7 +454,7 @@ function createMicrobrewery($name = null): void
 
 **Good:**
 
- You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+ You can use [type hinting](https://www.php.net/manual/en/language.types.declarations.php) and be sure that the `$breweryName` will not be `NULL`.
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
