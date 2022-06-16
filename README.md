@@ -2202,7 +2202,7 @@ This is also available in other languages:
 * :bangladesh: **Bangla:**
    * [nayeemdev/clean-code-php](https://github.com/nayeemdev/clean-code-php)
 * :egypt: **Arabic:**
-   * [ahmedjoda/clean-code-php](https://github.com/ahmedjoda/clean-code-php)
+   * [ahmedalmory/clean-code-php](https://github.com/ahmedalmory/clean-code-php)
 * :jp: **Japanese:**
    * [hayato07/clean-code-php](https://github.com/hayato07/clean-code-php)
 
