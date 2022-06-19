@@ -371,7 +371,7 @@ class Car
 
 **Not good:**
 
-The simple comparison will convert the string in an integer.
+The simple comparison will convert the string into an integer.
 
 ```php
 $a = '42';
