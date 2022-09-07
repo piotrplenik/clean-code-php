@@ -2,7 +2,7 @@
 
 ## Daftar Isi
 
-  1. [Introduction](#introduction)
+  1. [Pengenalan](#pengenalan)
   2. [Variables](#variables)
      * [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
      * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
@@ -47,20 +47,15 @@
   8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
   9. [Translations](#translations)
 
-## Introduction
+## Pengenalan
 
-Software engineering principles, from Robert C. Martin's book
-[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for PHP. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in PHP.
+Prinsip rekayasa perangkat lunak dari buku [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) milik Robert C. Martin diadaptasi untuk PHP. Ini bukanlah pedoman gaya. Ini merupakan pedoman untuk memproduksi perangkat lunak yang mudah dibaca, mudah digunakan kembali dan dapat direfaktor dalam PHP.
 
-Not every principle herein has to be strictly followed, and even fewer will be universally
-agreed upon. These are guidelines and nothing more, but they are ones codified over many
-years of collective experience by the authors of *Clean Code*.
+Tak semua prinsip disini harus diikuti secara ketat, dan bahkan lebih sedikit lagi yang disepakati secara universal. Ini adalah pedoman dan tidak lebih, namun itu dikodifikasikan selama bertahun-tahun dari pengalaman kolektif oleh penulis *Clean Code*.
 
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+Terinspirasi dari [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
 
-Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
+Meskipun banyak pengembang masih menggunakan PHP 5, sebagian besar contoh di artikel hanya bekerja dengan PHP 7.1+.
 
 **[⬆ back to top](#daftar-isi)**
 
