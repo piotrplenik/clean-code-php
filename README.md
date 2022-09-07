@@ -47,6 +47,8 @@
   8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
   9. [Translations](#translations)
 
+**[🔝 kembali ke atas](#daftar-isi)**
+
 ## Pengenalan
 
 Prinsip rekayasa perangkat lunak dari buku [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) milik Robert C. Martin diadaptasi untuk PHP. Ini bukanlah pedoman gaya. Ini merupakan pedoman untuk memproduksi perangkat lunak yang mudah dibaca, mudah digunakan kembali dan dapat direfaktor dalam PHP.
@@ -57,7 +59,7 @@ Terinspirasi dari [clean-code-javascript](https://github.com/ryanmcdermott/clean
 
 Meskipun banyak pengembang masih menggunakan PHP 5, sebagian besar contoh di artikel hanya bekerja dengan PHP 7.1+.
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ## Variables
 
@@ -75,7 +77,7 @@ $ymdstr = $moment->format('y-m-d');
 $currentDate = $moment->format('y-m-d');
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Use the same vocabulary for the same type of variable
 
@@ -94,7 +96,7 @@ getUserProfile();
 getUser();
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Use searchable names (part 1)
 
@@ -161,7 +163,7 @@ if ($user->access & User::ACCESS_UPDATE) {
 $user->access ^= User::ACCESS_CREATE;
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Use explanatory variables
 
@@ -200,7 +202,7 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid nesting too deeply and return early (part 1)
 
@@ -245,7 +247,7 @@ function isShopOpen(string $day): bool
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid nesting too deeply and return early (part 2)
 
@@ -284,7 +286,7 @@ function fibonacci(int $n): int
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid Mental Mapping
 
@@ -323,7 +325,7 @@ foreach ($locations as $location) {
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Don't add unneeded context
 
@@ -360,7 +362,7 @@ class Car
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 <<<<<<< HEAD
 ### Use default arguments instead of short circuiting or conditionals
@@ -399,7 +401,7 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 =======
 >>>>>>> 366a1c429ec19fd6ba8073405f7d4fb098ef8c40
@@ -438,7 +440,7 @@ if ($a !== $b) {
 
 The comparison `$a !== $b` returns `TRUE`.
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Null coalescing operator
 
@@ -461,7 +463,7 @@ if (isset($_GET['name'])) {
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ## Functions
 
@@ -501,7 +503,7 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[🔝 kembali ke atas](#table-of-contents)**
 
 ### Function arguments (2 or fewer ideally)
 
@@ -597,7 +599,7 @@ class Questionnaire
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Function names should say what they do
 
@@ -637,7 +639,7 @@ $message = new Email(...);
 $message->send();
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Functions should only be one level of abstraction
 
@@ -775,7 +777,7 @@ class BetterPHPAlternative
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Don't use flags as function parameters
 
@@ -810,7 +812,7 @@ function createTempFile(string $name): void
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid Side Effects
 
@@ -866,7 +868,7 @@ var_dump($newName);
 // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Don't write to global functions
 
@@ -917,7 +919,7 @@ $configuration = new Configuration([
 
 And now you must use instance of `Configuration` in your application.
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Don't use a Singleton pattern
 
@@ -978,7 +980,7 @@ $connection = new DBConnection($dsn);
 
 And now you must use instance of `DBConnection` in your application.
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Encapsulate conditionals
 
@@ -998,7 +1000,7 @@ if ($article->isPublished()) {
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid negative conditionals
 
@@ -1028,7 +1030,7 @@ if (isDOMNodePresent($node)) {
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid conditionals
 
@@ -1103,7 +1105,7 @@ class Cessna implements Airplane
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid type-checking (part 1)
 
@@ -1134,7 +1136,7 @@ function travelToTexas(Vehicle $vehicle): void
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid type-checking (part 2)
 
@@ -1170,7 +1172,7 @@ function combine(int $val1, int $val2): int
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Remove dead code
 
@@ -1207,7 +1209,7 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 
 ## Objects and Data Structures
@@ -1283,7 +1285,7 @@ $bankAccount->withdraw($shoesPrice);
 $balance = $bankAccount->getBalance();
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Make objects have private/protected members
 
@@ -1336,7 +1338,7 @@ $employee = new Employee('John Doe');
 echo 'Employee name: ' . $employee->getName();
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ## Classes
 
@@ -1439,7 +1441,7 @@ class Employee
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Avoid fluent interfaces
 
@@ -1547,7 +1549,7 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Prefer final classes
 
@@ -1612,7 +1614,7 @@ final class Car implements Vehicle
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ## SOLID
 
@@ -1700,7 +1702,7 @@ class UserSettings
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Open/Closed Principle (OCP)
 
@@ -1814,7 +1816,7 @@ class HttpRequester
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Liskov Substitution Principle (LSP)
 
@@ -1943,7 +1945,7 @@ foreach ($shapes as $shape) {
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Interface Segregation Principle (ISP)
 
@@ -2034,7 +2036,7 @@ class RobotEmployee implements Workable
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ### Dependency Inversion Principle (DIP)
 
@@ -2126,7 +2128,7 @@ class Manager
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ## Don’t repeat yourself (DRY)
 
@@ -2210,7 +2212,7 @@ function showList(array $employees): void
 }
 ```
 
-**[⬆ back to top](#daftar-isi)**
+**[🔝 kembali ke atas](#daftar-isi)**
 
 ## Translations
 
@@ -2246,4 +2248,4 @@ This is also available in other languages:
 * :indonesia: **Indonesia:**
    * [ranggakd/clean-code-php](https://github.com/ranggakd/clean-code-php)
    
-**[⬆ back to top](#table-of-contents)**
+**[🔝 kembali ke atas](#table-of-contents)**
