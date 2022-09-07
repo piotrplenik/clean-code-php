@@ -1,0 +1,12 @@
+{
+    "name": "jupeter/clean-code-php",
+    "description": "Clean Code concepts adapted for PHP",
+    "require": {
+        "php": ">=7.2",
+        "symplify/easy-coding-standard": "^9.3"
+    },
+    "scripts": {
+        "check-cs": "vendor/bin/ecs check-markdown README.md",
+        "fix-cs": "vendor/bin/ecs check-markdown README.md --fix"
+    }
+}

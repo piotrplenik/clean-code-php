@@ -13,11 +13,11 @@
      * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
      * [Avoid Mental Mapping](#avoid-mental-mapping)
      * [Don't add unneeded context](#dont-add-unneeded-context)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
   3. [Comparison](#comparison)
      * [Use identical comparison](#use-identical-comparison)
      * [Null coalescing operator](#null-coalescing-operator)
   4. [Functions](#functions)
+     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
      * [Function names should say what they do](#function-names-should-say-what-they-do)
      * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
@@ -147,8 +147,11 @@ $user->access ^= 2;
 class User
 {
     public const ACCESS_READ = 1;
+
     public const ACCESS_CREATE = 2;
+
     public const ACCESS_UPDATE = 4;
+
     public const ACCESS_DELETE = 8;
 
     // User as default can read, create and update something
@@ -223,15 +226,12 @@ function isShopOpen($day): bool
                 return true;
             } elseif ($day === 'sunday') {
                 return true;
-            } else {
-                return false;
             }
-        } else {
             return false;
         }
-    } else {
         return false;
     }
+    return false;
 }
 ```
 
@@ -244,9 +244,7 @@ function isShopOpen(string $day): bool
         return false;
     }
 
-    $openingDays = [
-        'friday', 'saturday', 'sunday'
-    ];
+    $openingDays = ['friday', 'saturday', 'sunday'];
 
     return in_array(strtolower($day), $openingDays, true);
 }
@@ -265,15 +263,12 @@ function fibonacci(int $n)
         if ($n !== 0) {
             if ($n !== 1) {
                 return fibonacci($n - 1) + fibonacci($n - 2);
-            } else {
-                return 1;
             }
-        } else {
-            return 0;
+            return 1;
         }
-    } else {
-        return 'Not supported';
+        return 0;
     }
+    return 'Not supported';
 }
 ```
 
@@ -287,7 +282,7 @@ function fibonacci(int $n): int
     }
 
     if ($n >= 50) {
-        throw new \Exception('Not supported');
+        throw new Exception('Not supported');
     }
 
     return fibonacci($n - 1) + fibonacci($n - 2);
@@ -346,7 +341,9 @@ variable name.
 class Car
 {
     public $carMake;
+
     public $carModel;
+
     public $carColor;
 
     //...
@@ -359,7 +356,9 @@ class Car
 class Car
 {
     public $make;
+
     public $model;
+
     public $color;
 
     //...
@@ -368,6 +367,7 @@ class Car
 
 **[⬆ back to top](#daftar-isi)**
 
+<<<<<<< HEAD
 ### Use default arguments instead of short circuiting or conditionals
 
 **Not good:**
@@ -406,20 +406,22 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 
 **[⬆ back to top](#daftar-isi)**
 
+=======
+>>>>>>> 366a1c429ec19fd6ba8073405f7d4fb098ef8c40
 ## Comparison
 
 ### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
 
 **Not good:**
 
-The simple comparison will convert the string in an integer.
+The simple comparison will convert the string into an integer.
 
 ```php
 $a = '42';
 $b = 42;
 
 if ($a != $b) {
-   // The expression will always pass
+    // The expression will always pass
 }
 ```
 
@@ -468,6 +470,44 @@ $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 
 ## Functions
 
+### Use default arguments instead of short circuiting or conditionals
+
+**Not good:**
+
+This is not good because `$breweryName` can be `NULL`.
+
+```php
+function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
+{
+    // ...
+}
+```
+
+**Not bad:**
+
+This opinion is more understandable than the previous version, but it better controls the value of the variable.
+
+```php
+function createMicrobrewery($name = null): void
+{
+    $breweryName = $name ?: 'Hipster Brew Co.';
+    // ...
+}
+```
+
+**Good:**
+
+ You can use [type hinting](https://www.php.net/manual/en/language.types.declarations.php) and be sure that the `$breweryName` will not be `NULL`.
+
+```php
+function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
+{
+    // ...
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
+
 ### Function arguments (2 or fewer ideally)
 
 Limiting the amount of function parameters is incredibly important because it makes
@@ -505,7 +545,9 @@ class Questionnaire
 class Name
 {
     private $firstname;
+
     private $lastname;
+
     private $patronymic;
 
     public function __construct(string $firstname, string $lastname, string $patronymic)
@@ -521,7 +563,9 @@ class Name
 class City
 {
     private $region;
+
     private $district;
+
     private $city;
 
     public function __construct(string $region, string $district, string $city)
@@ -537,6 +581,7 @@ class City
 class Contact
 {
     private $phone;
+
     private $email;
 
     public function __construct(string $phone, string $email)
@@ -749,7 +794,7 @@ based on a boolean.
 function createFile(string $name, bool $temp = false): void
 {
     if ($temp) {
-        touch('./temp/'.$name);
+        touch('./temp/' . $name);
     } else {
         touch($name);
     }
@@ -766,7 +811,7 @@ function createFile(string $name): void
 
 function createTempFile(string $name): void
 {
-    touch('./temp/'.$name);
+    touch('./temp/' . $name);
 }
 ```
 
@@ -804,7 +849,8 @@ function splitIntoFirstAndLastName(): void
 
 splitIntoFirstAndLastName();
 
-var_dump($name); // ['Ryan', 'McDermott'];
+var_dump($name);
+// ['Ryan', 'McDermott'];
 ```
 
 **Good:**
@@ -818,8 +864,11 @@ function splitIntoFirstAndLastName(string $name): array
 $name = 'Ryan McDermott';
 $newName = splitIntoFirstAndLastName($name);
 
-var_dump($name); // 'Ryan McDermott';
-var_dump($newName); // ['Ryan', 'McDermott'];
+var_dump($name);
+// 'Ryan McDermott';
+
+var_dump($newName);
+// ['Ryan', 'McDermott'];
 ```
 
 **[⬆ back to top](#daftar-isi)**
@@ -837,7 +886,7 @@ that tried to do the same thing.
 ```php
 function config(): array
 {
-    return  [
+    return [
         'foo' => 'bar',
     ];
 }
@@ -857,7 +906,7 @@ class Configuration
 
     public function get(string $key): ?string
     {
-        // null coalescing operator 
+        // null coalescing operator
         return $this->configuration[$key] ?? null;
     }
 }
@@ -897,7 +946,7 @@ class DBConnection
         // ...
     }
 
-    public static function getInstance(): DBConnection
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -922,7 +971,7 @@ class DBConnection
         // ...
     }
 
-     // ...
+    // ...
 }
 ```
 
@@ -961,13 +1010,12 @@ if ($article->isPublished()) {
 **Bad:**
 
 ```php
-function isDOMNodeNotPresent(\DOMNode $node): bool
+function isDOMNodeNotPresent(DOMNode $node): bool
 {
     // ...
 }
 
-if (!isDOMNodeNotPresent($node))
-{
+if (! isDOMNodeNotPresent($node)) {
     // ...
 }
 ```
@@ -975,7 +1023,7 @@ if (!isDOMNodeNotPresent($node))
 **Good:**
 
 ```php
-function isDOMNodePresent(\DOMNode $node): bool
+function isDOMNodePresent(DOMNode $node): bool
 {
     // ...
 }
@@ -1098,7 +1146,7 @@ function travelToTexas(Vehicle $vehicle): void
 If you are working with basic primitive values like strings, integers, and arrays,
 and you use PHP 7+ and you can't use polymorphism but you still feel the need to
 type-check, you should consider
-[type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
+[type declaration](https://www.php.net/manual/en/language.types.declarations.php)
 or strict mode. It provides you with static typing on top of standard PHP syntax.
 The problem with manually type-checking is that doing it will require so much
 extra verbiage that the faux "type-safety" you get doesn't make up for the lost
@@ -1110,8 +1158,8 @@ Otherwise, do all of that but with PHP strict type declaration or strict mode.
 ```php
 function combine($val1, $val2): int
 {
-    if (!is_numeric($val1) || !is_numeric($val2)) {
-        throw new \Exception('Must be of type Number');
+    if (! is_numeric($val1) || ! is_numeric($val2)) {
+        throw new Exception('Must be of type Number');
     }
 
     return $val1 + $val2;
@@ -1250,7 +1298,7 @@ $balance = $bankAccount->getBalance();
 
 Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
 
-For more informations you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
+For more information you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
 
 **Bad:**
 
@@ -1266,7 +1314,8 @@ class Employee
 }
 
 $employee = new Employee('John Doe');
-echo 'Employee name: '.$employee->name; // Employee name: John Doe
+// Employee name: John Doe
+echo 'Employee name: ' . $employee->name;
 ```
 
 **Good:**
@@ -1288,7 +1337,8 @@ class Employee
 }
 
 $employee = new Employee('John Doe');
-echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
+// Employee name: John Doe
+echo 'Employee name: ' . $employee->getName();
 ```
 
 **[⬆ back to top](#daftar-isi)**
@@ -1320,6 +1370,7 @@ relationship (Human->Animal vs. User->UserDetails).
 class Employee
 {
     private $name;
+
     private $email;
 
     public function __construct(string $name, string $email)
@@ -1337,6 +1388,7 @@ class Employee
 class EmployeeTaxData extends Employee
 {
     private $ssn;
+
     private $salary;
 
     public function __construct(string $name, string $email, string $ssn, string $salary)
@@ -1357,6 +1409,7 @@ class EmployeeTaxData extends Employee
 class EmployeeTaxData
 {
     private $ssn;
+
     private $salary;
 
     public function __construct(string $ssn, string $salary)
@@ -1371,7 +1424,9 @@ class EmployeeTaxData
 class Employee
 {
     private $name;
+
     private $email;
+
     private $taxData;
 
     public function __construct(string $name, string $email)
@@ -1380,7 +1435,7 @@ class Employee
         $this->email = $email;
     }
 
-    public function setTaxData(EmployeeTaxData $taxData)
+    public function setTaxData(EmployeeTaxData $taxData): void
     {
         $this->taxData = $taxData;
     }
@@ -1407,7 +1462,7 @@ more often it comes at some costs:
 3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite.
 4. Makes diffs of commits harder to read.
 
-For more informations you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
+For more information you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
 on this topic written by [Marco Pivetta](https://github.com/Ocramius).
 
 **Bad:**
@@ -1416,7 +1471,9 @@ on this topic written by [Marco Pivetta](https://github.com/Ocramius).
 class Car
 {
     private $make = 'Honda';
+
     private $model = 'Accord';
+
     private $color = 'white';
 
     public function setMake(string $make): self
@@ -1450,10 +1507,10 @@ class Car
 }
 
 $car = (new Car())
-  ->setColor('pink')
-  ->setMake('Ford')
-  ->setModel('F-150')
-  ->dump();
+    ->setColor('pink')
+    ->setMake('Ford')
+    ->setModel('F-150')
+    ->dump();
 ```
 
 **Good:**
@@ -1462,7 +1519,9 @@ $car = (new Car())
 class Car
 {
     private $make = 'Honda';
+
     private $model = 'Accord';
+
     private $color = 'white';
 
     public function setMake(string $make): void
@@ -1497,13 +1556,13 @@ $car->dump();
 
 ### Prefer final classes
 
-The `final` should be used whenever possible:
+The `final` keyword should be used whenever possible:
 
-1. It prevents uncontrolled inheritance chain.
+1. It prevents an uncontrolled inheritance chain.
 2. It encourages [composition](#prefer-composition-over-inheritance).
-3. It encourages the [Single Responsibility Pattern](#single-responsibility-principle-srp).
-4. It encourages developers to use your public methods instead of extending the class to get access on protected ones.
-5. It allows you to change your code without any break of applications that use your class.
+3. It encourages the [Single Responsibility Principle](#single-responsibility-principle-srp).
+4. It encourages developers to use your public methods instead of extending the class to get access to protected ones.
+5. It allows you to change your code without breaking applications that use your class.
 
 The only condition is that your class should implement an interface and no other public methods are defined.
 
@@ -1551,9 +1610,6 @@ final class Car implements Vehicle
         $this->color = $color;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getColor()
     {
         return $this->color;
@@ -1631,6 +1687,7 @@ class UserAuth
 class UserSettings
 {
     private $user;
+
     private $auth;
 
     public function __construct(User $user)
@@ -1785,6 +1842,7 @@ get into trouble.
 class Rectangle
 {
     protected $width = 0;
+
     protected $height = 0;
 
     public function setWidth(int $width): void
@@ -1822,7 +1880,7 @@ function printArea(Rectangle $rectangle): void
     $rectangle->setHeight(5);
 
     // BAD: Will return 25 for Square. Should be 20.
-    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()) . PHP_EOL;
 }
 
 $rectangles = [new Rectangle(), new Square()];
@@ -1837,7 +1895,7 @@ foreach ($rectangles as $rectangle) {
 The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
 
 Despite the apparent similarity of the square and the rectangle, they are different.
-A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtype.
+A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtypes.
 A square, a rectangle, a rhombus and a parallelogram are separate shapes with their own properties, albeit similar.
 
 ```php
@@ -2109,11 +2167,7 @@ function showDeveloperList(array $developers): void
         $expectedSalary = $developer->calculateExpectedSalary();
         $experience = $developer->getExperience();
         $githubLink = $developer->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
+        $data = [$expectedSalary, $experience, $githubLink];
 
         render($data);
     }
@@ -2125,11 +2179,7 @@ function showManagerList(array $managers): void
         $expectedSalary = $manager->calculateExpectedSalary();
         $experience = $manager->getExperience();
         $githubLink = $manager->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
+        $data = [$expectedSalary, $experience, $githubLink];
 
         render($data);
     }
@@ -2145,11 +2195,7 @@ function showList(array $employees): void
         $expectedSalary = $employee->calculateExpectedSalary();
         $experience = $employee->getExperience();
         $githubLink = $employee->getGithubLink();
-        $data = [
-            $expectedSalary,
-            $experience,
-            $githubLink
-        ];
+        $data = [$expectedSalary, $experience, $githubLink];
 
         render($data);
     }
@@ -2164,11 +2210,7 @@ It is better to use a compact version of the code.
 function showList(array $employees): void
 {
     foreach ($employees as $employee) {
-        render([
-            $employee->calculateExpectedSalary(),
-            $employee->getExperience(),
-            $employee->getGithubLink()
-        ]);
+        render([$employee->calculateExpectedSalary(), $employee->getExperience(), $employee->getGithubLink()]);
     }
 }
 ```
@@ -2192,11 +2234,21 @@ This is also available in other languages:
    * [panuwizzle/clean-code-php](https://github.com/panuwizzle/clean-code-php)
 * :fr: **French:**
    * [errorname/clean-code-php](https://github.com/errorname/clean-code-php)
-* :vietnam: **Vietnamese**
+* :vietnam: **Vietnamese:**
    * [viethuongdev/clean-code-php](https://github.com/viethuongdev/clean-code-php)
 * :kr: **Korean:**
    * [yujineeee/clean-code-php](https://github.com/yujineeee/clean-code-php)
 * :tr: **Turkish:**
    * [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
-
-**[⬆ back to top](#daftar-isi)**
+* :iran: **Persian:**
+   * [amirshnll/clean-code-php](https://github.com/amirshnll/clean-code-php)
+* :bangladesh: **Bangla:**
+   * [nayeemdev/clean-code-php](https://github.com/nayeemdev/clean-code-php)
+* :egypt: **Arabic:**
+   * [ahmedalmory/clean-code-php](https://github.com/ahmedalmory/clean-code-php)
+* :jp: **Japanese:**
+   * [hayato07/clean-code-php](https://github.com/hayato07/clean-code-php)
+* :indonesia: **Indonesia:**
+   * [ranggakd/clean-code-php](https://github.com/ranggakd/clean-code-php)
+   
+**[⬆ back to top](#table-of-contents)**
