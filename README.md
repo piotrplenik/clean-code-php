@@ -4,7 +4,7 @@
 
   1. [Pengenalan](#pengenalan)
   2. [Variabel](#variabel)
-     * [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
+     * [Gunakan nama variabel yang bermakna dan dapat diucapkan](#gunakan-nama-variabel-yang-bermakna-dan-dapat-diucapkan)
      * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
      * [Use searchable names (part 1)](#use-searchable-names-part-1)
      * [Use searchable names (part 2)](#use-searchable-names-part-2)
@@ -63,7 +63,7 @@ Meskipun banyak pengembang masih menggunakan PHP 5, sebagian besar contoh di art
 
 ## Variabel
 
-### Use meaningful and pronounceable variable names
+### Gunakan nama variabel yang bermakna dan dapat diucapkan
 
 **Bad:**
 
