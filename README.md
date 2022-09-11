@@ -65,13 +65,13 @@ Meskipun banyak pengembang masih menggunakan PHP 5, sebagian besar contoh di art
 
 ### Gunakan nama variabel yang bermakna dan dapat diucapkan
 
-**Bad:**
+**Buruk:**
 
 ```php
 $ymdstr = $moment->format('y-m-d');
 ```
 
-**Good:**
+**Baik:**
 
 ```php
 $currentDate = $moment->format('y-m-d');
