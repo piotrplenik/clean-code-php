@@ -17,7 +17,7 @@
      * [Use identical comparison](#use-identical-comparison)
      * [Null coalescing operator](#null-coalescing-operator)
   4. [Functions](#functions)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
+     * [Use default arguments instead of short-circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
      * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
      * [Function names should say what they do](#function-names-should-say-what-they-do)
      * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
@@ -58,7 +58,7 @@ Not every principle herein has to be strictly followed, and even fewer will be u
 agreed upon. These are guidelines and nothing more, but they are ones codified over many
 years of collective experience by the authors of *Clean Code*.
 
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+Inspired by [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
 
 Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
 
@@ -404,7 +404,7 @@ The comparison `$a !== $b` returns `TRUE`.
 
 ### Null coalescing operator
 
-Null coalescing is a new operator [introduced in PHP 7](https://www.php.net/manual/en/migration70.new-features.php). The null coalescing operator `??` has been added as syntactic sugar for the common case of needing to use a ternary in conjunction with `isset()`. It returns its first operand if it exists and is not `null`; otherwise it returns its second operand.
+Null coalescing is a new operator [introduced in PHP 7](https://www.php.net/manual/en/migration70.new-features.php). The null coalescing operator `??` has been added as syntactic sugar for the common case of needing to use a ternary in conjunction with `isset()`. It returns its first operand if it exists and is not `null`; otherwise, it returns its second operand.
 
 **Bad:**
 
@@ -427,7 +427,7 @@ $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 
 ## Functions
 
-### Use default arguments instead of short circuiting or conditionals
+### Use default arguments instead of short-circuiting or conditionals
 
 **Not good:**
 
@@ -467,11 +467,11 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 
 ### Function arguments (2 or fewer ideally)
 
-Limiting the amount of function parameters is incredibly important because it makes
+Limiting the number of function parameters is incredibly important because it makes
 testing your function easier. Having more than three leads to a combinatorial explosion
 where you have to test tons of different cases with each separate argument.
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided.
+Zero arguments are the ideal case. One or two arguments are ok, and three should be avoided.
 Anything more than that should be consolidated. Usually, if you have more than two
 arguments then your function is trying to do too much. In cases where it's not, most
 of the time a higher-level object will suffice as an argument.
@@ -679,7 +679,7 @@ function parseBetterPHPAlternative(string $code): void
 
 **Good:**
 
-The best solution is move out the dependencies of `parseBetterPHPAlternative()` function.
+The best solution is to move out the dependencies of `parseBetterPHPAlternative()` function.
 
 ```php
 class Tokenizer
@@ -785,7 +785,7 @@ example, you might need to write to a file. What you want to do is to centralize
 you are doing this. Don't have several functions and classes that write to a particular
 file. Have one service that does it. One and only one.
 
-The main point is to avoid common pitfalls like sharing state between objects without
+The main point is to avoid common pitfalls like sharing states between objects without
 any structure, using mutable data types that can be written to by anything, and not
 centralizing where your side effects occur. If you can do this, you will be happier
 than the vast majority of other programmers.
@@ -834,8 +834,8 @@ var_dump($newName);
 
 Polluting globals is a bad practice in many languages because you could clash with another
 library and the user of your API would be none-the-wiser until they get an exception in
-production. Let's think about an example: what if you wanted to have configuration array?
-You could write global function like `config()`, but it could clash with another library
+production. Let's think about an example: what if you wanted to have a configuration array?
+You could write a global function like `config()`, but it could clash with another library
 that tried to do the same thing.
 
 **Bad:**
@@ -869,7 +869,7 @@ class Configuration
 }
 ```
 
-Load configuration and create instance of `Configuration` class
+Load configuration and create an instance of `Configuration`` class
 
 ```php
 $configuration = new Configuration([
@@ -877,7 +877,7 @@ $configuration = new Configuration([
 ]);
 ```
 
-And now you must use instance of `Configuration` in your application.
+And now you must use the instance of `Configuration`` in your application.
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -887,9 +887,9 @@ Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
  1. They are generally used as a **global instance**, why is that so bad? Because **you hide the dependencies** of your application in your code, instead of exposing them through the interfaces. Making something global to avoid passing it around is a [code smell](https://en.wikipedia.org/wiki/Code_smell).
  2. They violate the [single responsibility principle](#single-responsibility-principle-srp): by virtue of the fact that **they control their own creation and lifecycle**.
  3. They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under **test rather difficult** in many cases.
- 4. They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent from the other.
+ 4. They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent of the other.
 
-There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
+There are also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of the problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
 
 **Bad:**
 
@@ -932,13 +932,13 @@ class DBConnection
 }
 ```
 
-Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+Create an instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
 
 ```php
 $connection = new DBConnection($dsn);
 ```
 
-And now you must use instance of `DBConnection` in your application.
+And now you must use the instance of `DBConnection` in your application.
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1249,13 +1249,13 @@ $balance = $bankAccount->getBalance();
 
 ### Make objects have private/protected members
 
-* `public` methods and properties are most dangerous for changes, because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of class.**
-* `protected` modifier are as dangerous as public, because they are available in scope of any child class. This effectively means that difference between public and protected is only in access mechanism, but encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
-* `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
+* `public` methods and properties are most dangerous for changes because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of the class.**
+* `protected` modifiers are as dangerous as public because they are available in the scope of any child class. This effectively means that difference between public and protected is only in the access mechanism, but the encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
+* `private` modifier guarantees that code is **dangerous to modify only within the boundaries of a single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
 
-Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
+Therefore, use `private` by default and `public/protected` when you need to provide access to external classes.
 
-For more information you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
+For more information, you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
 
 **Bad:**
 
@@ -1307,9 +1307,9 @@ echo 'Employee name: ' . $employee->getName();
 As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
 you should prefer composition over inheritance where you can. There are lots of
 good reasons to use inheritance and lots of good reasons to use composition.
-The main point for this maxim is that if your mind instinctively goes for
+The main point of this maxim is that if your mind instinctively goes for an
 inheritance, try to think if composition could model your problem better. In some
-cases it can.
+cases, it can.
 
 You might be wondering then, "when should I use inheritance?" It
 depends on your problem at hand, but this is a decent list of when inheritance
@@ -1405,8 +1405,7 @@ class Employee
 
 ### Avoid fluent interfaces
 
-A [Fluent interface](https://en.wikipedia.org/wiki/Fluent_interface) is an object
-oriented API that aims to improve the readability of the source code by using
+A [Fluent interface](https://en.wikipedia.org/wiki/Fluent_interface) is an object-oriented API that aims to improve the readability of the source code by using
 [Method chaining](https://en.wikipedia.org/wiki/Method_chaining).
 
 While there can be some contexts, frequently builder objects, where this
@@ -1417,9 +1416,9 @@ more often it comes at some costs:
 1. Breaks [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29).
 2. Breaks [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern).
 3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite.
-4. Makes diffs of commits harder to read.
+4. Makes the diffs in commits harder to read.
 
-For more information you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
+For more information, you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
 on this topic written by [Marco Pivetta](https://github.com/Ocramius).
 
 **Bad:**
@@ -1523,7 +1522,7 @@ The `final` keyword should be used whenever possible:
 
 The only condition is that your class should implement an interface and no other public methods are defined.
 
-For more informations you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
+For more information, you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
 
 **Bad:**
 
@@ -1592,7 +1591,7 @@ As stated in Clean Code, "There should never be more than one reason for a class
 to change". It's tempting to jam-pack a class with a lot of functionality, like
 when you can only take one suitcase on your flight. The issue with this is
 that your class won't be conceptually cohesive and it will give it many reasons
-to change. Minimizing the amount of times you need to change a class is important.
+to change. Minimizing the number of times you need to change a class is important.
 It's important because if too much functionality is in one class and you modify a piece of it,
 it can be difficult to understand how that will affect other dependent modules in
 your codebase.
@@ -2008,7 +2007,7 @@ abstractions.
 
 This can be hard to understand at first, but if you've worked with PHP frameworks (like Symfony), you've seen an implementation of this principle in the form of Dependency
 Injection (DI). While they are not identical concepts, DIP keeps high-level
-modules from knowing the details of its low-level modules and setting them up.
+modules from knowing the details of their low-level modules and setting them up.
 It can accomplish this through DI. A huge benefit of this is that it reduces
 the coupling between modules. Coupling is a very bad development pattern because
 it makes your code hard to refactor.
@@ -2101,7 +2100,7 @@ change some logic.
 Imagine if you run a restaurant and you keep track of your inventory: all your
 tomatoes, onions, garlic, spices, etc. If you have multiple lists that
 you keep this on, then all have to be updated when you serve a dish with
-tomatoes in them. If you only have one list, there's only one place to update!
+tomatoes in them. If you only have one list, there's only one place to update it!
 
 Often you have duplicate code because you have two or more slightly
 different things, that share a lot in common, but their differences force you
@@ -2112,7 +2111,7 @@ things with just one function/module/class.
 Getting the abstraction right is critical, that's why you should follow the
 SOLID principles laid out in the [Classes](#classes) section. Bad abstractions can be
 worse than duplicate code, so be careful! Having said this, if you can make
-a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
+a good abstraction, do it! Don't repeat yourself, otherwise, you'll find yourself
 updating multiple places any time you want to change one thing.
 
 **Bad:**
