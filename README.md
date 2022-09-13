@@ -62,6 +62,8 @@ Inspired by [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-
 
 Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
 
+**[⬆ back to top](#table-of-contents)**
+
 ## Variables
 
 ### Use meaningful and pronounceable variable names
@@ -118,6 +120,8 @@ $result = $serializer->serialize($data, 448);
 ```php
 $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
+
+**[⬆ back to top](#table-of-contents)**
 
 ### Use searchable names (part 2)
 
@@ -1584,6 +1588,8 @@ final class Car implements Vehicle
  * [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
  * [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
  * [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+
+**[⬆ back to top](#table-of-contents)**
 
 ### Single Responsibility Principle (SRP)
 
