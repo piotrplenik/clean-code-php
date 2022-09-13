@@ -80,6 +80,13 @@ $ymdstr = $moment->format('y-m-d');
 $currentDate = $moment->format('y-m-d');
 ```
 
+**Refactor:**
+
+```diff
+- $ymdstr = $moment->format('y-m-d');
++ $currentDate = $moment->format('y-m-d');
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use the same vocabulary for the same type of variable
@@ -97,6 +104,16 @@ getUserProfile();
 
 ```php
 getUser();
+```
+
+**Refactor:**
+
+```diff
+- getUserInfo();
+- getUserData();
+- getUserRecord();
+- getUserProfile();
++ getUser();
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -119,6 +136,13 @@ $result = $serializer->serialize($data, 448);
 
 ```php
 $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+```
+
+**Refactor:**
+
+```diff
+- $result = $serializer->serialize($data, 448);
++ $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -168,6 +192,31 @@ if ($user->access & User::ACCESS_UPDATE) {
 $user->access ^= User::ACCESS_CREATE;
 ```
 
+**Refactor:**
+
+```diff
+class User
+{
+-    public $access = 7;
++    public const ACCESS_READ = 1;
++
++    public const ACCESS_CREATE = 2;
++
++    public const ACCESS_UPDATE = 4;
++
++    public const ACCESS_DELETE = 8;
++
++    public $access = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_UPDATE;
+}
+
+- if ($user->access & 4) {
++ if ($user->access & User::ACCESS_UPDATE) {
+}
+
+- $user->access ^= 2;
++ $user->access ^= User::ACCESS_CREATE;
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Use explanatory variables
@@ -205,6 +254,20 @@ $cityZipCodeRegex = '/^[^,]+,\s*(?<city>.+?)\s*(?<zipCode>\d{5})$/';
 preg_match($cityZipCodeRegex, $address, $matches);
 
 saveCityZipCode($matches['city'], $matches['zipCode']);
+```
+
+**Refactor:**
+
+```diff
+$address = 'One Infinite Loop, Cupertino 95014';
+- $cityZipCodeRegex = '/^[^,]+,\s*(.+?)\s*(\d{5})$/';
++ $cityZipCodeRegex = '/^[^,]+,\s*(?<city>.+?)\s*(?<zipCode>\d{5})$/';
+preg_match($cityZipCodeRegex, $address, $matches);
+
+- saveCityZipCode($matches[1], $matches[2]);
+- [, $city, $zipCode] = $matches;
+- saveCityZipCode($city, $zipCode);
++ saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -252,6 +315,36 @@ function isShopOpen(string $day): bool
 }
 ```
 
+**Refactor:**
+
+```diff
+function isShopOpen(string $day): bool
+{
+-    if ($day) {
+-        if (is_string($day)) {
+-            $day = strtolower($day);
+-            if ($day === 'friday') {
+-                return true;
+-            } elseif ($day === 'saturday') {
+-                return true;
+-            } elseif ($day === 'sunday') {
+-                return true;
+-            }
+-            return false;
+-        }
+-        return false;
+-    }
+-    return false;
++    if (empty($day)) {
++        return false;
++    }
++
++    $openingDays = ['friday', 'saturday', 'sunday'];
++
++    return in_array(strtolower($day), $openingDays, true);
+}
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid nesting too deeply and return early (part 2)
@@ -288,6 +381,34 @@ function fibonacci(int $n): int
     }
 
     return fibonacci($n - 1) + fibonacci($n - 2);
+}
+```
+
+**Refactor:**
+
+```diff
+- function fibonacci(int $n)
++ function fibonacci(int $n): int
+{
+-    if ($n < 50) {
+-        if ($n !== 0) {
+-            if ($n !== 1) {
+-                return fibonacci($n - 1) + fibonacci($n - 2);
+-            }
+-            return 1;
+-        }
+-        return 0;
+-    }
+-    return 'Not supported';
++    if ($n === 0 || $n === 1) {
++        return $n;
++    }
++
++    if ($n >= 50) {
++        throw new Exception('Not supported');
++    }
++
++    return fibonacci($n - 1) + fibonacci($n - 2);
 }
 ```
 
