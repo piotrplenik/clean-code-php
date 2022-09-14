@@ -451,6 +451,25 @@ foreach ($locations as $location) {
 }
 ```
 
+**Refactor:**
+
+```diff
+- $l = ['Austin', 'New York', 'San Francisco'];
++ $locations = ['Austin', 'New York', 'San Francisco'];
+
+- for ($i = 0; $i < count($l); $i++) {
+-    $li = $l[$i];
++ foreach ($locations as $location) {
+    doStuff();
+    doSomeOtherStuff();
+    // ...
+    // ...
+    // ...
+-    dispatch($li);
++    dispatch($location);
+}
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't add unneeded context
@@ -483,6 +502,24 @@ class Car
     public $model;
 
     public $color;
+
+    //...
+}
+```
+
+**Refactor:**
+
+```diff
+class Car
+{
+-    public $carMake;
++    public $make;
+
+-    public $carModel;
++    public $model;
+
+-    public $carColor;
++    public $color;
 
     //...
 }
