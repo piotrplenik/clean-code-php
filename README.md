@@ -56,7 +56,7 @@ readable, reusable, and refactorable software in PHP.
 
 Not every principle herein has to be strictly followed, and even fewer will be universally
 agreed upon. These are guidelines and nothing more, but they are ones codified over many
-years of collective experience by the authors of *Clean Code*.
+years of collective experience by the authors of the *Clean Code*.
 
 Inspired by [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
 
@@ -545,7 +545,7 @@ if ($a != $b) {
 ```
 
 The comparison `$a != $b` returns `FALSE` but in fact it's `TRUE`!
-The string `42` is different than the integer `42`.
+The string `42` is different from the integer `42`.
 
 **Good:**
 
@@ -841,7 +841,7 @@ function parseBetterPHPAlternative(string $code): void
 
 **Good:**
 
-The best solution is to move out the dependencies of `parseBetterPHPAlternative()` function.
+The best solution is to move out the dependencies of the `parseBetterPHPAlternative()` function.
 
 ```php
 class Tokenizer
@@ -1031,7 +1031,7 @@ class Configuration
 }
 ```
 
-Load configuration and create an instance of `Configuration`` class
+Load configuration and create an instance of the `Configuration` class
 
 ```php
 $configuration = new Configuration([
@@ -1039,7 +1039,7 @@ $configuration = new Configuration([
 ]);
 ```
 
-And now you must use the instance of `Configuration`` in your application.
+And now you must use the instance of `Configuration` in your application.
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1350,7 +1350,7 @@ to look up and change every accessor in your codebase.
 * You can lazy load your object's properties, let's say getting it from a
 server.
 
-Additionally, this is part of [Open/Closed](#openclosed-principle-ocp) principle.
+Additionally, this is part of the [Open/Closed](#openclosed-principle-ocp) principle.
 
 **Bad:**
 
@@ -1413,7 +1413,7 @@ $balance = $bankAccount->getBalance();
 
 * `public` methods and properties are most dangerous for changes because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of the class.**
 * `protected` modifiers are as dangerous as public because they are available in the scope of any child class. This effectively means that difference between public and protected is only in the access mechanism, but the encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
-* `private` modifier guarantees that code is **dangerous to modify only within the boundaries of a single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
+* `private` modifier guarantees that code is **dangerous to modify only within the boundaries of a single class** (you are safe for modifications and you won't have the [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
 
 Therefore, use `private` by default and `public/protected` when you need to provide access to external classes.
 
