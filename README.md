@@ -318,7 +318,8 @@ function isShopOpen(string $day): bool
 **Refactor:**
 
 ```diff
-function isShopOpen(string $day): bool
+- function isShopOpen($day): bool
++ function isShopOpen(string $day): bool
 {
 -    if ($day) {
 -        if (is_string($day)) {
