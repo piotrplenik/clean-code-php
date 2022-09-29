@@ -1128,6 +1128,28 @@ function createTempFile(string $name): void
 }
 ```
 
+**Refactor:**
+
+```diff
+- function createFile(string $name, bool $temp = false): void
+- {
+-    if ($temp) {
+-        touch('./temp/' . $name);
+-    } else {
+-        touch($name);
+-    }
+-}
++ function createFile(string $name): void
++ {
++    touch($name);
++ }
++
++ function createTempFile(string $name): void
++ {
++    touch('./temp/' . $name);
++ }
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Side Effects
@@ -1184,6 +1206,30 @@ var_dump($newName);
 // ['Ryan', 'McDermott'];
 ```
 
+**Refactor:**
+
+```diff
+- function splitIntoFirstAndLastName(): void
++ function splitIntoFirstAndLastName(string $name): array
+{
+-    global $name;
+-
+-    $name = explode(' ', $name);
++    return explode(' ', $name);
+}
+
+$name = 'Ryan McDermott';
+- splitIntoFirstAndLastName();
++ $newName = splitIntoFirstAndLastName($name);
+
+var_dump($name);
+- // ['Ryan', 'McDermott'];
++ // 'Ryan McDermott';
+
++ var_dump($newName);
++ // ['Ryan', 'McDermott'];
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't write to global functions
@@ -1234,6 +1280,35 @@ $configuration = new Configuration([
 ```
 
 And now you must use the instance of `Configuration` in your application.
+
+**Refactor:**
+
+```diff
++ class Configuration
++ {
++    private $configuration = [];
++
++    public function __construct(array $configuration)
++    {
++        $this->configuration = $configuration;
++    }
++
++    public function get(string $key): ?string
++    {
++        // null coalescing operator
++        return $this->configuration[$key] ?? null;
++    }
++ }
++ 
+- function config(): array
+- {
+-    return [
++ $configuration = new Configuration([
+    'foo' => 'bar',
+-    ];
+- }
++ ]);
+```
 
 **[⬆ back to top](#table-of-contents)**
 
