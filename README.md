@@ -80,12 +80,16 @@ $ymdstr = $moment->format('y-m-d');
 $currentDate = $moment->format('y-m-d');
 ```
 
-**Refactor:**
+<details>
+    <summary>
+        <strong>Refactor:</strong>
+    </summary>
 
 ```diff
 - $ymdstr = $moment->format('y-m-d');
 + $currentDate = $moment->format('y-m-d');
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
