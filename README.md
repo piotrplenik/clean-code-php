@@ -82,7 +82,7 @@ $currentDate = $moment->format('y-m-d');
 
 <details>
     <summary>
-        <strong>Refactor:</strong>
+        <b>Refactor:</b>
     </summary>
 
 ```diff
