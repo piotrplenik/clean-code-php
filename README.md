@@ -561,6 +561,18 @@ if ($a !== $b) {
 }
 ```
 
+**Refactor:**
+
+```diff
+$a = '42';
+$b = 42;
+
+- if ($a != $b) {
++ if ($a !== $b) {
+    //
+}
+```
+
 The comparison `$a !== $b` returns `TRUE`.
 
 **[⬆ back to top](#table-of-contents)**
@@ -584,6 +596,19 @@ if (isset($_GET['name'])) {
 **Good:**
 ```php
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
+```
+
+**Refactor:**
+
+```diff
+- if (isset($_GET['name'])) {
+-    $name = $_GET['name'];
+- } elseif (isset($_POST['name'])) {
+-    $name = $_POST['name'];
+- } else {
+-    $name = 'nobody';
+-}
++ $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -622,6 +647,18 @@ function createMicrobrewery($name = null): void
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 {
+    // ...
+}
+```
+
+**Refactor:**
+
+```diff
+- function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
+- function createMicrobrewery($name = null): void
++ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
+{
+-    $breweryName = $name ?: 'Hipster Brew Co.';
     // ...
 }
 ```
@@ -722,6 +759,79 @@ class Questionnaire
 }
 ```
 
+**Refactor:**
+
+```diff
++class Name
++{
++    private $firstname;
++
++    private $lastname;
++
++    private $patronymic;
++
++    public function __construct(string $firstname, string $lastname, string $patronymic)
++    {
++        $this->firstname = $firstname;
++        $this->lastname = $lastname;
++        $this->patronymic = $patronymic;
++    }
++
++    // getters ...
++}
++
++class City
++{
++    private $region;
++
++    private $district;
++
++    private $city;
++
++    public function __construct(string $region, string $district, string $city)
++    {
++        $this->region = $region;
++        $this->district = $district;
++        $this->city = $city;
++    }
++
++    // getters ...
++}
++
++class Contact
++{
++    private $phone;
++
++    private $email;
++
++    public function __construct(string $phone, string $email)
++    {
++        $this->phone = $phone;
++        $this->email = $email;
++    }
++
++    // getters ...
++}
++
+class Questionnaire
+{
+-    public function __construct(
+-        string $firstname,
+-        string $lastname,
+-        string $patronymic,
+-        string $region,
+-        string $district,
+-        string $city,
+-        string $phone,
+-        string $email
+-    ) {
++    public function __construct(Name $name, City $city, Contact $contact)
++    {
+        // ...
+    }
+}
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Function names should say what they do
@@ -760,6 +870,26 @@ class Email
 $message = new Email(...);
 // Clear and obvious
 $message->send();
+```
+
+**Refactor:**
+
+```diff
+class Email
+{
+    //...
+
+-    public function handle(): void
++    public function send(): void
+    {
+        mail($this->to, $this->subject, $this->body);
+    }
+}
+
+$message = new Email(...);
+//
+- $message->handle();
++ $message->send();
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -898,6 +1028,69 @@ class BetterPHPAlternative
         }
     }
 }
+```
+
+**Refactor:**
+
+```diff
++ class Tokenizer
++ {
+- function tokenize(string $code): array
++    public function tokenize(string $code): array
++    {
+        $regexes = [
+            // ...
+        ];
+
+        $statements = explode(' ', $code);
+        $tokens = [];
+        foreach ($regexes as $regex) {
+            foreach ($statements as $statement) {
++                $tokens[] = /* ... */;
+            }
+        }
+
++        return $tokens;
++    }
++ }
+
++ class Lexer
++ {
+- function lexer(array $tokens): array
++    public function lexify(array $tokens): array
++    {
+        $ast = [];
+        foreach ($tokens as $token) {
++            $ast[] = /* ... */;
+        }
+
++        return $ast;
++    }
++ }
+
+- function parseBetterPHPAlternative(string $code): void
++ class BetterPHPAlternative
++ {
++    private $tokenizer;
++    private $lexer;
++
++    public function __construct(Tokenizer $tokenizer, Lexer $lexer)
++    {
++        $this->tokenizer = $tokenizer;
++        $this->lexer = $lexer;
++    }
++
++    public function parse(string $code): void
++    {
+-    $tokens = tokenize($code);
+-    $ast = lexer($tokens);
++        $tokens = $this->tokenizer->tokenize($code);
++        $ast = $this->lexer->lexify($tokens);
+        foreach ($ast as $node) {
+            // parse...
+        }
++    }
++ }
 ```
 
 **[⬆ back to top](#table-of-contents)**
