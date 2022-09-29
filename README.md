@@ -82,7 +82,7 @@ $currentDate = $moment->format('y-m-d');
 
 <details>
     <summary>
-        <b>Refactor:</b>
+<b>Refactor:</b>
     </summary>
 
 ```diff
@@ -110,7 +110,10 @@ getUserProfile();
 getUser();
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - getUserInfo();
@@ -119,6 +122,7 @@ getUser();
 - getUserProfile();
 + getUser();
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -142,12 +146,16 @@ $result = $serializer->serialize($data, 448);
 $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - $result = $serializer->serialize($data, 448);
 + $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -196,7 +204,10 @@ if ($user->access & User::ACCESS_UPDATE) {
 $user->access ^= User::ACCESS_CREATE;
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 class User
@@ -220,6 +231,7 @@ class User
 - $user->access ^= 2;
 + $user->access ^= User::ACCESS_CREATE;
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -260,7 +272,10 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -273,6 +288,7 @@ preg_match($cityZipCodeRegex, $address, $matches);
 - saveCityZipCode($city, $zipCode);
 + saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -319,7 +335,10 @@ function isShopOpen(string $day): bool
 }
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - function isShopOpen($day): bool
@@ -349,6 +368,7 @@ function isShopOpen(string $day): bool
 +    return in_array(strtolower($day), $openingDays, true);
 }
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -389,7 +409,10 @@ function fibonacci(int $n): int
 }
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - function fibonacci(int $n)
@@ -416,6 +439,7 @@ function fibonacci(int $n): int
 +    return fibonacci($n - 1) + fibonacci($n - 2);
 }
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -456,7 +480,10 @@ foreach ($locations as $location) {
 }
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - $l = ['Austin', 'New York', 'San Francisco'];
@@ -474,6 +501,7 @@ foreach ($locations as $location) {
 +    dispatch($location);
 }
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -512,7 +540,10 @@ class Car
 }
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 class Car
@@ -529,6 +560,7 @@ class Car
     //...
 }
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -565,7 +597,12 @@ if ($a !== $b) {
 }
 ```
 
-**Refactor:**
+The comparison `$a !== $b` returns `TRUE`.
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 $a = '42';
@@ -576,8 +613,7 @@ $b = 42;
     //
 }
 ```
-
-The comparison `$a !== $b` returns `TRUE`.
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -602,7 +638,10 @@ if (isset($_GET['name'])) {
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - if (isset($_GET['name'])) {
@@ -614,6 +653,7 @@ $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 -}
 + $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
