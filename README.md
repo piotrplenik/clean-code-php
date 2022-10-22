@@ -2207,7 +2207,7 @@ Bu boshqa tillarda ham mavjud:
 * :jp: **Japanese:**
    * [hayato07/clean-code-php](https://github.com/hayato07/clean-code-php)
 * :uz: **Uzbekcha:**
-   * [AxlidinovJ/Clean-Code-PHP-uz](https://github.com/AxlidinovJ/Clean-Code-PHP-uz)
+   * [JamshidbekAkhlidinov/clean-code-php](https://github.com/JamshidbekAkhlidinov/clean-code-php)
 
 
 
