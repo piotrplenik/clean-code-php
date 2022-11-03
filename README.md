@@ -695,7 +695,10 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
@@ -706,6 +709,7 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
     // ...
 }
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -803,7 +807,10 @@ class Questionnaire
 }
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 +class Name
@@ -875,6 +882,7 @@ class Questionnaire
     }
 }
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -916,7 +924,10 @@ $message = new Email(...);
 $message->send();
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 class Email
@@ -935,6 +946,7 @@ $message = new Email(...);
 - $message->handle();
 + $message->send();
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1074,7 +1086,10 @@ class BetterPHPAlternative
 }
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 + class Tokenizer
@@ -1136,6 +1151,7 @@ class BetterPHPAlternative
 +    }
 + }
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1172,7 +1188,10 @@ function createTempFile(string $name): void
 }
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - function createFile(string $name, bool $temp = false): void
@@ -1193,6 +1212,7 @@ function createTempFile(string $name): void
 +    touch('./temp/' . $name);
 + }
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1250,7 +1270,10 @@ var_dump($newName);
 // ['Ryan', 'McDermott'];
 ```
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 - function splitIntoFirstAndLastName(): void
@@ -1273,6 +1296,7 @@ var_dump($name);
 + var_dump($newName);
 + // ['Ryan', 'McDermott'];
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1325,7 +1349,10 @@ $configuration = new Configuration([
 
 And now you must use the instance of `Configuration` in your application.
 
-**Refactor:**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
 ```diff
 + class Configuration
@@ -1353,6 +1380,7 @@ And now you must use the instance of `Configuration` in your application.
 - }
 + ]);
 ```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
