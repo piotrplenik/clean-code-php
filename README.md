@@ -152,6 +152,7 @@ $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
     </summary>
 
 ```diff
+- // What the heck is 448 for?
 - $result = $serializer->serialize($data, 448);
 + $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
@@ -212,25 +213,30 @@ $user->access ^= User::ACCESS_CREATE;
 ```diff
 class User
 {
+-    // What the heck is 7 for?
 -    public $access = 7;
 +    public const ACCESS_READ = 1;
-+
+
 +    public const ACCESS_CREATE = 2;
-+
+
 +    public const ACCESS_UPDATE = 4;
-+
+
 +    public const ACCESS_DELETE = 8;
-+
+
++    // User as default can read, create and update something
 +    public $access = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_UPDATE;
 }
 
+- // What the heck is 4 for?
 - if ($user->access & 4) {
 + if ($user->access & User::ACCESS_UPDATE) {
 -    // ...
 +    // do edit ...
 }
 
+- // What's going on here?
 - $user->access ^= 2;
++ // Deny access rights to create something
 + $user->access ^= User::ACCESS_CREATE;
 ```
 </details>
@@ -364,9 +370,9 @@ function isShopOpen(string $day): bool
 +    if (empty($day)) {
 +        return false;
 +    }
-+
+
 +    $openingDays = ['friday', 'saturday', 'sunday'];
-+
+
 +    return in_array(strtolower($day), $openingDays, true);
 }
 ```
@@ -433,11 +439,11 @@ function fibonacci(int $n): int
 +    if ($n === 0 || $n === 1) {
 +        return $n;
 +    }
-+
+
 +    if ($n >= 50) {
 +        throw new Exception('Not supported');
 +    }
-+
+
 +    return fibonacci($n - 1) + fibonacci($n - 2);
 }
 ```
@@ -653,7 +659,7 @@ $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 -    $name = $_POST['name'];
 - } else {
 -    $name = 'nobody';
--}
+- }
 + $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 </details>
@@ -816,56 +822,56 @@ class Questionnaire
     </summary>
 
 ```diff
-+class Name
-+{
++ class Name
++ {
 +    private $firstname;
-+
+
 +    private $lastname;
-+
+
 +    private $patronymic;
-+
+
 +    public function __construct(string $firstname, string $lastname, string $patronymic)
 +    {
 +        $this->firstname = $firstname;
 +        $this->lastname = $lastname;
 +        $this->patronymic = $patronymic;
 +    }
-+
+
 +    // getters ...
-+}
-+
-+class City
-+{
++ }
+
++ class City
++ {
 +    private $region;
-+
+
 +    private $district;
-+
+
 +    private $city;
-+
+
 +    public function __construct(string $region, string $district, string $city)
 +    {
 +        $this->region = $region;
 +        $this->district = $district;
 +        $this->city = $city;
 +    }
-+
+
 +    // getters ...
-+}
-+
-+class Contact
-+{
++ }
+
++ class Contact
++ {
 +    private $phone;
-+
+
 +    private $email;
-+
+
 +    public function __construct(string $phone, string $email)
 +    {
 +        $this->phone = $phone;
 +        $this->email = $email;
 +    }
-+
+
 +    // getters ...
-+}
++ }
 +
 class Questionnaire
 {
@@ -945,8 +951,9 @@ class Email
 }
 
 $message = new Email(...);
-//
+- // What is this? A handle for the message? Are we writing to a file now?
 - $message->handle();
++ // Clear and obvious
 + $message->send();
 ```
 </details>
@@ -1209,7 +1216,7 @@ function createTempFile(string $name): void
 + {
 +    touch($name);
 + }
-+
+
 + function createTempFile(string $name): void
 + {
 +    touch('./temp/' . $name);
@@ -1279,16 +1286,20 @@ var_dump($newName);
     </summary>
 
 ```diff
+- // Global variable referenced by following function.
+- // If we had another function that used this name, now it'd be an array and it could break it.
+- $name = 'Ryan McDermott';
+
 - function splitIntoFirstAndLastName(): void
 + function splitIntoFirstAndLastName(string $name): array
 {
 -    global $name;
--
+
 -    $name = explode(' ', $name);
 +    return explode(' ', $name);
 }
 
-$name = 'Ryan McDermott';
++ $name = 'Ryan McDermott';
 - splitIntoFirstAndLastName();
 + $newName = splitIntoFirstAndLastName($name);
 
@@ -1361,19 +1372,19 @@ And now you must use the instance of `Configuration` in your application.
 + class Configuration
 + {
 +    private $configuration = [];
-+
+
 +    public function __construct(array $configuration)
 +    {
 +        $this->configuration = $configuration;
 +    }
-+
+
 +    public function get(string $key): ?string
 +    {
 +        // null coalescing operator
 +        return $this->configuration[$key] ?? null;
 +    }
 + }
-+ 
+
 - function config(): array
 - {
 -    return [
@@ -1467,7 +1478,7 @@ class DBConnection
 -        if (self::$instance === null) {
 -            self::$instance = new self();
 -        }
--
+
 -        return self::$instance;
 -    }
 
@@ -1975,7 +1986,7 @@ $bankAccount = new BankAccount();
 - $bankAccount->balance -= 100;
 + $bankAccount->withdraw($shoesPrice);
 
-// Get balance
++ // Get balance
 + $balance = $bankAccount->getBalance();
 ```
 </details>
@@ -2205,11 +2216,11 @@ class Employee
 +        $this->taxData = $taxData;
 +    }
 
-+    // ...
+    // ...
 }
 
-// Bad because Employees "have" tax data.
-// EmployeeTaxData is not a type of Employee
+- // Bad because Employees "have" tax data.
+- // EmployeeTaxData is not a type of Employee
 
 - class EmployeeTaxData extends Employee
 - {
@@ -2988,7 +2999,7 @@ foreach ($shapes as $shape) {
     {
         $this->width = $width;
 -    }
--
+
 -    public function setHeight(int $height): void
 -    {
         $this->height = $height;
@@ -3181,7 +3192,7 @@ class HumanEmployee implements Employee
     {
         //.... working much more
     }
--
+
 -    public function eat(): void
 -    {
 -        //.... robot can't eat, but it must implement this method
@@ -3421,7 +3432,7 @@ function showList(array $employees): void
 -        $experience = $developer->getExperience();
 -        $githubLink = $developer->getGithubLink();
 -        $data = [$expectedSalary, $experience, $githubLink];
--
+
 -        render($data);
 -    }
 - }
@@ -3433,7 +3444,7 @@ function showList(array $employees): void
 -        $experience = $manager->getExperience();
 -        $githubLink = $manager->getGithubLink();
 -        $data = [$expectedSalary, $experience, $githubLink];
--
+
 -        render($data);
 -    }
 - }
