@@ -226,6 +226,8 @@ class User
 
 - if ($user->access & 4) {
 + if ($user->access & User::ACCESS_UPDATE) {
+-    // ...
++    // do edit ...
 }
 
 - $user->access ^= 2;
@@ -497,6 +499,7 @@ foreach ($locations as $location) {
     // ...
     // ...
     // ...
+-    // Wait, what is `$li` for again?
 -    dispatch($li);
 +    dispatch($location);
 }
@@ -1443,6 +1446,39 @@ $connection = new DBConnection($dsn);
 
 And now you must use the instance of `DBConnection` in your application.
 
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+class DBConnection
+{
+-    private static $instance;
+
+-    private function __construct(string $dsn)
++    public function __construct(string $dsn)
+    {
+        // ...
+    }
+
+-    public static function getInstance(): self
+-    {
+-        if (self::$instance === null) {
+-            self::$instance = new self();
+-        }
+-
+-        return self::$instance;
+-    }
+
+    // ...
+}
+
+- $singleton = DBConnection::getInstance();
++ $connection = new DBConnection($dsn);
+```
+</details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Encapsulate conditionals
@@ -1462,6 +1498,19 @@ if ($article->isPublished()) {
     // ...
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- if ($article->state === 'published') {
++ if ($article->isPublished()) {
+    // ...
+}
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1492,6 +1541,25 @@ if (isDOMNodePresent($node)) {
     // ...
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- function isDOMNodeNotPresent(DOMNode $node): bool
++ function isDOMNodePresent(DOMNode $node): bool
+{
+    // ...
+}
+
+- if (! isDOMNodeNotPresent($node)) {
++ if (isDOMNodePresent($node)) {
+    // ...
+}
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1568,6 +1636,63 @@ class Cessna implements Airplane
 }
 ```
 
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- class Airplane
++ interface Airplane
+{
+    // ...
+
+    public function getCruisingAltitude(): int
+-    {
+-        switch ($this->type) {
+-            case '777':
+-                return $this->getMaxAltitude() - $this->getPassengerCount();
+-            case 'Air Force One':
+-                return $this->getMaxAltitude();
+-            case 'Cessna':
+-                return $this->getMaxAltitude() - $this->getFuelExpenditure();
+-        }
+-    }
+}
+
++ class Boeing777 implements Airplane
++ {
++    // ...
+
++    public function getCruisingAltitude(): int
++    {
++        return $this->getMaxAltitude() - $this->getPassengerCount();
++    }
++ }
+
++ class AirForceOne implements Airplane
++ {
++    // ...
+
++    public function getCruisingAltitude(): int
++    {
++        return $this->getMaxAltitude();
++    }
++ }
+
++ class Cessna implements Airplane
++ {
++    // ...
+
++    public function getCruisingAltitude(): int
++    {
++        return $this->getMaxAltitude() - $this->getFuelExpenditure();
++    }
++ }
+
+```
+</details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 1)
@@ -1598,6 +1723,26 @@ function travelToTexas(Vehicle $vehicle): void
     $vehicle->travelTo(new Location('texas'));
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- function travelToTexas($vehicle): void
++ function travelToTexas(Vehicle $vehicle): void
+{
+-    if ($vehicle instanceof Bicycle) {
+-        $vehicle->pedalTo(new Location('texas'));
+-    } elseif ($vehicle instanceof Car) {
+-        $vehicle->driveTo(new Location('texas'));
+-    }
++    $vehicle->travelTo(new Location('texas'));
+}
+```
+
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1634,6 +1779,24 @@ function combine(int $val1, int $val2): int
     return $val1 + $val2;
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- function combine($val1, $val2): int
++ function combine(int $val1, int $val2): int
+{
+-    if (! is_numeric($val1) || ! is_numeric($val2)) {
+-        throw new Exception('Must be of type Number');
+-    }
+
+    return $val1 + $val2;
+}
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1672,8 +1835,30 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
 
+```diff
+- function oldRequestModule(string $url): void
++ function requestModule(string $url): void
+{
+    // ...
+}
+
+- function newRequestModule(string $url): void
+- {
+-    // ...
+- }
+
+- $request = newRequestModule($requestUrl);
++ $request = requestModule($requestUrl);
+inventoryTracker('apples', $request, 'www.inventory-awesome.io');
+```
+</details>
+
+**[⬆ back to top](#table-of-contents)**
 
 ## Objects and Data Structures
 
@@ -1748,6 +1933,53 @@ $bankAccount->withdraw($shoesPrice);
 $balance = $bankAccount->getBalance();
 ```
 
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+class BankAccount
+{
+-    public $balance = 1000;
++    private $balance;
+
++    public function __construct(int $balance = 1000)
++    {
++      $this->balance = $balance;
++    }
+
++    public function withdraw(int $amount): void
++    {
++        if ($amount > $this->balance) {
++            throw new \Exception('Amount greater than available balance.');
++        }
+
++        $this->balance -= $amount;
++    }
+
++    public function deposit(int $amount): void
++    {
++        $this->balance += $amount;
++    }
+
++    public function getBalance(): int
++    {
++        return $this->balance;
++    }
+}
+
+$bankAccount = new BankAccount();
+
+// Buy shoes...
+- $bankAccount->balance -= 100;
++ $bankAccount->withdraw($shoesPrice);
+
+// Get balance
++ $balance = $bankAccount->getBalance();
+```
+</details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Make objects have private/protected members
@@ -1800,6 +2032,35 @@ $employee = new Employee('John Doe');
 // Employee name: John Doe
 echo 'Employee name: ' . $employee->getName();
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+class Employee
+{
+-    public $name;
++    private $name;
+
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
++    public function getName(): string
++    {
++        return $this->name;
++    }
+}
+
+$employee = new Employee('John Doe');
+// Employee name: John Doe
+- echo 'Employee name: ' . $employee->name;
++ echo 'Employee name: ' . $employee->getName();
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1903,6 +2164,71 @@ class Employee
     // ...
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
++ class EmployeeTaxData
++ {
++    private $ssn;
+
++    private $salary;
+
++    public function __construct(string $ssn, string $salary)
++    {
++        $this->ssn = $ssn;
++        $this->salary = $salary;
++    }
+
++    // ...
++ }
+
+class Employee
+{
+    private $name;
+
+    private $email;
+
++    private $taxData;
+
+    public function __construct(string $name, string $email)
+    {
+        $this->name = $name;
+        $this->email = $email;
+    }
+
++    public function setTaxData(EmployeeTaxData $taxData): void
++    {
++        $this->taxData = $taxData;
++    }
+
++    // ...
+}
+
+// Bad because Employees "have" tax data.
+// EmployeeTaxData is not a type of Employee
+
+- class EmployeeTaxData extends Employee
+- {
+-    private $ssn;
+
+-    private $salary;
+
+-    public function __construct(string $name, string $email, string $ssn, string $salary)
+-    {
+-        parent::__construct($name, $email);
+
+-        $this->ssn = $ssn;
+-        $this->salary = $salary;
+-    }
+
+-    // ...
+-}
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -2011,6 +2337,66 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+class Car
+{
+    private $make = 'Honda';
+
+    private $model = 'Accord';
+
+    private $color = 'white';
+
+-    public function setMake(string $make): self
++    public function setMake(string $make): void
+    {
+        $this->make = $make;
+
+-        // NOTE: Returning this for chaining
+-        return $this;
+    }
+
+-    public function setModel(string $model): self
++    public function setModel(string $model): void
+    {
+        $this->model = $model;
+
+-        // NOTE: Returning this for chaining
+-        return $this;
+    }
+
+-    public function setColor(string $color): self
++    public function setColor(string $color): void
+    {
+        $this->color = $color;
+
+-        // NOTE: Returning this for chaining
+-        return $this;
+    }
+
+    public function dump(): void
+    {
+        var_dump($this->make, $this->model, $this->color);
+    }
+}
+
+- $car = (new Car())
+-    ->setColor('pink')
+-    ->setMake('Ford')
+-    ->setModel('F-150')
+-    ->dump();
++ $car = new Car();
++ $car->setColor('pink');
++ $car->setMake('Ford');
++ $car->setModel('F-150');
++ $car->dump();
+```
+</details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Prefer final classes
@@ -2075,6 +2461,41 @@ final class Car implements Vehicle
     }
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
++ interface Vehicle
++ {
++    /**
++     * @return string The color of the vehicle
++     */
++    public function getColor();
++ }
+
+- final class Car
++ final class Car implements Vehicle
+{
+    private $color;
+
+    public function __construct($color)
+    {
+        $this->color = $color;
+    }
+
+-    /**
+-     * @return string The color of the vehicle
+-     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+}
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -2165,6 +2586,55 @@ class UserSettings
     }
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
++ class UserAuth
++ {
++    private $user;
+
++    public function __construct(User $user)
++    {
++        $this->user = $user;
++    }
+
++    public function verifyCredentials(): bool
++    {
++        // ...
++    }
++ }
+
+class UserSettings
+{
+    private $user;
+
++    private $auth;
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
++        $this->auth = new UserAuth($user);        
+    }
+
+    public function changeSettings(array $settings): void
+    {
+-        if ($this->verifyCredentials()) {
++        if ($this->auth->verifyCredentials()) {
+            // ...
+        }
+    }
+
+-    private function verifyCredentials(): bool
+-    {
+-        // ...
+-    }
+}
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -2280,6 +2750,91 @@ class HttpRequester
 }
 ```
 
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- abstract class Adapter
++ interface Adapter
+{
+-    protected $name;
+
+-    public function getName(): string
+-    {
+-        return $this->name;
+-    }
+
++    public function request(string $url): Promise;
+}
+
+- class AjaxAdapter extends Adapter
++ class AjaxAdapter implements Adapter
+{
+-    public function __construct()
+-    {
+-        parent::__construct();
+
+-        $this->name = 'ajaxAdapter';
+-    }
+
++    public function request(string $url): Promise
++    {
++        // request and return promise
++    }
+}
+
+- class NodeAdapter extends Adapter
++ class NodeAdapter implements Adapter
+{
+-    public function __construct()
+-    {
+-        parent::__construct();
+
+-        $this->name = 'nodeAdapter';
+-    }
+
++    public function request(string $url): Promise
++    {
++        // request and return promise
++    }
+}
+
+class HttpRequester
+{
+    private $adapter;
+
+    public function __construct(Adapter $adapter)
+    {
+        $this->adapter = $adapter;
+    }
+
+    public function fetch(string $url): Promise
+    {
+-        $adapterName = $this->adapter->getName();
+
+-        if ($adapterName === 'ajaxAdapter') {
+-            return $this->makeAjaxCall($url);
+-        } elseif ($adapterName === 'httpNodeAdapter') {
+-            return $this->makeHttpCall($url);
+-        }
++        return $this->adapter->request($url);
+    }
+
+-    private function makeAjaxCall(string $url): Promise
+-    {
+-        // request and return promise
+-    }
+
+-    private function makeHttpCall(string $url): Promise
+-    {
+-        // request and return promise
+-    }
+}
+```
+</details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Liskov Substitution Principle (LSP)
@@ -2341,7 +2896,7 @@ function printArea(Rectangle $rectangle): void
     $rectangle->setHeight(5);
 
     // BAD: Will return 25 for Square. Should be 20.
-    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()) . PHP_EOL;
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
 }
 
 $rectangles = [new Rectangle(), new Square()];
@@ -2408,6 +2963,90 @@ foreach ($shapes as $shape) {
     printArea($shape);
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
++ interface Shape
++ {
++    public function getArea(): int;
++ }
+
+- class Rectangle
++ class Rectangle implements Shape
+{
+-    protected $width = 0;
++    private $width = 0;
+-    protected $height = 0;
++    private $height = 0;
+
+-    public function setWidth(int $width): void
++    public function __construct(int $width, int $height)
+    {
+        $this->width = $width;
+-    }
+-
+-    public function setHeight(int $height): void
+-    {
+        $this->height = $height;
+    }
+
+    public function getArea(): int
+    {
+        return $this->width * $this->height;
+    }
+}
+
+- class Square extends Rectangle
++ class Square implements Shape
+{
++    private $length = 0;
+
+-    public function setWidth(int $width): void
+-    {
+-        $this->width = $this->height = $width;
+-    }
+
+-    public function setHeight(int $height): void
+-    {
+-        $this->width = $this->height = $height;
+-    }
+
++    public function __construct(int $length)
++    {
++        $this->length = $length;
++    }
+
++    public function getArea(): int
++    {
++        return $this->length ** 2;
++    }
+}
+
+- function printArea(Rectangle $rectangle): void
++ function printArea(Shape $shape): void
+{
+-    $rectangle->setWidth(4);
+-    $rectangle->setHeight(5);
+
+-    // BAD: Will return 25 for Square. Should be 20.
+-    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
++    echo sprintf('%s has area %d.', get_class($shape), $shape->getArea()).PHP_EOL;
+}
+
+- $rectangles = [new Rectangle(), new Square()];
++ $shapes = [new Rectangle(4, 5), new Square(5)];
+
+- foreach ($rectangles as $rectangle) {
++ foreach ($shapes as $shape) {
+-    printArea($rectangle);
++    printArea($shape);
+}
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -2499,6 +3138,57 @@ class RobotEmployee implements Workable
     }
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- interface Employee
++ interface Workable
+{
+    public function work(): void;
++ }
++
++ interface Feedable
++ {
+    public function eat(): void;
+}
+
++ interface Employee extends Feedable, Workable
++ {
++ }
+
+class HumanEmployee implements Employee
+{
+    public function work(): void
+    {
+        // ....working
+    }
+
+    public function eat(): void
+    {
+        // ...... eating in lunch break
+    }
+}
+
++ // robot can only work
+- class RobotEmployee implements Employee
++ class RobotEmployee implements Workable
+{
+    public function work(): void
+    {
+        //.... working much more
+    }
+-
+-    public function eat(): void
+-    {
+-        //.... robot can't eat, but it must implement this method
+-    }
+}
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -2592,6 +3282,48 @@ class Manager
 }
 ```
 
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- class Employee
++ interface Employee
+{
+-    public function work(): void
++    public function work(): void;
+-    {
+-        // ....working
+-    }
+}
+
+- class Robot extends Employee
++ class Robot implements Employee
+{
+    public function work(): void
+    {
+        //.... working much more
+    }
+}
+
+class Manager
+{
+    private $employee;
+
+    public function __construct(Employee $employee)
+    {
+        $this->employee = $employee;
+    }
+
+    public function manage(): void
+    {
+        $this->employee->work();
+    }
+}
+```
+</details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Don’t repeat yourself (DRY)
@@ -2675,6 +3407,53 @@ function showList(array $employees): void
     }
 }
 ```
+
+<details>
+    <summary>
+<b>Refactor:</b>
+    </summary>
+
+```diff
+- function showDeveloperList(array $developers): void
+- {
+-    foreach ($developers as $developer) {
+-        $expectedSalary = $developer->calculateExpectedSalary();
+-        $experience = $developer->getExperience();
+-        $githubLink = $developer->getGithubLink();
+-        $data = [$expectedSalary, $experience, $githubLink];
+-
+-        render($data);
+-    }
+- }
+
+- function showManagerList(array $managers): void
+- {
+-    foreach ($managers as $manager) {
+-        $expectedSalary = $manager->calculateExpectedSalary();
+-        $experience = $manager->getExperience();
+-        $githubLink = $manager->getGithubLink();
+-        $data = [$expectedSalary, $experience, $githubLink];
+-
+-        render($data);
+-    }
+- }
+
++ function showList(array $employees): void
++ {
++    foreach ($employees as $employee) {
+-        $expectedSalary = $employee->calculateExpectedSalary();
+-        $experience = $employee->getExperience();
+-        $githubLink = $employee->getGithubLink();
+-        $data = [$expectedSalary, $experience, $githubLink];
+
+-        render($data);
++        render([$employee->calculateExpectedSalary(), $employee->getExperience(), $employee->getGithubLink()]);
++    }
++ }
+
+
+```
+</details>
 
 **[⬆ back to top](#table-of-contents)**
 
