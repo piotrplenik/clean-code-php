@@ -3461,8 +3461,6 @@ function showList(array $employees): void
 +        render([$employee->calculateExpectedSalary(), $employee->getExperience(), $employee->getGithubLink()]);
 +    }
 + }
-
-
 ```
 </details>
 
