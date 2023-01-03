@@ -1,0 +1,21 @@
+name: Coding Standard
+
+on:
+    pull_request: null
+    push: null
+
+jobs:
+    coding_standard:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v2
+            # see https://github.com/shivammathur/setup-php
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.0
+                    coverage: none
+
+            -   run: composer install --no-progress --ansi
+
+            -   run: vendor/bin/ecs check-markdown README.md --ansi
