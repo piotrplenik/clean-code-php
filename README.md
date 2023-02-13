@@ -2205,5 +2205,7 @@ This is also available in other languages:
    * [ahmedalmory/clean-code-php](https://github.com/ahmedalmory/clean-code-php)
 * :jp: **Japanese:**
    * [hayato07/clean-code-php](https://github.com/hayato07/clean-code-php)
+* :uz: **Uzbekcha:**
+   * [JamshidbekAkhlidinov/clean-code-php](https://github.com/JamshidbekAkhlidinov/clean-code-php)
 
 **[⬆ back to top](#table-of-contents)**
