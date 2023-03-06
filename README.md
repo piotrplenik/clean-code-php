@@ -2178,6 +2178,8 @@ function showList(array $employees): void
 
 This is also available in other languages:
 
+* :ukraine: **Ukrainian:**
+   * [PetroOstapuk/clean-code-php](https://github.com/PetroOstapuk/clean-code-php)
 * :cn: **Chinese:**
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
 * :ru: **Russian:**
