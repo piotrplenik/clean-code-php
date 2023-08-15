@@ -1034,7 +1034,7 @@ interface Airplane
     public function getCruisingAltitude(): int;
 }
 
-class Boeing777 implements Airplane
+final class Boeing777 implements Airplane
 {
     // ...
 
@@ -1044,7 +1044,7 @@ class Boeing777 implements Airplane
     }
 }
 
-class AirForceOne implements Airplane
+final class AirForceOne implements Airplane
 {
     // ...
 
@@ -1054,7 +1054,7 @@ class AirForceOne implements Airplane
     }
 }
 
-class Cessna implements Airplane
+final class Cessna implements Airplane
 {
     // ...
 
